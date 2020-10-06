@@ -1,4 +1,4 @@
-package engine.facades;
+package engine.api;
 
 public interface UserManager {
 }

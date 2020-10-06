@@ -1,13 +1,13 @@
 package engine.file;
 
-import engine.resources.jaxb.generated.SuperDuperMarketDescriptor;
+import engine.file.jaxb.schema.generated.SuperDuperMarketDescriptor;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
-class XmlFileLoader {
+class XmlDeserializer {
 
     private static final String XML_SUFFIX = ".xml";
 
