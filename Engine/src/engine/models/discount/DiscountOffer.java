@@ -1,24 +1,27 @@
-package engine.models;
+package engine.models.discount;
 
-import dto.models.DiscountTriggerDTO;
-import engine.jaxb.schema.generated.IfYouBuy;
+import dto.models.DiscountOfferDTO;
+import engine.models.item.StoreItem;
 
 import java.util.Objects;
 
-class DiscountTrigger {
+public class DiscountOffer {
 
     private final StoreItem item;
     private final float quantity;
+    private final int itemOfferPrice;
 
-    public DiscountTrigger(StoreItem item, float quantity) {
+    public DiscountOffer(StoreItem item, float quantity, int itemOfferPrice) {
         this.item = item;
         this.quantity = quantity;
+        this.itemOfferPrice = itemOfferPrice;
     }
 
-    DiscountTriggerDTO toDiscountTriggerDTO() {
-        return new DiscountTriggerDTO.Builder()
+    DiscountOfferDTO toDiscountOfferDTO() {
+        return new DiscountOfferDTO.Builder()
                 .item(item.toStoreItemDTO())
                 .quantity(quantity)
+                .itemOfferPrice(itemOfferPrice)
                 .build();
     }
 
@@ -30,25 +33,31 @@ class DiscountTrigger {
         return quantity;
     }
 
+    public int getItemOfferPrice() {
+        return itemOfferPrice;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DiscountTrigger that = (DiscountTrigger) o;
+        DiscountOffer that = (DiscountOffer) o;
         return Float.compare(that.quantity, quantity) == 0 &&
+                itemOfferPrice == that.itemOfferPrice &&
                 Objects.equals(item, that.item);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(item, quantity);
+        return Objects.hash(item, quantity, itemOfferPrice);
     }
 
     @Override
     public String toString() {
-        return "DiscountTrigger{" +
+        return "DiscountOffer{" +
                 "item=" + item +
                 ", quantity=" + quantity +
+                ", itemOfferPrice=" + itemOfferPrice +
                 '}';
     }
 }

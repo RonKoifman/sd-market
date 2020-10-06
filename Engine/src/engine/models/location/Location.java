@@ -1,4 +1,4 @@
-package engine.models;
+package engine.models.location;
 
 import engine.exceptions.LocationOutOfRangeException;
 
@@ -10,7 +10,7 @@ public class Location extends Point {
     private static final int MIN_COORDINATE = 1;
     private static final int MAX_COORDINATE = 50;
 
-    Location(int x, int y) {
+    public Location(int x, int y) {
         checkForLegalCoordinate(x);
         checkForLegalCoordinate(y);
         this.x = x;

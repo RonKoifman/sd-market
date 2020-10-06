@@ -1,4 +1,4 @@
-package engine.models;
+package engine.managers;
 
 import engine.enums.DiscountOfferType;
 import engine.enums.PurchaseForm;
@@ -6,6 +6,14 @@ import engine.exceptions.IdenticalLocationsException;
 import engine.exceptions.LocationOutOfRangeException;
 import engine.interfaces.Locationable;
 import engine.jaxb.schema.generated.*;
+import engine.models.location.Location;
+import engine.models.discount.DiscountInformation;
+import engine.models.discount.DiscountOffer;
+import engine.models.discount.DiscountTrigger;
+import engine.models.item.MarketItem;
+import engine.models.item.StoreItem;
+import engine.models.order.GeneralOrder;
+import engine.models.store.Store;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -15,7 +23,7 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class FileHandler {
+public class SDMFileManager {
 
     private boolean isFileLoaded;
     private Map<Integer, Store> tempStoreIdToStore;
@@ -61,14 +69,14 @@ class FileHandler {
             throw new IllegalArgumentException("XML file type must end with the suffix '.xml'.");
         }
 
-        SuperDuperMarketDescriptor sdmDescriptor = unmarshalFile(filePath);
+        SuperDuperMarketDescriptor sdmDescriptor = deserializeFile(filePath);
         setTempItems(sdmDescriptor.getSDMItems().getSDMItem());
         setTempStores(sdmDescriptor.getSDMStores().getSDMStore());
         setTempLocationables(new HashSet<>(tempStoreIdToStore.values()));
         isFileLoaded = true;
     }
 
-    private SuperDuperMarketDescriptor unmarshalFile(String filePath) throws JAXBException {
+    private SuperDuperMarketDescriptor deserializeFile(String filePath) throws JAXBException {
         File loadedFile = new File(filePath);
         JAXBContext jaxbContext = JAXBContext.newInstance(SuperDuperMarketDescriptor.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -123,7 +131,7 @@ class FileHandler {
             }
 
             MarketItem itemToAdd = tempItemIdToItem.get(sell.getItemId());
-            store.addNewItem(new StoreItem(itemToAdd.getId(), itemToAdd.getName(), itemToAdd.getPurchaseForm(), store, sell.getPrice()));
+            store.addNewItem(new StoreItem(itemToAdd.getId(), itemToAdd.getName(), itemToAdd.getPurchaseForm(), sell.getPrice()));
         }
     }
 

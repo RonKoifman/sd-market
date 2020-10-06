@@ -1,9 +1,9 @@
-package engine.models;
+package engine.models.item;
 
 import dto.models.MarketItemDTO;
 import engine.enums.PurchaseForm;
 
-class MarketItem extends Item {
+public class MarketItem extends Item {
 
     private int amountOfStoresSelling;
     private float averagePrice;

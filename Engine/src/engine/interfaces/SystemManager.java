@@ -45,5 +45,5 @@ public interface SystemManager {
 
     Collection<GeneralOrderDTO> getAllOrdersInMarket();
 
-    Collection<CustomerDTO> getAllCustomersInMarket();
+    Collection<UserDTO> getAllUsersInMarket();
 }

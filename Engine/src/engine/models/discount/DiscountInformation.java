@@ -1,14 +1,12 @@
-package engine.models;
+package engine.models.discount;
 
 import dto.models.DiscountInformationDTO;
 import engine.enums.DiscountOfferType;
-import engine.jaxb.schema.generated.SDMDiscount;
-import engine.jaxb.schema.generated.SDMOffer;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-class DiscountInformation {
+public class DiscountInformation {
 
     private final String name;
     private final DiscountTrigger discountTrigger;

@@ -1,4 +1,4 @@
-package engine.models;
+package engine.models.order;
 
 import dto.models.CustomerDTO;
 import dto.models.OrderItemDTO;
@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-abstract class Order implements Identifiable, Serializable {
+public abstract class Order implements Identifiable, Serializable {
 
     protected int id;
     protected final CustomerDTO customer;

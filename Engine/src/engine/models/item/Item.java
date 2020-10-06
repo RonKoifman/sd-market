@@ -1,10 +1,10 @@
-package engine.models;
+package engine.models.item;
 
 import engine.enums.PurchaseForm;
 
 import java.util.Objects;
 
-abstract class Item {
+public abstract class Item {
 
     protected final int id;
     protected final String name;

@@ -1,4 +1,4 @@
-package engine.models;
+package engine.models.store;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -9,8 +9,14 @@ import dto.models.StoreDTO;
 import engine.exceptions.DiscountOffersRemovedException;
 import engine.interfaces.Locationable;
 import engine.interfaces.Identifiable;
+import engine.models.zone.Zone;
+import engine.models.discount.DiscountInformation;
+import engine.models.discount.DiscountTrigger;
+import engine.models.item.StoreItem;
+import engine.models.location.Location;
+import engine.models.order.SubOrder;
 
-class Store implements Locationable, Identifiable {
+public class Store implements Locationable, Identifiable {
 
     private final int id;
     private final String name;
@@ -20,6 +26,7 @@ class Store implements Locationable, Identifiable {
     private final List<DiscountInformation> discountsInformation = new LinkedList<>();
     private final Map<Integer, SubOrder> orderIdToOrder = new HashMap<>();
     private float totalPaymentForDeliveries;
+    //private final Zone zone;
 
     public Store(int id, String name, int deliveryPPK, Location location) {
         this.id = id;

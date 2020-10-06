@@ -1,4 +1,4 @@
-package engine.models;
+package engine.models.order;
 
 import dto.models.*;
 
@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-class GeneralOrder extends Order {
+public class GeneralOrder extends Order {
 
     private final Map<StoreDTO, SubOrder> storeToOrder = new HashMap<>();
 

@@ -1,6 +1,6 @@
 package engine.interfaces;
 
-import engine.models.Location;
+import engine.models.location.Location;
 
 public interface Locationable {
 

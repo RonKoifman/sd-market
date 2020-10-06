@@ -1,11 +1,11 @@
-package engine.models;
+package engine.models.order;
 
 import dto.models.*;
 
 import java.time.LocalDate;
 import java.util.*;
 
-class SubOrder extends Order {
+public class SubOrder extends Order {
 
     private final StoreDTO store;
     private final float distanceFromCustomer;

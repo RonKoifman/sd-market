@@ -1,14 +1,16 @@
-package engine.models;
+package engine.models.user;
 
 import dto.models.CustomerDTO;
 import engine.interfaces.Locationable;
 import engine.interfaces.Identifiable;
+import engine.models.location.Location;
+import engine.models.order.GeneralOrder;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-class Customer implements Locationable, Identifiable {
+public class Customer implements Locationable, Identifiable {
 
     private final int id;
     private final String name;

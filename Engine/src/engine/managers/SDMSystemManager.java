@@ -1,10 +1,18 @@
-package engine.models;
+package engine.managers;
 
 import dto.models.*;
 import engine.enums.PurchaseForm;
 import engine.exceptions.*;
 import engine.interfaces.Locationable;
 import engine.interfaces.SystemManager;
+import engine.models.item.MarketItem;
+import engine.models.item.StoreItem;
+import engine.models.location.Location;
+import engine.models.order.GeneralOrder;
+import engine.models.order.Order;
+import engine.models.store.Store;
+import engine.models.user.Customer;
+import engine.models.user.User;
 
 import javax.xml.bind.JAXBException;
 import java.awt.*;
@@ -13,25 +21,25 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SDMManager implements SystemManager {
+public class SDMSystemManager implements SystemManager {
 
-    private static SDMManager instance;
-    private final FileHandler fileHandler = new FileHandler();
+    private static SDMSystemManager instance;
+    private final SDMFileManager fileManager = new SDMFileManager();
     private Map<Integer, Store> storeIdToStore;
     private Map<Integer, MarketItem> itemIdToItem;
-    private Map<Integer, Customer> customerIdToCustomer;
+    private Map<Integer, User> userIdToUser;
     private Map<Location, Locationable> locationToLocationable;
     private final Map<Integer, GeneralOrder> orderIdToOrder = new HashMap<>();
     private GeneralOrder pendingOrder;
 
-    private SDMManager() {
+    private SDMSystemManager() {
     }
 
     public static SystemManager getInstance() {
         if (instance == null) {
-            synchronized (SDMManager.class) {
+            synchronized (SDMSystemManager.class) {
                 if (instance == null) {
-                    instance = new SDMManager();
+                    instance = new SDMSystemManager();
                 }
             }
         }
@@ -41,13 +49,13 @@ public class SDMManager implements SystemManager {
 
     @Override
     public void loadDataFromFile(String filePath) throws JAXBException {
-        fileHandler.loadSystemDataFromFile(filePath);
+        fileManager.loadSystemDataFromFile(filePath);
         initializeMarket();
     }
 
     @Override
     public boolean isFileLoaded() {
-        return fileHandler.isFileLoaded();
+        return fileManager.isFileLoaded();
     }
 
     @Override
@@ -93,10 +101,10 @@ public class SDMManager implements SystemManager {
     }
 
     @Override
-    public Collection<CustomerDTO> getAllCustomersInMarket() {
-        return customerIdToCustomer.values()
+    public Collection<UserDTO> getAllUsersInMarket() {
+        return userIdToUser.values()
                 .stream()
-                .map(Customer::toCustomerDTO)
+                .map(User::toUserDTO)
                 .collect(Collectors.toSet());
     }
 
@@ -130,7 +138,7 @@ public class SDMManager implements SystemManager {
             throw new ItemAlreadySoldByStoreException();
         }
 
-        store.addNewItem(new StoreItem(itemToAdd.getId(), itemToAdd.getName(), itemToAdd.getPurchaseForm(), store, itemPrice));
+        store.addNewItem(new StoreItem(itemToAdd.getId(), itemToAdd.getName(), itemToAdd.getPurchaseForm(), itemPrice));
         itemToAdd.increaseAmountOfStoresSelling(itemPrice);
     }
 
@@ -191,7 +199,8 @@ public class SDMManager implements SystemManager {
     public void addPendingOrderToOrdersStock() {
         pendingOrder.generateOrderId();
         orderIdToOrder.put(pendingOrder.getId(), pendingOrder);
-        customerIdToCustomer.get(pendingOrder.getCustomer().getId()).addNewOrder(pendingOrder);
+        //userIdToUser.get(pendingOrder.getCustomer().getId()).addNewOrder(pendingOrder);
+        // TODO: add new order to customer...
         updateItemsPurchaseAmountAfterNewOrder(pendingOrder);
         updateStoresOrdersAfterNewOrder(pendingOrder);
     }
@@ -280,10 +289,10 @@ public class SDMManager implements SystemManager {
     }
 
     private void initializeMarket() {
-        itemIdToItem = fileHandler.getTempItemIdToItem();
-        storeIdToStore = fileHandler.getTempStoreIdToStore();
-        locationToLocationable = fileHandler.getTempLocationToLocationable();
-        customerIdToCustomer = new HashMap<>();
+        itemIdToItem = fileManager.getTempItemIdToItem();
+        storeIdToStore = fileManager.getTempStoreIdToStore();
+        locationToLocationable = fileManager.getTempLocationToLocationable();
+        userIdToUser = new HashMap<>();
         orderIdToOrder.clear();
         Order.resetOrdersCount();
         initializeItemsSellsInStores();
@@ -302,10 +311,10 @@ public class SDMManager implements SystemManager {
     @Override
     public String toString() {
         return "SDMManager{" +
-                "fileHandler=" + fileHandler +
+                "fileHandler=" + fileManager +
                 ", storeIdToStore=" + storeIdToStore +
                 ", itemIdToItem=" + itemIdToItem +
-                ", customerIdToCustomer=" + customerIdToCustomer +
+                ", customerIdToCustomer=" + userIdToUser +
                 ", locationToLocationable=" + locationToLocationable +
                 ", orderIdToOrder=" + orderIdToOrder +
                 ", pendingOrder=" + pendingOrder +
