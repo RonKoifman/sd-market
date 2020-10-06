@@ -5,7 +5,6 @@ import engine.enums.PurchaseForm;
 import engine.exceptions.IdenticalLocationsException;
 import engine.exceptions.LocationOutOfRangeException;
 import engine.interfaces.Locationable;
-import engine.jaxb.schema.generated.*;
 import engine.models.location.Location;
 import engine.models.discount.DiscountInformation;
 import engine.models.discount.DiscountOffer;
@@ -13,6 +12,7 @@ import engine.models.discount.DiscountTrigger;
 import engine.models.item.MarketItem;
 import engine.models.item.StoreItem;
 import engine.models.store.Store;
+import engine.resources.jaxb.generated.*;
 
 import java.util.*;
 import java.util.List;

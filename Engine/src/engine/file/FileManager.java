@@ -1,7 +1,7 @@
 package engine.file;
 
+import engine.resources.jaxb.generated.SuperDuperMarketDescriptor;
 import engine.interfaces.Locationable;
-import engine.jaxb.schema.generated.SuperDuperMarketDescriptor;
 import engine.models.item.MarketItem;
 import engine.models.location.Location;
 import engine.models.store.Store;

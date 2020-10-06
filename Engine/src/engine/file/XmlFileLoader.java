@@ -1,6 +1,6 @@
 package engine.file;
 
-import engine.jaxb.schema.generated.SuperDuperMarketDescriptor;
+import engine.resources.jaxb.generated.SuperDuperMarketDescriptor;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
