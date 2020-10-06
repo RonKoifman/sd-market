@@ -3,15 +3,15 @@ package engine.managers;
 import dto.models.*;
 import engine.enums.PurchaseForm;
 import engine.exceptions.*;
+import engine.file.FileManager;
 import engine.interfaces.Locationable;
-import engine.interfaces.SystemManager;
+import engine.facades.SystemManager;
 import engine.models.item.MarketItem;
 import engine.models.item.StoreItem;
 import engine.models.location.Location;
 import engine.models.order.GeneralOrder;
 import engine.models.order.Order;
 import engine.models.store.Store;
-import engine.models.user.Customer;
 import engine.models.user.User;
 
 import javax.xml.bind.JAXBException;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class SDMSystemManager implements SystemManager {
 
     private static SDMSystemManager instance;
-    private final SDMFileManager fileManager = new SDMFileManager();
+    private final FileManager fileManager = new FileManager();
     private Map<Integer, Store> storeIdToStore;
     private Map<Integer, MarketItem> itemIdToItem;
     private Map<Integer, User> userIdToUser;
@@ -289,9 +289,9 @@ public class SDMSystemManager implements SystemManager {
     }
 
     private void initializeMarket() {
-        itemIdToItem = fileManager.getTempItemIdToItem();
-        storeIdToStore = fileManager.getTempStoreIdToStore();
-        locationToLocationable = fileManager.getTempLocationToLocationable();
+        itemIdToItem = fileManager.getConvertedItemIdToItem();
+        storeIdToStore = fileManager.getConvertedStoreIdToStore();
+        locationToLocationable = fileManager.getConvertedLocationToLocationable();
         userIdToUser = new HashMap<>();
         orderIdToOrder.clear();
         Order.resetOrdersCount();

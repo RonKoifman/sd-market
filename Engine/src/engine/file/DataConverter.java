@@ -1,4 +1,4 @@
-package engine.managers;
+package engine.file;
 
 import engine.enums.DiscountOfferType;
 import engine.enums.PurchaseForm;
@@ -12,88 +12,46 @@ import engine.models.discount.DiscountOffer;
 import engine.models.discount.DiscountTrigger;
 import engine.models.item.MarketItem;
 import engine.models.item.StoreItem;
-import engine.models.order.GeneralOrder;
 import engine.models.store.Store;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SDMFileManager {
+class DataConverter {
 
-    private boolean isFileLoaded;
-    private Map<Integer, Store> tempStoreIdToStore;
-    private Map<Integer, MarketItem> tempItemIdToItem;
-    private Map<Location, Locationable> tempLocationToLocationable;
+    private Map<Integer, Store> convertedStoreIdToStore;
+    private Map<Integer, MarketItem> convertedItemIdToItem;
+    private Map<Location, Locationable> convertedLocationToLocationable;
 
-    public Map<Integer, Store> getTempStoreIdToStore() {
-        return tempStoreIdToStore;
+    public Map<Integer, Store> getConvertedStoreIdToStore() {
+        return convertedStoreIdToStore;
     }
 
-    public Map<Integer, MarketItem> getTempItemIdToItem() {
-        return tempItemIdToItem;
+    public Map<Integer, MarketItem> getConvertedItemIdToItem() {
+        return convertedItemIdToItem;
     }
 
-    public Map<Location, Locationable> getTempLocationToLocationable() {
-        return tempLocationToLocationable;
+    public Map<Location, Locationable> getConvertedLocationToLocationable() {
+        return convertedLocationToLocationable;
     }
 
-    public boolean isFileLoaded() {
-        return isFileLoaded;
+    public void convertJaxbObjectsToSystemModels(SuperDuperMarketDescriptor sdmDescriptor) {
+        convertItems(sdmDescriptor.getSDMItems().getSDMItem());
+        convertStores(sdmDescriptor.getSDMStores().getSDMStore());
+        convertLocationables(new HashSet<>(convertedStoreIdToStore.values()));
     }
 
-    public void saveOrdersHistoryDataToFile(String filePath, Map<Integer, GeneralOrder> orderIdToOrder) throws IOException {
-        try (ObjectOutputStream out =
-                     new ObjectOutputStream(
-                             new FileOutputStream(String.valueOf(filePath)))) {
-            out.writeObject(orderIdToOrder);
-            out.flush();
-        }
-    }
-
-    public Map<Integer, GeneralOrder> loadSavedOrdersHistoryDataFromFile(String filePath) throws IOException, ClassNotFoundException {
-        try (ObjectInputStream in =
-                     new ObjectInputStream(
-                             new FileInputStream(String.valueOf(filePath)))) {
-
-            return (Map<Integer, GeneralOrder>)in.readObject();
-        }
-    }
-
-    public void loadSystemDataFromFile(String filePath) throws JAXBException {
-        if (!filePath.endsWith(".xml")) {
-            throw new IllegalArgumentException("XML file type must end with the suffix '.xml'.");
-        }
-
-        SuperDuperMarketDescriptor sdmDescriptor = deserializeFile(filePath);
-        setTempItems(sdmDescriptor.getSDMItems().getSDMItem());
-        setTempStores(sdmDescriptor.getSDMStores().getSDMStore());
-        setTempLocationables(new HashSet<>(tempStoreIdToStore.values()));
-        isFileLoaded = true;
-    }
-
-    private SuperDuperMarketDescriptor deserializeFile(String filePath) throws JAXBException {
-        File loadedFile = new File(filePath);
-        JAXBContext jaxbContext = JAXBContext.newInstance(SuperDuperMarketDescriptor.class);
-        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-
-        return (SuperDuperMarketDescriptor)jaxbUnmarshaller.unmarshal(loadedFile);
-    }
-
-    private void setTempLocationables(Collection<Locationable> locationables) {
-        tempLocationToLocationable = new HashMap<>();
+    private void convertLocationables(Collection<Locationable> locationables) {
+        convertedLocationToLocationable = new HashMap<>();
 
         for (Locationable locationable : locationables) {
-            if (tempLocationToLocationable.containsKey(locationable.getLocation())) {
+            if (convertedLocationToLocationable.containsKey(locationable.getLocation())) {
                 throw new IdenticalLocationsException("The location (" + locationable.getLocation().x + ", " +
                         locationable.getLocation().y + ") exists more than once in the market.");
             }
 
-            tempLocationToLocationable.put(locationable.getLocation(), locationable);
+            convertedLocationToLocationable.put(locationable.getLocation(), locationable);
         }
     }
 
@@ -105,7 +63,7 @@ public class SDMFileManager {
                 .map(SDMSell::getItemId)
                 .collect(Collectors.toSet());
 
-        for (MarketItem item : tempItemIdToItem.values()) {
+        for (MarketItem item : convertedItemIdToItem.values()) {
             if (!storesItemsId.contains(item.getId())) {
                 throw new IllegalStateException("An item with the id '" + item.getId() + "' is not sold by any store in the market.");
             }
@@ -115,7 +73,7 @@ public class SDMFileManager {
     private void checkForExistingItemsInStoresSells(Collection<SDMStore> stores) {
         for (SDMStore store : stores) {
             for (SDMSell sell : store.getSDMPrices().getSDMSell()) {
-                if (!tempItemIdToItem.containsKey(sell.getItemId())) {
+                if (!convertedItemIdToItem.containsKey(sell.getItemId())) {
                     throw new IllegalStateException("An item with the id '" + sell.getItemId() + "', which sold by '" +
                             store.getName() + "' store, does not exist in the market.");
                 }
@@ -130,7 +88,7 @@ public class SDMFileManager {
                         store.getName() + "' store.");
             }
 
-            MarketItem itemToAdd = tempItemIdToItem.get(sell.getItemId());
+            MarketItem itemToAdd = convertedItemIdToItem.get(sell.getItemId());
             store.addNewItem(new StoreItem(itemToAdd.getId(), itemToAdd.getName(), itemToAdd.getPurchaseForm(), sell.getPrice()));
         }
     }
@@ -162,20 +120,19 @@ public class SDMFileManager {
         }
     }
 
-    private void setTempStores(Collection<SDMStore> generatedStores) {
-        tempStoreIdToStore = new HashMap<>();
+    private void convertStores(Collection<SDMStore> generatedStores) {
+        convertedStoreIdToStore = new HashMap<>();
 
         checkForExistingItemsInStoresSells(generatedStores);
         checkEachItemSoldByAtLeastOneStore(generatedStores);
-
         for (SDMStore sdmStore : generatedStores) {
-            if (tempStoreIdToStore.containsKey(sdmStore.getId())) {
+            if (convertedStoreIdToStore.containsKey(sdmStore.getId())) {
                 throw new IllegalStateException("A store with the id '" + sdmStore.getId() + "' exists more than once in the market.");
             }
 
             try {
                 Store newStore = new Store(sdmStore.getId(), sdmStore.getName().trim(), sdmStore.getDeliveryPpk(), new Location(sdmStore.getLocation().getX(), sdmStore.getLocation().getY()));
-                tempStoreIdToStore.put(sdmStore.getId(), newStore);
+                convertedStoreIdToStore.put(sdmStore.getId(), newStore);
                 setStoreItemsPrices(newStore, sdmStore.getSDMPrices().getSDMSell());
                 setStoreDiscounts(newStore, sdmStore.getSDMDiscounts());
             } catch (LocationOutOfRangeException e) {
@@ -185,25 +142,24 @@ public class SDMFileManager {
         }
     }
 
-    private void setTempItems(Collection<SDMItem> generatedItems) {
-        tempItemIdToItem = new HashMap<>();
+    private void convertItems(Collection<SDMItem> generatedItems) {
+        convertedItemIdToItem = new HashMap<>();
 
         for (SDMItem sdmItem : generatedItems) {
-            if (tempItemIdToItem.containsKey(sdmItem.getId())) {
+            if (convertedItemIdToItem.containsKey(sdmItem.getId())) {
                 throw new IllegalStateException("An item with the id '" + sdmItem.getId() + "' exists more than once in the market.");
             }
 
-            tempItemIdToItem.put(sdmItem.getId(), new MarketItem(sdmItem.getId(), sdmItem.getName().trim(), PurchaseForm.valueOf(sdmItem.getPurchaseCategory().toUpperCase())));
+            convertedItemIdToItem.put(sdmItem.getId(), new MarketItem(sdmItem.getId(), sdmItem.getName().trim(), PurchaseForm.valueOf(sdmItem.getPurchaseCategory().toUpperCase())));
         }
     }
 
     @Override
     public String toString() {
         return "FileHandler{" +
-                "isFileLoaded=" + isFileLoaded +
-                ", tempStoreIdToStore=" + tempStoreIdToStore +
-                ", tempItemIdToItem=" + tempItemIdToItem +
-                ", tempLocationToLocationable=" + tempLocationToLocationable +
+                ", tempStoreIdToStore=" + convertedStoreIdToStore +
+                ", tempItemIdToItem=" + convertedItemIdToItem +
+                ", tempLocationToLocationable=" + convertedLocationToLocationable +
                 '}';
     }
 }
