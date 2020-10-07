@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 public class SDMSystemManager implements SystemManager {
 
     private static SDMSystemManager instance;
+    private static final Object CREATION_CONTEXT_LOCK = new Object();
     private final FileManager fileManager = new FileManager();
     private Map<Integer, Store> storeIdToStore;
     private Map<Integer, MarketItem> itemIdToItem;
@@ -37,7 +38,7 @@ public class SDMSystemManager implements SystemManager {
 
     public static SystemManager getInstance() {
         if (instance == null) {
-            synchronized (SDMSystemManager.class) {
+            synchronized (CREATION_CONTEXT_LOCK) {
                 if (instance == null) {
                     instance = new SDMSystemManager();
                 }

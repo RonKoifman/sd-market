@@ -1,0 +1,84 @@
+07-Sep-2020 10:58:47.702 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version:        Apache Tomcat/8.5.23
+07-Sep-2020 10:58:47.704 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Sep 28 2017 10:30:11 UTC
+07-Sep-2020 10:58:47.705 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server number:         8.5.23.0
+07-Sep-2020 10:58:47.705 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 10
+07-Sep-2020 10:58:47.705 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+07-Sep-2020 10:58:47.705 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+07-Sep-2020 10:58:47.706 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk1.8.0_261\jre
+07-Sep-2020 10:58:47.706 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_261-b12
+07-Sep-2020 10:58:47.706 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+07-Sep-2020 10:58:47.709 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23
+07-Sep-2020 10:58:47.709 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23
+07-Sep-2020 10:58:47.709 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\conf\logging.properties
+07-Sep-2020 10:58:47.710 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+07-Sep-2020 10:58:47.710 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+07-Sep-2020 10:58:47.710 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+07-Sep-2020 10:58:47.710 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23
+07-Sep-2020 10:58:47.711 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23
+07-Sep-2020 10:58:47.712 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\temp
+07-Sep-2020 10:58:47.713 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded APR based Apache Tomcat Native library [1.2.14] using APR version [1.6.2].
+07-Sep-2020 10:58:47.713 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+07-Sep-2020 10:58:47.714 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+07-Sep-2020 10:58:48.052 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 1.0.2l  25 May 2017]
+07-Sep-2020 10:58:48.183 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+07-Sep-2020 10:58:48.372 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+07-Sep-2020 10:58:48.382 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+07-Sep-2020 10:58:48.384 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+07-Sep-2020 10:58:48.384 INFO [main] org.apache.catalina.startup.Catalina.load Initialization processed in 1013 ms
+07-Sep-2020 10:58:48.412 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+07-Sep-2020 10:58:48.413 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet Engine: Apache Tomcat/8.5.23
+07-Sep-2020 10:58:48.427 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\docs]
+07-Sep-2020 10:58:48.708 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\docs] has finished in [281] ms
+07-Sep-2020 10:58:48.709 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\examples]
+07-Sep-2020 10:58:49.143 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\examples] has finished in [434] ms
+07-Sep-2020 10:58:49.143 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\host-manager]
+07-Sep-2020 10:58:49.183 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\host-manager] has finished in [40] ms
+07-Sep-2020 10:58:49.183 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\manager]
+07-Sep-2020 10:58:49.214 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\manager] has finished in [31] ms
+07-Sep-2020 10:58:49.215 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\ROOT]
+07-Sep-2020 10:58:49.237 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\ROOT] has finished in [23] ms
+07-Sep-2020 10:58:49.239 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+07-Sep-2020 10:58:49.249 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+07-Sep-2020 10:58:49.252 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 866 ms
+07-Sep-2020 11:10:50.303 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version:        Apache Tomcat/8.5.23
+07-Sep-2020 11:10:50.307 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Sep 28 2017 10:30:11 UTC
+07-Sep-2020 11:10:50.308 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server number:         8.5.23.0
+07-Sep-2020 11:10:50.308 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 10
+07-Sep-2020 11:10:50.308 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+07-Sep-2020 11:10:50.308 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+07-Sep-2020 11:10:50.309 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk1.8.0_261\jre
+07-Sep-2020 11:10:50.309 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_261-b12
+07-Sep-2020 11:10:50.309 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+07-Sep-2020 11:10:50.314 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23
+07-Sep-2020 11:10:50.314 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23
+07-Sep-2020 11:10:50.315 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\conf\logging.properties
+07-Sep-2020 11:10:50.315 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+07-Sep-2020 11:10:50.315 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+07-Sep-2020 11:10:50.316 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+07-Sep-2020 11:10:50.316 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23
+07-Sep-2020 11:10:50.317 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23
+07-Sep-2020 11:10:50.318 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\temp
+07-Sep-2020 11:10:50.318 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded APR based Apache Tomcat Native library [1.2.14] using APR version [1.6.2].
+07-Sep-2020 11:10:50.319 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+07-Sep-2020 11:10:50.320 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+07-Sep-2020 11:10:50.794 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 1.0.2l  25 May 2017]
+07-Sep-2020 11:10:51.029 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+07-Sep-2020 11:10:51.306 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+07-Sep-2020 11:10:51.310 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+07-Sep-2020 11:10:51.314 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+07-Sep-2020 11:10:51.314 INFO [main] org.apache.catalina.startup.Catalina.load Initialization processed in 1558 ms
+07-Sep-2020 11:10:51.348 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+07-Sep-2020 11:10:51.349 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet Engine: Apache Tomcat/8.5.23
+07-Sep-2020 11:10:51.362 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\docs]
+07-Sep-2020 11:10:51.739 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\docs] has finished in [376] ms
+07-Sep-2020 11:10:51.739 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\examples]
+07-Sep-2020 11:10:52.390 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\examples] has finished in [651] ms
+07-Sep-2020 11:10:52.390 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\host-manager]
+07-Sep-2020 11:10:52.448 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\host-manager] has finished in [58] ms
+07-Sep-2020 11:10:52.448 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\manager]
+07-Sep-2020 11:10:52.495 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\manager] has finished in [47] ms
+07-Sep-2020 11:10:52.495 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\ROOT]
+07-Sep-2020 11:10:52.537 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\Ron Koifman\Desktop\B.Sc. Computer Science\Year 2\Summer Semester\Java\Java - Tools and Libraries\Tomcat\apache-tomcat-8.5.23\webapps\ROOT] has finished in [41] ms
+07-Sep-2020 11:10:52.541 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+07-Sep-2020 11:10:52.555 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+07-Sep-2020 11:10:52.560 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 1244 ms
