@@ -1,6 +1,6 @@
 <h1 align="center">SDMarket</h1>
 <p align="center">
-  <img src="https://ibb.co/xJz6kVz"><img src="https://i.ibb.co/yWgq9Lg/sdm-full-logo.png">
+  <img src="https://i.ibb.co/DwfcFhQ/sdm-logo.png" alt="sdm-logo">
 </p>
 
 # Intro
