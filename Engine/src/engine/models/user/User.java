@@ -6,24 +6,23 @@ import engine.interfaces.Identifiable;
 import engine.interfaces.Locationable;
 import engine.models.location.Location;
 
+import java.util.Objects;
+
 public abstract class User implements Locationable, Identifiable {
 
-    private final UserRole userRole;
-    private final int id;
-    private final String username;
-    private final Location location;
+    protected final int id;
+    protected final UserRole userRole;
+    protected final String username;
+    protected Location location;
     private static int idGenerator;
 
-    public User(UserRole userRole, int id, String username, Location location) {
-        this.userRole = userRole;
-        this.id = id;
+    public User(String username, UserRole userRole) {
         this.username = username;
-        this.location = location;
+        this.userRole = userRole;
+        this.id = ++idGenerator;
     }
 
-    public UserDTO toUserDTO() {
-        return new UserDTO.Builder().build();
-    }
+    public abstract UserDTO toUserDTO();
 
     @Override
     public int getId() {
@@ -33,5 +32,18 @@ public abstract class User implements Locationable, Identifiable {
     @Override
     public Location getLocation() {
         return location;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(username, user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username);
     }
 }

@@ -6,27 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SDMarket · Signup</title>
     <link rel="icon" href="common/images/app-icon.png">
-    <link rel="stylesheet" href="common/bootstrap.min.css">
+    <link rel="stylesheet" href="common/lib/bootstrap.min.css">
     <link rel="stylesheet" href="pages/signup/signup.css">
+    <script src="common/lib/jquery-2.0.3.min.js"></script>
+    <script src="common/lib/bootstrap.min.js"></script>
+    <script src="pages/signup/signup.js"></script>
 </head>
 
 <body class="text-center">
-<form class="form-signin" id="form" >
+<form class="form-signin" id="form" method="GET" action="signup">
     <img class="mb-4" src="common/images/sdm-logo.png" alt="" width="230" height="130">
     <h1 class="h3 mb-3 font-weight-normal">Create an account</h1>
-    <label for="name1"></label>
-    <input type="text" class="form-control" placeholder="Username" id="name1" name="username">
-    <div class="radio mb-3 form-check form-check-inline" >
-        <label>
-            <input type="radio" id="store-owner" name="user-role" checked> Signup as a store owner
+    <br>
+    <input type="text" class="form-control" placeholder="Username" id="username" name="username" required autofocus>
+    <label for="username" ></label>
+    <div class="form-check form-check-inline" >
+        <input class="form-check-input" type="radio" id="store_owner" value="store_owner" name="user_role" checked>
+        <label class="form-check-label" for="store_owner">
+            Signup as a store owner
         </label>
     </div>
-    <div class="radio mb-3 form-check form-check-inline">
-        <label>
-            <input type="radio" id="customer" name="user-role"> Signup as a customer
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="customer" value="customer" name="user_role">
+        <label class="form-check-label" for="customer">
+            Signup as a customer
         </label>
     </div>
-    <div class="alert" id="alert" role="alert"></div>
+    <br>
+    <br>
+    <div class="alert" role="alert">
+    </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Signup</button>
 
     <hr class="featurette-divider">
@@ -36,8 +45,5 @@
 </form>
 
 </body>
-
-<script src="common/jquery-3.5.1.min.js"></script>
-<script src="common/bootstrap.min.js"></script>
 
 </html>
