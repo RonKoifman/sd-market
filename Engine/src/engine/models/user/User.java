@@ -11,15 +11,15 @@ import java.util.Objects;
 public abstract class User implements Locationable, Identifiable {
 
     protected final int id;
-    protected final UserRole userRole;
     protected final String username;
+    protected final UserRole userRole;
     protected Location location;
     private static int idGenerator;
 
     public User(String username, UserRole userRole) {
+        this.id = ++idGenerator;
         this.username = username;
         this.userRole = userRole;
-        this.id = ++idGenerator;
     }
 
     public abstract UserDTO toUserDTO();

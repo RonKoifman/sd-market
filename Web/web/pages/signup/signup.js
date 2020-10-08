@@ -11,6 +11,7 @@ $(function () {
                     window.location.assign(res);
                 } else {
                     $('.alert').addClass('alert-danger').text(res);
+                    $('#username').val('');
                 }
             }
         });

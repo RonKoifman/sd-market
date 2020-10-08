@@ -29,7 +29,7 @@ public class SignupServlet extends HttpServlet {
                 if (usernameFromParameter == null) {
                     out.print(Constants.SIGNUP_URL);
                 } else if (usernameFromParameter.trim().isEmpty()) {
-                    out.print("Please enter at least one valid character.");
+                    out.print("Please enter at least one character.");
                 } else {
                     usernameFromParameter = usernameFromParameter.trim();
                     synchronized (this) {

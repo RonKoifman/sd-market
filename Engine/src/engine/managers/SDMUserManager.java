@@ -33,6 +33,18 @@ public class SDMUserManager implements UserManager {
         return instance;
     }
 
+    static SDMUserManager getUserManager() {
+        if (instance == null) {
+            synchronized (CREATION_CONTEXT_LOCK) {
+                if (instance == null) {
+                    instance = new SDMUserManager();
+                }
+            }
+        }
+
+        return instance;
+    }
+
     @Override
     public synchronized void addUser(String username, UserRole userRole) {
         switch (userRole) {
@@ -65,5 +77,9 @@ public class SDMUserManager implements UserManager {
     public UserDTO getUserByUsername(String username) {
         User user = usernameToUser.getOrDefault(username, null);
         return user != null ? user.toUserDTO() : null;
+    }
+
+    User getUserModelByUsername(String username) {
+        return usernameToUser.getOrDefault(username, null);
     }
 }
