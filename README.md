@@ -1,4 +1,3 @@
-<h1 align="center">SDMarket</h1>
 <p align="center">
   <img src="https://i.ibb.co/TgCqJ9P/sdm-full-logo.png" alt="sdm-full-logo">
 </p>
