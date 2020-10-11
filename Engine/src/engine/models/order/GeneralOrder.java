@@ -1,6 +1,7 @@
 package engine.models.order;
 
 import dto.models.*;
+import engine.models.location.Location;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -10,8 +11,8 @@ public class GeneralOrder extends Order {
 
     private final Map<StoreDTO, SubOrder> storeToOrder = new HashMap<>();
 
-    public GeneralOrder(CustomerDTO customer, LocalDate orderDate, List<OrderItemDTO> allOrderedItems, Map<StoreDTO, List<OrderItemDTO>> storeToOrderedItems) {
-        super(customer, orderDate, allOrderedItems);
+    public GeneralOrder(CustomerDTO customer, Location orderDestination, LocalDate orderDate, List<OrderItemDTO> allOrderedItems, Map<StoreDTO, List<OrderItemDTO>> storeToOrderedItems) {
+        super(customer, orderDate, orderDestination, allOrderedItems);
         createStoresSubOrders(storeToOrderedItems);
         this.totalItemsCost = calculateTotalItemsCost();
         this.deliveryCost = calculateDeliveryCost();
@@ -24,6 +25,7 @@ public class GeneralOrder extends Order {
         return new GeneralOrderDTO.Builder()
                 .id(id)
                 .orderDate(orderDate)
+                .orderDestination(orderDestination)
                 .orderedItems(orderedItems)
                 .storeToOrder(storeToOrder.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().toSubOrderDTO())))
                 .totalItemsCost(totalItemsCost)
@@ -73,7 +75,7 @@ public class GeneralOrder extends Order {
 
     private void createStoresSubOrders(Map<StoreDTO, List<OrderItemDTO>> storeToOrderedItems) {
         for (StoreDTO store : storeToOrderedItems.keySet()) {
-            storeToOrder.put(store, new SubOrder(store, customer, orderDate, storeToOrderedItems.get(store)));
+            storeToOrder.put(store, new SubOrder(store, customer, orderDestination, orderDate, storeToOrderedItems.get(store)));
         }
     }
 
@@ -96,6 +98,7 @@ public class GeneralOrder extends Order {
                 "storeToOrder=" + storeToOrder +
                 ", id=" + id +
                 ", customer=" + customer +
+                ", orderDestination=" + orderDestination +
                 ", orderDate=" + orderDate +
                 ", orderedItems=" + orderedItems +
                 ", totalItemsCost=" + totalItemsCost +

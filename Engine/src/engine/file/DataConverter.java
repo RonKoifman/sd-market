@@ -2,15 +2,13 @@ package engine.file;
 
 import engine.enums.DiscountOfferType;
 import engine.enums.PurchaseForm;
-import engine.exceptions.IdenticalLocationsException;
 import engine.exceptions.LocationOutOfRangeException;
 import engine.file.jaxb.schema.generated.*;
-import engine.interfaces.Locationable;
 import engine.models.location.Location;
 import engine.models.discount.DiscountInformation;
 import engine.models.discount.DiscountOffer;
 import engine.models.discount.DiscountTrigger;
-import engine.models.item.MarketItem;
+import engine.models.item.RegionItem;
 import engine.models.item.StoreItem;
 import engine.models.store.Store;
 
@@ -21,38 +19,25 @@ import java.util.stream.Collectors;
 class DataConverter {
 
     private Map<Integer, Store> convertedStoreIdToStore;
-    private Map<Integer, MarketItem> convertedItemIdToItem;
-    private Map<Location, Locationable> convertedLocationToLocationable;
+    private Map<Integer, RegionItem> convertedItemIdToItem;
+    private String convertedRegionName;
 
     public Map<Integer, Store> getConvertedStoreIdToStore() {
         return convertedStoreIdToStore;
     }
 
-    public Map<Integer, MarketItem> getConvertedItemIdToItem() {
+    public Map<Integer, RegionItem> getConvertedItemIdToItem() {
         return convertedItemIdToItem;
     }
 
-    public Map<Location, Locationable> getConvertedLocationToLocationable() {
-        return convertedLocationToLocationable;
+    public String getConvertedRegionName() {
+        return convertedRegionName;
     }
 
     public void convertJaxbObjectsToSystemModels(SuperDuperMarketDescriptor sdmDescriptor) {
         convertItems(sdmDescriptor.getSDMItems().getSDMItem());
         convertStores(sdmDescriptor.getSDMStores().getSDMStore());
-        convertLocationables(new HashSet<>(convertedStoreIdToStore.values()));
-    }
-
-    private void convertLocationables(Collection<Locationable> locationables) {
-        convertedLocationToLocationable = new HashMap<>();
-
-        for (Locationable locationable : locationables) {
-            if (convertedLocationToLocationable.containsKey(locationable.getLocation())) {
-                throw new IdenticalLocationsException("The location (" + locationable.getLocation().x + ", " +
-                        locationable.getLocation().y + ") exists more than once in the market.");
-            }
-
-            convertedLocationToLocationable.put(locationable.getLocation(), locationable);
-        }
+        convertRegionName(sdmDescriptor.getSDMZone().getName());
     }
 
     private void checkEachItemSoldByAtLeastOneStore(Collection<SDMStore> generatedStores) {
@@ -63,9 +48,9 @@ class DataConverter {
                 .map(SDMSell::getItemId)
                 .collect(Collectors.toSet());
 
-        for (MarketItem item : convertedItemIdToItem.values()) {
+        for (RegionItem item : convertedItemIdToItem.values()) {
             if (!storesItemsId.contains(item.getId())) {
-                throw new IllegalStateException("An item with the id '" + item.getId() + "' is not sold by any store in the market.");
+                throw new IllegalStateException("An item with the id '" + item.getId() + "' is not sold by any store in the region.");
             }
         }
     }
@@ -75,7 +60,7 @@ class DataConverter {
             for (SDMSell sell : store.getSDMPrices().getSDMSell()) {
                 if (!convertedItemIdToItem.containsKey(sell.getItemId())) {
                     throw new IllegalStateException("An item with the id '" + sell.getItemId() + "', which sold by '" +
-                            store.getName() + "' store, does not exist in the market.");
+                            store.getName() + "' store, does not exist in region's items.");
                 }
             }
         }
@@ -88,8 +73,8 @@ class DataConverter {
                         store.getName() + "' store.");
             }
 
-            MarketItem itemToAdd = convertedItemIdToItem.get(sell.getItemId());
-            store.addNewItem(new StoreItem(itemToAdd.getId(), itemToAdd.getName(), itemToAdd.getPurchaseForm(), sell.getPrice()));
+            RegionItem itemToAdd = convertedItemIdToItem.get(sell.getItemId());
+            store.addNewItem(new StoreItem(itemToAdd.getId(), itemToAdd.getName(), itemToAdd.getPurchaseForm(), sell.getPrice(), store.getId()));
         }
     }
 
@@ -120,6 +105,10 @@ class DataConverter {
         }
     }
 
+    private void convertRegionName(String regionName) {
+        this.convertedRegionName = regionName.trim();
+    }
+
     private void convertStores(Collection<SDMStore> generatedStores) {
         convertedStoreIdToStore = new HashMap<>();
 
@@ -127,7 +116,7 @@ class DataConverter {
         checkEachItemSoldByAtLeastOneStore(generatedStores);
         for (SDMStore sdmStore : generatedStores) {
             if (convertedStoreIdToStore.containsKey(sdmStore.getId())) {
-                throw new IllegalStateException("A store with the id '" + sdmStore.getId() + "' exists more than once in the market.");
+                throw new IllegalStateException("A store with the id '" + sdmStore.getId() + "' exists more than once in the region.");
             }
 
             try {
@@ -147,19 +136,19 @@ class DataConverter {
 
         for (SDMItem sdmItem : generatedItems) {
             if (convertedItemIdToItem.containsKey(sdmItem.getId())) {
-                throw new IllegalStateException("An item with the id '" + sdmItem.getId() + "' exists more than once in the market.");
+                throw new IllegalStateException("An item with the id '" + sdmItem.getId() + "' exists more than once in the region.");
             }
 
-            convertedItemIdToItem.put(sdmItem.getId(), new MarketItem(sdmItem.getId(), sdmItem.getName().trim(), PurchaseForm.valueOf(sdmItem.getPurchaseCategory().toUpperCase())));
+            convertedItemIdToItem.put(sdmItem.getId(), new RegionItem(sdmItem.getId(), sdmItem.getName().trim(), PurchaseForm.valueOf(sdmItem.getPurchaseCategory().toUpperCase())));
         }
     }
 
     @Override
     public String toString() {
-        return "FileHandler{" +
-                ", tempStoreIdToStore=" + convertedStoreIdToStore +
-                ", tempItemIdToItem=" + convertedItemIdToItem +
-                ", tempLocationToLocationable=" + convertedLocationToLocationable +
+        return "DataConverter{" +
+                "convertedStoreIdToStore=" + convertedStoreIdToStore +
+                ", convertedItemIdToItem=" + convertedItemIdToItem +
+                ", convertedRegionName='" + convertedRegionName + '\'' +
                 '}';
     }
 }

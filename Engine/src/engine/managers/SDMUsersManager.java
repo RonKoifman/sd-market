@@ -1,7 +1,6 @@
 package engine.managers;
 
 import dto.models.UserDTO;
-import engine.api.UserManager;
 import engine.enums.UserRole;
 import engine.models.user.Customer;
 import engine.models.user.StoreOwner;
@@ -12,32 +11,20 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class SDMUserManager implements UserManager {
+public class SDMUsersManager implements UsersManager {
 
-    private static SDMUserManager instance;
+    private static SDMUsersManager instance;
     private static final Object CREATION_CONTEXT_LOCK = new Object();
     private final Map<String, User> usernameToUser = new HashMap<>();
 
-    private SDMUserManager() {
+    private SDMUsersManager() {
     }
 
-    public static UserManager getInstance() {
+    public static UsersManager getInstance() {
         if (instance == null) {
             synchronized (CREATION_CONTEXT_LOCK) {
                 if (instance == null) {
-                    instance = new SDMUserManager();
-                }
-            }
-        }
-
-        return instance;
-    }
-
-    static SDMUserManager getUserManager() {
-        if (instance == null) {
-            synchronized (CREATION_CONTEXT_LOCK) {
-                if (instance == null) {
-                    instance = new SDMUserManager();
+                    instance = new SDMUsersManager();
                 }
             }
         }
@@ -74,12 +61,23 @@ public class SDMUserManager implements UserManager {
     }
 
     @Override
-    public UserDTO getUserByUsername(String username) {
-        User user = usernameToUser.getOrDefault(username, null);
-        return user != null ? user.toUserDTO() : null;
+    public synchronized UserDTO getUserByUsername(String username) {
+       return usernameToUser.get(username).toUserDTO();
     }
 
-    User getUserModelByUsername(String username) {
+    static SDMUsersManager getUserManager() {
+        if (instance == null) {
+            synchronized (CREATION_CONTEXT_LOCK) {
+                if (instance == null) {
+                    instance = new SDMUsersManager();
+                }
+            }
+        }
+
+        return instance;
+    }
+
+    synchronized User getUserModelByUsername(String username) {
         return usernameToUser.getOrDefault(username, null);
     }
 }

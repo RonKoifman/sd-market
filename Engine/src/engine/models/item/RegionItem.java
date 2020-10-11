@@ -1,19 +1,19 @@
 package engine.models.item;
 
-import dto.models.MarketItemDTO;
+import dto.models.RegionItemDTO;
 import engine.enums.PurchaseForm;
 
-public class MarketItem extends Item {
+public class RegionItem extends Item {
 
     private int amountOfStoresSelling;
     private float averagePrice;
 
-    public MarketItem(int id, String name, PurchaseForm purchaseForm) {
+    public RegionItem(int id, String name, PurchaseForm purchaseForm) {
         super(id, name, purchaseForm);
     }
 
-    public MarketItemDTO toMarketItemDTO() {
-        return new MarketItemDTO.Builder()
+    public RegionItemDTO toRegionItemDTO() {
+        return new RegionItemDTO.Builder()
                 .id(id)
                 .name(name)
                 .purchaseForm(purchaseForm.getValue())
@@ -47,7 +47,7 @@ public class MarketItem extends Item {
 
     @Override
     public String toString() {
-        return "MarketItem{" +
+        return "RegionItem{" +
                 "amountOfStoresSelling=" + amountOfStoresSelling +
                 ", averagePrice=" + averagePrice +
                 ", id=" + id +

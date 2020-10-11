@@ -7,13 +7,13 @@ public class DiscountInformationDTO {
 
     private final String name;
     private final DiscountTriggerDTO discountTrigger;
-    private final String offerType;
+    private final String discountType;
     private final List<DiscountOfferDTO> discountOffers;
 
     private DiscountInformationDTO(Builder builder) {
         this.name = builder.name;
         this.discountTrigger = builder.discountTrigger;
-        this.offerType = builder.offerType;
+        this.discountType = builder.discountType;
         this.discountOffers = builder.discountOffers;
     }
 
@@ -25,8 +25,8 @@ public class DiscountInformationDTO {
         return discountTrigger;
     }
 
-    public String getOfferType() {
-        return offerType;
+    public String getDiscountType() {
+        return discountType;
     }
 
     public List<DiscountOfferDTO> getDiscountOffers() {
@@ -37,7 +37,7 @@ public class DiscountInformationDTO {
 
         private String name;
         private DiscountTriggerDTO discountTrigger;
-        private String offerType;
+        private String discountType;
         private List<DiscountOfferDTO> discountOffers;
 
         public Builder name(String name) {
@@ -50,8 +50,8 @@ public class DiscountInformationDTO {
             return this;
         }
 
-        public Builder offerType(String offerType) {
-            this.offerType = offerType;
+        public Builder discountType(String discountType) {
+            this.discountType = discountType;
             return this;
         }
 
@@ -83,7 +83,7 @@ public class DiscountInformationDTO {
         return "DiscountInformationDTO{" +
                 "name='" + name + '\'' +
                 ", discountTrigger=" + discountTrigger +
-                ", offerType='" + offerType + '\'' +
+                ", discountType='" + discountType + '\'' +
                 ", discountOffers=" + discountOffers +
                 '}';
     }

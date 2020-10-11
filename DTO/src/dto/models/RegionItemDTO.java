@@ -2,7 +2,7 @@ package dto.models;
 
 import java.util.Objects;
 
-public class MarketItemDTO {
+public class RegionItemDTO {
 
     private final int id;
     private final String name;
@@ -11,7 +11,7 @@ public class MarketItemDTO {
     private final int amountOfStoresSelling;
     private final float averagePrice;
 
-    private MarketItemDTO(Builder builder) {
+    private RegionItemDTO(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.purchaseForm = builder.purchaseForm;
@@ -83,8 +83,8 @@ public class MarketItemDTO {
             return this;
         }
 
-        public MarketItemDTO build() {
-            return new MarketItemDTO(this);
+        public RegionItemDTO build() {
+            return new RegionItemDTO(this);
         }
     }
 
@@ -92,7 +92,7 @@ public class MarketItemDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MarketItemDTO that = (MarketItemDTO) o;
+        RegionItemDTO that = (RegionItemDTO) o;
         return id == that.id;
     }
 
@@ -103,7 +103,7 @@ public class MarketItemDTO {
 
     @Override
     public String toString() {
-        return "MarketItemDTO{" +
+        return "RegionItemDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", purchaseForm='" + purchaseForm + '\'' +

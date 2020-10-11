@@ -6,6 +6,8 @@ import engine.enums.UserRole;
 
 public class StoreOwner extends User {
 
+
+
     public StoreOwner(String username, UserRole userRole) {
         super(username, userRole);
     }
@@ -16,7 +18,6 @@ public class StoreOwner extends User {
                 .id(id)
                 .username(username)
                 .userRole(userRole.getValue())
-                .location(location)
                 .build();
     }
 }

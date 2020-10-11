@@ -1,13 +1,16 @@
 package dto.models;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class SubOrderDTO {
 
     private final int id;
     private final LocalDate orderDate;
+    private final Point orderDestination;
     private final float distanceFromCustomer;
     private final int totalItemsAmount;
     private final int totalItemsTypes;
@@ -19,6 +22,7 @@ public class SubOrderDTO {
     private SubOrderDTO(Builder builder) {
         this.id = builder.id;
         this.orderDate = builder.orderDate;
+        this.orderDestination = builder.orderDestination;
         this.distanceFromCustomer = builder.distanceFromCustomer;
         this.totalItemsAmount = builder.totalItemsAmount;
         this.totalItemsCost = builder.totalItemsCost;
@@ -46,6 +50,10 @@ public class SubOrderDTO {
 
     public LocalDate getOrderDate() {
         return orderDate;
+    }
+
+    public Point getOrderDestination() {
+        return orderDestination;
     }
 
     public float getDistanceFromCustomer() {
@@ -76,6 +84,7 @@ public class SubOrderDTO {
 
         private int id;
         private LocalDate orderDate;
+        private Point orderDestination;
         private float distanceFromCustomer;
         private int totalItemsTypes;
         private int totalItemsAmount;
@@ -91,6 +100,11 @@ public class SubOrderDTO {
 
         public Builder orderDate(LocalDate orderDate) {
             this.orderDate = orderDate;
+            return this;
+        }
+
+        public Builder orderDestination(Point orderDestination) {
+            this.orderDestination = orderDestination;
             return this;
         }
 
@@ -152,6 +166,7 @@ public class SubOrderDTO {
         return "SubOrderDTO{" +
                 "id=" + id +
                 ", orderDate=" + orderDate +
+                ", orderDestination=" + orderDestination +
                 ", distanceFromCustomer=" + distanceFromCustomer +
                 ", totalItemsAmount=" + totalItemsAmount +
                 ", totalItemsTypes=" + totalItemsTypes +

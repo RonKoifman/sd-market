@@ -3,17 +3,16 @@ package engine.models.user;
 import dto.models.UserDTO;
 import engine.enums.UserRole;
 import engine.interfaces.Identifiable;
-import engine.interfaces.Locationable;
-import engine.models.location.Location;
+import engine.models.account.Account;
 
 import java.util.Objects;
 
-public abstract class User implements Locationable, Identifiable {
+public abstract class User implements Identifiable {
 
     protected final int id;
     protected final String username;
     protected final UserRole userRole;
-    protected Location location;
+    protected final Account account = new Account();
     private static int idGenerator;
 
     public User(String username, UserRole userRole) {
@@ -27,11 +26,6 @@ public abstract class User implements Locationable, Identifiable {
     @Override
     public int getId() {
         return id;
-    }
-
-    @Override
-    public Location getLocation() {
-        return location;
     }
 
     @Override

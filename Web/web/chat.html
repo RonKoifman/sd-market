@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SDMarket · Chat</title>
+    <link rel="icon" href="common/images/app-icon.png">
+    <link rel="stylesheet" href="common/assets/bootstrap.min.css">
+    <link rel="stylesheet" href="pages/chat/chat.css">
+    <script src="common/assets/jquery-2.0.3.min.js"></script>
+    <script src="common/assets/bootstrap.min.js"></script>
+    <script src="pages/chat/chat.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm navbar-light">
+    <a href="home.html" class="navbar-brand">
+        <img src="common/images/sdm-logo-navbar.png" alt="SDMarket" id="logo">
+    </a>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarMenu">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="home.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="account.html">My Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Chat</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row main-body">
+    <div class="col-md-3 online-users">
+        <div class="card h-100 mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Online Users</h4>
+                <ul class="online-users-list">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9 chat">
+        <div class="row-md-10 chat-messages">
+            <div id="chat-area" class="span6"></div>
+        </div>
+        <div class="row-md-2 user-messages">
+            <div class="input-group input-group-lg">
+                <label for="user-message"></label><input type="text" class="form-control input-lg" id="user-message">
+                <span class="input-group-btn ml-2">
+                    <button class="btn btn-primary" type="submit">Send</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="featurette-divider">
+<footer class="container">
+    <p class="float-right"><a href="#">Scroll to top</a></p>
+    <p class="text-center">Copyright © SDMarket 2020 · Ron Koifman</p>
+</footer>
+
+</body>
+</html>

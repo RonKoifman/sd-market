@@ -1,5 +1,6 @@
 package dto.models;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -10,6 +11,7 @@ public class GeneralOrderDTO {
 
     private final int id;
     private final LocalDate orderDate;
+    private final Point orderDestination;
     private final List<OrderItemDTO> orderedItems;
     private final Map<StoreDTO, SubOrderDTO> storeToOrder;
     private final float totalItemsCost;
@@ -21,6 +23,7 @@ public class GeneralOrderDTO {
     private GeneralOrderDTO(Builder builder) {
         this.id = builder.id;
         this.orderDate = builder.orderDate;
+        this.orderDestination = builder.orderDestination;
         this.orderedItems = builder.orderedItems;
         this.storeToOrder = builder.storeToOrder;
         this.totalItemsCost = builder.totalItemsCost;
@@ -44,6 +47,10 @@ public class GeneralOrderDTO {
 
     public LocalDate getOrderDate() {
         return orderDate;
+    }
+
+    public Point getOrderDestination() {
+        return orderDestination;
     }
 
     public float getTotalItemsCost() {
@@ -78,6 +85,7 @@ public class GeneralOrderDTO {
 
         private int id;
         private LocalDate orderDate;
+        private Point orderDestination;
         private List<OrderItemDTO> orderedItems;
         private Map<StoreDTO, SubOrderDTO> storeToOrder;
         private float totalItemsCost;
@@ -93,6 +101,11 @@ public class GeneralOrderDTO {
 
         public Builder orderDate(LocalDate orderDate) {
             this.orderDate = orderDate;
+            return this;
+        }
+
+        public Builder orderDestination(Point orderDestination) {
+            this.orderDestination = orderDestination;
             return this;
         }
 
@@ -154,6 +167,7 @@ public class GeneralOrderDTO {
         return "GeneralOrderDTO{" +
                 "id=" + id +
                 ", orderDate=" + orderDate +
+                ", orderDestination=" + orderDestination +
                 ", orderedItems=" + orderedItems +
                 ", storeToOrder=" + storeToOrder +
                 ", totalItemsCost=" + totalItemsCost +

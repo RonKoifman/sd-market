@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SDMarket · Home</title>
     <link rel="icon" href="common/images/app-icon.png">
-    <link rel="stylesheet" href="common/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="common/assets/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="pages/home/home.css">
-    <script src="common/lib/jquery-2.0.3.min.js"></script>
-    <script src="common/lib/bootstrap.min.js"></script>
+    <script src="common/assets/jquery-2.0.3.min.js"></script>
+    <script src="common/assets/bootstrap.min.js"></script>
     <script src="pages/home/home.js"></script>
 </head>
 
 <body>
-<header>
     <nav class="navbar navbar-expand-sm navbar-light">
         <a href="#" class="navbar-brand">
             <img src="common/images/sdm-logo-navbar.png" alt="SDMarket" id="logo">
@@ -25,16 +25,50 @@
         <div class="collapse navbar-collapse" id="navbarMenu">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">My Account</a>
+                    <a class="nav-link" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Chat</a>
+                    <a class="nav-link" href="account.html">My Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="chat.html">Chat</a>
                 </li>
             </ul>
         </div>
     </nav>
-</header>
 
+    <div class="jumbotron">
+        <h1 class="display-4">Hello, <span id="username">Ron</span>!</h1>
+        <p class="lead">
+            Here you can find general information about the orders, stores, and items in the various regions uploaded to the app. <br> If you are interested in visiting a specific region, click on the dedicated button next to the requested region.</p>
+        <hr class="my-4">
+       <div class="form-group">
+           <h6>Upload New Region</h6><br>
+           <input type="file" accept=".xml" class="form-control-file" id="file">
+           <br>
+           <button class="btn btn-primary">Upload</button>
+       </div>
+    </div>
+    <br>
+    <div class="regions-table text-center">
+        <h3 class="h4">Regions</h3> <br>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th>Region Name</th>
+                    <th>Owner</th>
+                    <th>Total Items</th>
+                    <th>Total Stores</th>
+                    <th>Total Orders Made</th>
+                    <th>Average Orders Cost</th>
+                </tr>
+                </thead>
+                <tbody class="transactions-data">
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 
 <hr class="featurette-divider">

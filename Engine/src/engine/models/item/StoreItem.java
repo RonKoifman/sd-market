@@ -5,11 +5,13 @@ import engine.enums.PurchaseForm;
 
 public class StoreItem extends Item {
 
+    private final int sellingStoreId;
     private int price;
 
-    public StoreItem(int id, String name, PurchaseForm purchaseForm, int price) {
+    public StoreItem(int id, String name, PurchaseForm purchaseForm, int price, int sellingStoreId) {
         super(id, name, purchaseForm);
         this.price = price;
+        this.sellingStoreId = sellingStoreId;
     }
 
     public StoreItemDTO toStoreItemDTO() {
@@ -19,6 +21,7 @@ public class StoreItem extends Item {
                 .purchaseForm(purchaseForm.getValue())
                 .purchaseAmount(purchaseAmount)
                 .price(price)
+                .sellingStoreId(sellingStoreId)
                 .build();
     }
 
@@ -30,9 +33,14 @@ public class StoreItem extends Item {
         return price;
     }
 
+    public int getSellingStoreId() {
+        return sellingStoreId;
+    }
+
     @Override
     public String toString() {
         return "StoreItem{" +
+                "sellingStoreId=" + sellingStoreId +
                 ", price=" + price +
                 ", id=" + id +
                 ", name='" + name + '\'' +

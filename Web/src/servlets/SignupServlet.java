@@ -1,9 +1,9 @@
 package servlets;
 
 import constants.Constants;
-import engine.api.UserManager;
+import engine.managers.UsersManager;
 import engine.enums.UserRole;
-import engine.managers.SDMUserManager;
+import engine.managers.SDMUsersManager;
 import utils.SessionUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -18,9 +18,13 @@ public class SignupServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         res.setContentType("text/html;charset=UTF-8");
+        res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        res.setHeader("Pragma", "no-cache");
+        res.setDateHeader("Expires", 0);
+
         try (PrintWriter out = res.getWriter()) {
             String usernameFromSession = SessionUtils.getUsername(req);
-            UserManager userManager = SDMUserManager.getInstance();
+            UsersManager usersManager = SDMUsersManager.getInstance();
 
             if (usernameFromSession == null) {
                 String usernameFromParameter = req.getParameter(Constants.USERNAME);
@@ -29,20 +33,25 @@ public class SignupServlet extends HttpServlet {
                 if (usernameFromParameter == null) {
                     out.print(Constants.SIGNUP_URL);
                 } else if (usernameFromParameter.trim().isEmpty()) {
+                    res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     out.print("Please enter at least one character.");
+                } else if (!usernameFromParameter.trim().matches("[a-zA-Z0-9]+")) {
+                    res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    out.print("Please enter only english letters and digits.");
                 } else {
                     usernameFromParameter = usernameFromParameter.trim();
                     synchronized (this) {
-                        if (userManager.isUserExists(usernameFromParameter)) {
+                        if (usersManager.isUserExists(usernameFromParameter)) {
+                            res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                             out.print("This username is already taken.");
                         } else {
                             switch (userRoleFromParameter) {
                                 case Constants.STORE_OWNER:
-                                    userManager.addUser(usernameFromParameter, UserRole.valueOf(Constants.STORE_OWNER.toUpperCase()));
+                                    usersManager.addUser(usernameFromParameter, UserRole.valueOf(Constants.STORE_OWNER.toUpperCase()));
                                     break;
 
                                 case Constants.CUSTOMER:
-                                    userManager.addUser(usernameFromParameter, UserRole.valueOf(Constants.CUSTOMER.toUpperCase()));
+                                    usersManager.addUser(usernameFromParameter, UserRole.valueOf(Constants.CUSTOMER.toUpperCase()));
                                     break;
                             }
 

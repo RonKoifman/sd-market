@@ -10,20 +10,20 @@ public class DiscountInformation {
 
     private final String name;
     private final DiscountTrigger discountTrigger;
-    private final DiscountOfferType offerType;
+    private final DiscountOfferType discountType;
     private final List<DiscountOffer> discountOffers = new LinkedList<>();
 
-    public DiscountInformation(String name, DiscountTrigger discountTrigger, DiscountOfferType offerType) {
+    public DiscountInformation(String name, DiscountTrigger discountTrigger, DiscountOfferType discountType) {
         this.name = name;
         this.discountTrigger = discountTrigger;
-        this.offerType = offerType;
+        this.discountType = discountType;
     }
 
     public DiscountInformationDTO toDiscountInformationDTO() {
         return new DiscountInformationDTO.Builder()
                 .name(name)
                 .discountTrigger(discountTrigger.toDiscountTriggerDTO())
-                .offerType(offerType == DiscountOfferType.IRRELEVANT ? "" : offerType.getValue())
+                .discountType(discountType == DiscountOfferType.IRRELEVANT ? "" : discountType.getValue())
                 .discountOffers(discountOffers.stream().map(DiscountOffer::toDiscountOfferDTO).collect(Collectors.toList()))
                 .build();
     }
@@ -63,7 +63,7 @@ public class DiscountInformation {
         return "DiscountDetails{" +
                 "name='" + name + '\'' +
                 ", discountTrigger=" + discountTrigger +
-                ", offerType=" + offerType +
+                ", discountType=" + discountType +
                 ", discountOffers=" + discountOffers +
                 '}';
     }

@@ -4,16 +4,19 @@ import dto.models.CustomerDTO;
 import dto.models.OrderItemDTO;
 import engine.enums.PurchaseForm;
 import engine.interfaces.Identifiable;
+import engine.interfaces.Locationable;
+import engine.models.location.Location;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public abstract class Order implements Identifiable, Serializable {
+public abstract class Order implements Identifiable, Locationable, Serializable {
 
     protected int id;
     protected final CustomerDTO customer;
+    protected final Location orderDestination;
     protected final LocalDate orderDate;
     protected final List <OrderItemDTO> orderedItems = new LinkedList<>();
     protected float totalItemsCost;
@@ -23,9 +26,10 @@ public abstract class Order implements Identifiable, Serializable {
     protected int totalItemsAmount;
     private static int idGenerator;
 
-    public Order(CustomerDTO customer, LocalDate orderDate, List<OrderItemDTO> orderedItems) {
+    public Order(CustomerDTO customer, LocalDate orderDate, Location orderDestination, List<OrderItemDTO> orderedItems) {
         this.customer = customer;
         this.orderDate = orderDate;
+        this.orderDestination = orderDestination;
         this.orderedItems.addAll(orderedItems);
     }
 
@@ -34,8 +38,9 @@ public abstract class Order implements Identifiable, Serializable {
         return id;
     }
 
-    public static void resetOrdersCount() {
-        idGenerator = 0;
+    @Override
+    public Location getLocation() {
+        return orderDestination;
     }
 
     public CustomerDTO getCustomer() {
@@ -46,12 +51,12 @@ public abstract class Order implements Identifiable, Serializable {
         return orderedItems;
     }
 
-    public float getTotalItemsCost() {
-        return totalItemsCost;
-    }
-
     public float getDeliveryCost() {
         return deliveryCost;
+    }
+
+    public float getTotalItemsCost() {
+        return totalItemsCost;
     }
 
     protected void generateOrderId() {
@@ -106,8 +111,9 @@ public abstract class Order implements Identifiable, Serializable {
         return "Order{" +
                 "id=" + id +
                 ", customer=" + customer +
+                ", orderDestination=" + orderDestination +
                 ", orderDate=" + orderDate +
-                ", itemIdToOrderedItem=" + orderedItems +
+                ", orderedItems=" + orderedItems +
                 ", totalItemsCost=" + totalItemsCost +
                 ", deliveryCost=" + deliveryCost +
                 ", totalOrderCost=" + totalOrderCost +

@@ -1,6 +1,7 @@
 package engine.models.order;
 
 import dto.models.*;
+import engine.models.location.Location;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -10,8 +11,8 @@ public class SubOrder extends Order {
     private final StoreDTO store;
     private final float distanceFromCustomer;
 
-    public SubOrder(StoreDTO store, CustomerDTO customer, LocalDate orderDate, List<OrderItemDTO> orderedItems) {
-        super(customer, orderDate, orderedItems);
+    public SubOrder(StoreDTO store, CustomerDTO customer, Location orderDestination, LocalDate orderDate, List<OrderItemDTO> orderedItems) {
+        super(customer, orderDate, orderDestination, orderedItems);
         this.store = store;
         this.distanceFromCustomer = calculateDistanceFromCustomer();
         this.totalItemsCost = calculateTotalItemsCost();
@@ -27,6 +28,7 @@ public class SubOrder extends Order {
                 .deliveryCost(deliveryCost)
                 .distanceFromCustomer(distanceFromCustomer)
                 .orderDate(orderDate)
+                .orderDestination(orderDestination)
                 .totalItemsAmount(totalItemsAmount)
                 .totalItemsCost(totalItemsCost)
                 .totalOrderCost(totalOrderCost)
@@ -49,7 +51,7 @@ public class SubOrder extends Order {
     }
 
     private float calculateDistanceFromCustomer() {
-        return (float)customer.getLocation().distance(store.getLocation());
+        return (float)orderDestination.distance(store.getLocation());
     }
 
     @Override
@@ -72,6 +74,7 @@ public class SubOrder extends Order {
                 ", distanceFromCustomer=" + distanceFromCustomer +
                 ", id=" + id +
                 ", customer=" + customer +
+                ", orderDestination=" + orderDestination +
                 ", orderDate=" + orderDate +
                 ", orderedItems=" + orderedItems +
                 ", totalItemsCost=" + totalItemsCost +

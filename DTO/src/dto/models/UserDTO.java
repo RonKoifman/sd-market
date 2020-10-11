@@ -1,20 +1,17 @@
 package dto.models;
 
-import java.awt.*;
 import java.util.Objects;
 
 public abstract class UserDTO {
 
     protected final int id;
-    protected final String userRole;
     protected final String username;
-    protected final Point location;
+    protected final String userRole;
 
-    public UserDTO(int id, String userRole, String username, Point location) {
+    public UserDTO(int id, String userRole, String username) {
         this.id = id;
-        this.userRole = userRole;
         this.username = username;
-        this.location = location;
+        this.userRole = userRole;
     }
 
     public int getId() {
@@ -27,10 +24,6 @@ public abstract class UserDTO {
 
     public String getUsername() {
         return username;
-    }
-
-    public Point getLocation() {
-        return location;
     }
 
     @Override

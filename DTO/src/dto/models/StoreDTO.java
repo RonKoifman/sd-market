@@ -11,18 +11,18 @@ public class StoreDTO {
     private final Point location;
     private final Map<Integer, StoreItemDTO> itemIdToItem;
     private final Collection<SubOrderDTO> ordersMade;
-    private final Collection<DiscountInformationDTO> discountsInformation;
-    private final float totalPaymentForDeliveries;
+    private final float totalIncomeFromDeliveries;
+    private final float totalIncomeFromItems;
 
     private StoreDTO(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.location = builder.location;
         this.deliveryPPK = builder.deliveryPPK;
-        this.totalPaymentForDeliveries = builder.totalPaymentForDeliveries;
+        this.totalIncomeFromDeliveries = builder.totalIncomeFromDeliveries;
+        this.totalIncomeFromItems = builder.totalIncomeFromItems;
         this.itemIdToItem = builder.itemIdToItem;
         this.ordersMade = builder.ordersMade;
-        this.discountsInformation = builder.discountsInformation;
     }
 
     public int getId() {
@@ -49,16 +49,16 @@ public class StoreDTO {
         return ordersMade;
     }
 
-    public Collection<DiscountInformationDTO> getDiscountsInformation() {
-        return discountsInformation;
-    }
-
     public int getDeliveryPPK() {
         return deliveryPPK;
     }
 
-    public float getTotalPaymentForDeliveries() {
-        return totalPaymentForDeliveries;
+    public float getTotalIncomeFromDeliveries() {
+        return totalIncomeFromDeliveries;
+    }
+
+    public float getTotalIncomeFromItems() {
+        return totalIncomeFromItems;
     }
 
     public boolean isItemSold(int itemId) {
@@ -73,8 +73,8 @@ public class StoreDTO {
         private Point location;
         private Map<Integer, StoreItemDTO> itemIdToItem;
         private Collection<SubOrderDTO> ordersMade;
-        private Collection<DiscountInformationDTO> discountsInformation;
-        private float totalPaymentForDeliveries;
+        private float totalIncomeFromDeliveries;
+        private float totalIncomeFromItems;
 
         public Builder id(int id) {
             this.id = id;
@@ -106,13 +106,13 @@ public class StoreDTO {
             return this;
         }
 
-        public Builder discountsInformation(Collection<DiscountInformationDTO> discountsInformation) {
-            this.discountsInformation = discountsInformation;
+        public Builder totalIncomeFromDeliveries(float totalIncomeFromDeliveries) {
+            this.totalIncomeFromDeliveries = totalIncomeFromDeliveries;
             return this;
         }
 
-        public Builder totalPaymentForDeliveries(float totalPaymentForDeliveries) {
-            this.totalPaymentForDeliveries = totalPaymentForDeliveries;
+        public Builder totalIncomeFromItems(float totalIncomeFromItems) {
+            this.totalIncomeFromItems = totalIncomeFromItems;
             return this;
         }
 
@@ -143,8 +143,8 @@ public class StoreDTO {
                 ", location=" + location +
                 ", itemIdToItem=" + itemIdToItem +
                 ", ordersMade=" + ordersMade +
-                ", discountsInformation=" + discountsInformation +
-                ", totalPaymentForDeliveries=" + totalPaymentForDeliveries +
+                ", totalIncomeFromDeliveries=" + totalIncomeFromDeliveries +
+                ", totalIncomeFromItems=" + totalIncomeFromItems +
                 '}';
     }
 }

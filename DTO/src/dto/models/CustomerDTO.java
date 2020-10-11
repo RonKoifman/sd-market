@@ -1,14 +1,11 @@
 package dto.models;
 
-import java.awt.*;
-import java.util.Objects;
-
 public class CustomerDTO extends UserDTO {
 
 
 
     private CustomerDTO(Builder builder) {
-        super(builder.id, builder.userRole, builder.username, builder.location);
+        super(builder.id, builder.userRole, builder.username);
     }
 
     public static final class Builder {
@@ -16,7 +13,6 @@ public class CustomerDTO extends UserDTO {
        private int id;
        private String username;
        private String userRole;
-       private Point location;
 
         public Builder id(int id) {
             this.id = id;
@@ -30,11 +26,6 @@ public class CustomerDTO extends UserDTO {
 
         public Builder userRole(String userRole) {
             this.userRole = userRole;
-            return this;
-        }
-
-        public Builder location(Point location) {
-            this.location = location;
             return this;
         }
 

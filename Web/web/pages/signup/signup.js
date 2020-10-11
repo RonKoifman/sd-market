@@ -6,20 +6,19 @@ $(function () {
             data: parameters,
             url: this.action,
             timeout: 2000,
+            error: function (res) {
+                $('.alert').addClass('alert-danger').text(res.responseText);
+                $('#username').val('');
+            },
             success: function (res) {
-                if (res === 'signup.html' || res === 'home.html') {
-                    window.location.assign(res);
-                } else {
-                    $('.alert').addClass('alert-danger').text(res);
-                    $('#username').val('');
-                }
+                window.location.assign(res);
             }
         });
 
-        return false
+        return false;
     }
 
-    $('form.form-signup').submit(onSubmitClicked)
-    $('form.form-signin').submit(onSubmitClicked)
+    $('form.form-signup').submit(onSubmitClicked);
+    $('form.form-signin').submit(onSubmitClicked);
 });
 

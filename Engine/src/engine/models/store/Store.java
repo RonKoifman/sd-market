@@ -9,7 +9,6 @@ import dto.models.StoreDTO;
 import engine.exceptions.DiscountOffersRemovedException;
 import engine.interfaces.Locationable;
 import engine.interfaces.Identifiable;
-import engine.models.zone.Zone;
 import engine.models.discount.DiscountInformation;
 import engine.models.discount.DiscountTrigger;
 import engine.models.item.StoreItem;
@@ -20,13 +19,14 @@ public class Store implements Locationable, Identifiable {
 
     private final int id;
     private final String name;
-    private final int deliveryPPK;
+    //private final String ownerName;
     private final Location location;
+    private final int deliveryPPK;
+    private float totalIncomeFromDeliveries;
+    private float totalIncomeFromItems;
     private final Map<Integer, StoreItem> itemIdToItem = new HashMap<>();
     private final List<DiscountInformation> discountsInformation = new LinkedList<>();
     private final Map<Integer, SubOrder> orderIdToOrder = new HashMap<>();
-    private float totalPaymentForDeliveries;
-    //private final Zone zone;
 
     public Store(int id, String name, int deliveryPPK, Location location) {
         this.id = id;
@@ -63,10 +63,10 @@ public class Store implements Locationable, Identifiable {
                 .name(name)
                 .location(location)
                 .deliveryPPK(deliveryPPK)
-                .totalPaymentForDeliveries(totalPaymentForDeliveries)
+                .totalIncomeFromDeliveries(totalIncomeFromDeliveries)
+                .totalIncomeFromItems(totalIncomeFromItems)
                 .itemIdToItem(itemIdToItem.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().toStoreItemDTO())))
                 .ordersMade(orderIdToOrder.values().stream().map(SubOrder::toSubOrderDTO).collect(Collectors.toSet()))
-                .discountsInformation(discountsInformation.stream().map(DiscountInformation::toDiscountInformationDTO).collect(Collectors.toList()))
                 .build();
     }
 
@@ -81,7 +81,8 @@ public class Store implements Locationable, Identifiable {
     public void addNewOrder(SubOrder newOrder) {
         orderIdToOrder.put(newOrder.getId(), newOrder);
         increaseItemsPurchaseAmountFromStore(newOrder.getOrderedItems());
-        increaseTotalPaymentForDeliveries(newOrder.getDeliveryCost());
+        totalIncomeFromDeliveries += newOrder.getDeliveryCost();
+        totalIncomeFromItems += newOrder.getTotalItemsCost();
     }
 
     public void addNewDiscount(DiscountInformation newDiscount) {
@@ -133,10 +134,6 @@ public class Store implements Locationable, Identifiable {
         }
     }
 
-    private void increaseTotalPaymentForDeliveries(float paymentForDeliveryToAdd) {
-        totalPaymentForDeliveries += paymentForDeliveryToAdd;
-    }
-
     private void increaseItemsPurchaseAmountFromStore(List<OrderItemDTO> orderedItems) {
        orderedItems.forEach(orderedItem -> itemIdToItem.get(orderedItem.getItem().getId()).increasePurchaseAmount(orderedItem.getQuantity()));
     }
@@ -181,12 +178,13 @@ public class Store implements Locationable, Identifiable {
         return "Store{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", deliveryPPK=" + deliveryPPK +
                 ", location=" + location +
+                ", deliveryPPK=" + deliveryPPK +
+                ", totalIncomeFromDeliveries=" + totalIncomeFromDeliveries +
+                ", totalIncomeFromItems=" + totalIncomeFromItems +
                 ", itemIdToItem=" + itemIdToItem +
                 ", discountsInformation=" + discountsInformation +
                 ", orderIdToOrder=" + orderIdToOrder +
-                ", totalPaymentForDeliveries=" + totalPaymentForDeliveries +
                 '}';
     }
 }

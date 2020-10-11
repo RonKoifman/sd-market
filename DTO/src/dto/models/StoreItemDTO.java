@@ -9,6 +9,7 @@ public class StoreItemDTO {
     private final String purchaseForm;
     private final float purchaseAmount;
     private final int price;
+    private final int sellingStoreId;
 
     private StoreItemDTO(Builder builder) {
         this.id = builder.id;
@@ -16,6 +17,7 @@ public class StoreItemDTO {
         this.purchaseForm = builder.purchaseForm;
         this.purchaseAmount = builder.purchaseAmount;
         this.price = builder.price;
+        this.sellingStoreId = builder.sellingStoreId;
     }
 
     public int getId() {
@@ -45,6 +47,7 @@ public class StoreItemDTO {
         private String purchaseForm;
         private float purchaseAmount;
         private int price;
+        private int sellingStoreId;
 
         public Builder id(int id) {
             this.id = id;
@@ -68,6 +71,11 @@ public class StoreItemDTO {
 
         public Builder price(int price) {
             this.price = price;
+            return this;
+        }
+
+        public Builder sellingStoreId(int sellingStoreId) {
+            this.sellingStoreId = sellingStoreId;
             return this;
         }
 
@@ -97,6 +105,7 @@ public class StoreItemDTO {
                 ", purchaseForm='" + purchaseForm + '\'' +
                 ", purchaseAmount=" + purchaseAmount +
                 ", price=" + price +
+                ", sellingStoreId=" + sellingStoreId +
                 '}';
     }
 }

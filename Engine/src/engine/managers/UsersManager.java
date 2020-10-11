@@ -1,11 +1,11 @@
-package engine.api;
+package engine.managers;
 
 import dto.models.UserDTO;
 import engine.enums.UserRole;
 
 import java.util.Set;
 
-public interface UserManager {
+public interface UsersManager {
 
     void addUser(String username, UserRole userRole);
 
