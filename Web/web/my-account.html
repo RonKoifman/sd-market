@@ -7,13 +7,15 @@
     <title>SDMarket · My Account</title>
     <link rel="icon" href="common/images/app-icon.png">
     <link rel="stylesheet" href="common/assets/bootstrap.min.css">
-    <link rel="stylesheet" href="pages/account/account.css">
+    <link rel="stylesheet" href="pages/account/my-account.css">
     <script src="common/assets/jquery-2.0.3.min.js"></script>
     <script src="common/assets/bootstrap.min.js"></script>
-    <script src="pages/account/account.js"></script>
+    <script src="common/assets/context-path-helper.js"></script>
+    <script src="pages/account/my-account.js"></script>
 </head>
 
 <body>
+<!-- Navbar -->
 <nav class="navbar navbar-expand-sm navbar-light">
     <a href="home.html" class="navbar-brand">
         <img src="common/images/sdm-logo-navbar.png" alt="SDMarket" id="logo">
@@ -27,10 +29,13 @@
                 <a class="nav-link" href="home.html">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">My Account</a>
+                <a class="nav-link" href="my-account.html">My Account</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="chat.html">Chat</a>
+            </li>
+            <li id="uploadNavLink" class="nav-item">
+                <a class="nav-link" href="upload-file.html">Upload File</a>
             </li>
         </ul>
     </div>
@@ -38,14 +43,16 @@
 
 <br><br>
 
+<!-- My account form -->
 <form id="form-account" class="card p-2 form-account">
-    <p class="h4" id="account">My Account</p><br>
+    <h5 class="card-title text-center">My Account</h5><br>
     <h5 class="justify-content-between align-items-center mb-3">
-        <span>Current Balance:</span>
+        <span class="h6">Current Balance:</span>
         <span id="balance" class="badge badge-secondary badge-pill ml-3">$1000</span>
     </h5>
 
-    <div id="deposit-labels" class="input-group">
+    <!--  Customer additional labels  -->
+    <div id="depositLabels" class="input-group">
         <label for="amount"></label><input type="number" min="1" class="form-control" placeholder="Amount" id="amount" required>
         <label for="date"></label><input type="date" class="form-control" id="date" required min="2020-11-01">
         <div class="input-group-append">
@@ -55,8 +62,8 @@
 </form>
 
 <br><br>
-
-<div class="regions-table text-center">
+<!-- Transactions table -->
+<div class="transactions-table text-center">
     <h3 class="h4">Transactions History</h3> <br>
     <div class="table-responsive">
         <table class="table table-striped table-sm">

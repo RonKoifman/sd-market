@@ -5,9 +5,9 @@ import constants.Constants;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class SessionUtils {
+public final class SessionUtils {
 
-    public static String getUsername (HttpServletRequest req) {
+    public static String getUsername(HttpServletRequest req) {
         HttpSession session = req.getSession(false);
         Object sessionAttribute = session != null ? session.getAttribute(Constants.USERNAME) : null;
 

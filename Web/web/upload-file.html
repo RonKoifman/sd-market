@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>SDMarket · Chat</title>
+    <title>SDMarket · Upload File</title>
     <link rel="icon" href="common/images/app-icon.png">
     <link rel="stylesheet" href="common/assets/bootstrap.min.css">
-    <link rel="stylesheet" href="pages/chat/chat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="pages/upload/upload-file.css">
     <script src="common/assets/jquery-2.0.3.min.js"></script>
     <script src="common/assets/bootstrap.min.js"></script>
     <script src="common/assets/context-path-helper.js"></script>
-    <script src="pages/chat/chat.js"></script>
+    <script src="pages/upload/upload-file.js"></script>
 </head>
 
 <body>
@@ -33,46 +34,34 @@
             <li class="nav-item">
                 <a class="nav-link" href="chat.html">Chat</a>
             </li>
-            <li id="uploadNavLink" class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link" href="upload-file.html">Upload File</a>
             </li>
         </ul>
     </div>
 </nav>
 
-<div class="row main-body">
-    <!-- Online users   -->
-    <div class="col-md-3 online-users">
-        <div class="card h-100 mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Online Users</h5>
-                <ul class="online-users-list">
-
-                </ul>
+<br><br>
+<!-- Upload file form -->
+<div id="uploadDiv" class="text-center card shadow p-3 mb-5 bg rounded">
+    <h5 class="card-title">Upload New Region</h5>
+    <form id="uploadForm" class="form-upload" method="POST" action="upload-file"><br>
+        <div class="form-group">
+            <input value="file_path" type="file" name="file" accept=".xml" required class="form-control-file mr-auto" id="filePath"><br>
+            <!-- Alert  -->
+            <div class="alert" role="alert">
             </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Upload</button>
         </div>
-    </div>
-    <!-- Chat messages   -->
-    <div class="col-md-9 chat">
-        <div class="row-md-10 chat-messages">
-            <div id="chat-area" class="span6"></div>
-        </div>
-        <div class="row-md-2 user-messages">
-            <div class="input-group input-group-lg">
-                <label for="user-message"></label><input type="text" class="form-control input-lg" id="user-message">
-                <span class="input-group-btn ml-2">
-                    <button class="btn btn-primary" type="submit">Send</button>
-                </span>
-            </div>
-        </div>
-    </div>
+    </form>
 </div>
-</body>
 
 <!-- Footer -->
 <hr class="featurette-divider">
 <footer class="container">
-    <p class="float-right"><a href="#">Scroll to top</a></p>
     <p class="text-center">Copyright © SDMarket 2020 · Ron Koifman</p>
 </footer>
+
+</body>
+
 </html>

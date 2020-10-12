@@ -12,6 +12,8 @@ $(function () {
                 case 'Customer':
                     $('#uploadNavLink').hide();
                     break;
+                case 'Store Owner':
+                    $('#depositLabels').hide();
             }
         }
     })

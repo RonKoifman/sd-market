@@ -16,12 +16,12 @@ import java.io.PrintWriter;
 @WebServlet(name = "SignupServlet", urlPatterns = {"/signup"})
 public class SignupServlet extends HttpServlet {
 
-    private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        res.setContentType("text/html;charset=UTF-8");
-        res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        res.setHeader("Pragma", "no-cache");
-        res.setDateHeader("Expires", 0);
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        processRequest(req, res);
+    }
 
+    private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             String usernameFromSession = SessionUtils.getUsername(req);
             UsersManager usersManager = SDMUsersManager.getInstance();
@@ -35,7 +35,7 @@ public class SignupServlet extends HttpServlet {
                 } else if (usernameFromParameter.trim().isEmpty()) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     out.print("Please enter at least one character.");
-                } else if (!usernameFromParameter.trim().matches("[a-zA-Z0-9]+")) {
+                } else if (!usernameFromParameter.trim().matches("[a-zA-Z0-9 ]+")) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     out.print("Please enter only english letters and digits.");
                 } else {
@@ -67,10 +67,5 @@ public class SignupServlet extends HttpServlet {
 
             out.flush();
         }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        processRequest(req, res);
     }
 }

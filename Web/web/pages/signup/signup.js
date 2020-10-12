@@ -6,12 +6,12 @@ $(function () {
             data: parameters,
             url: this.action,
             timeout: 2000,
+            success: function (res) {
+                window.location.assign(res);
+            },
             error: function (res) {
                 $('.alert').addClass('alert-danger').text(res.responseText);
                 $('#username').val('');
-            },
-            success: function (res) {
-                window.location.assign(res);
             }
         });
 

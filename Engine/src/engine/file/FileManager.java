@@ -5,6 +5,7 @@ import engine.models.item.RegionItem;
 import engine.models.store.Store;
 
 import javax.xml.bind.JAXBException;
+import java.io.InputStream;
 import java.util.Map;
 
 public class FileManager {
@@ -12,8 +13,8 @@ public class FileManager {
     private final XmlDeserializer xmlDeserializer = new XmlDeserializer();
     private final DataConverter dataConverter = new DataConverter();
 
-    public void loadRegionDataFromFile(String filePath) throws JAXBException {
-        SuperDuperMarketDescriptor sdmDescriptor = xmlDeserializer.deserializeFile(filePath);
+    public void loadRegionDataFromFile(InputStream fileInputStream) throws JAXBException {
+        SuperDuperMarketDescriptor sdmDescriptor = xmlDeserializer.deserializeFile(fileInputStream);
         dataConverter.convertJaxbObjectsToSystemModels(sdmDescriptor);
     }
 

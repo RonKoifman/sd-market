@@ -1,5 +1,18 @@
+const userInfoURL = buildUrlWithContextPath("userInfo");
+let user;
+
 $(function () {
-
-
-    return false;
-})
+    $.ajax({
+        url: userInfoURL,
+        async: false,
+        success: function (loggedInUser) {
+            user = loggedInUser;
+            $('#username').text(user.username);
+            switch (user.userRole) {
+                case 'Customer':
+                    $('#uploadNavLink').hide();
+                    break;
+            }
+        }
+    })
+});

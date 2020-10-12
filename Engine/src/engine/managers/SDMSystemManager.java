@@ -4,6 +4,7 @@ import dto.models.RegionDTO;
 import engine.file.FileManager;
 
 import javax.xml.bind.JAXBException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,8 +33,8 @@ public class SDMSystemManager implements SystemManager {
     }
 
     @Override
-    public synchronized void loadNewRegionDataFromFile(String ownerUsername, String filePath) throws JAXBException {
-        fileManager.loadRegionDataFromFile(filePath);
+    public synchronized void loadNewRegionDataFromFile(String ownerUsername, InputStream fileInputStream) throws JAXBException {
+        fileManager.loadRegionDataFromFile(fileInputStream);
         checkForUniqueRegionName(fileManager.getLoadedRegionName());
         SDMRegionManager newRegionManager = new SDMRegionManager(fileManager.getLoadedRegionName(), ownerUsername, fileManager.getLoadedStoreIdToStore(), fileManager.getLoadedItemIdToItem());
         regionNameToRegionManager.put(newRegionManager.getRegionDTO().getName(), newRegionManager);
