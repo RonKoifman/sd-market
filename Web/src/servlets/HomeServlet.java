@@ -1,9 +1,36 @@
 package servlets;
 
+import com.google.gson.Gson;
+import dto.models.RegionDTO;
+import engine.managers.SDMSystemManager;
+import engine.managers.SystemManager;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collection;
 
 @WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
 public class HomeServlet extends HttpServlet {
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        processRequest(req, res);
+    }
+
+    private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        res.setContentType("application/json");
+        SystemManager systemManager = SDMSystemManager.getInstance();
+
+        try (PrintWriter out = res.getWriter()) {
+            Gson gson = new Gson();
+            Collection<RegionDTO> regions = systemManager.getAllRegions();
+            String json = gson.toJson(regions);
+            out.println(json);
+            out.flush();
+        }
+    }
 }

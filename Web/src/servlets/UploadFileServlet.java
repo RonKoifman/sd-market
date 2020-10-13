@@ -26,33 +26,34 @@ public class UploadFileServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        String GENERAL_ERROR_MESSAGE = "General failure occurred while loading your file. Make sure you've entered a valid XML file.";
-        PrintWriter out = res.getWriter();
-        SystemManager systemManager = SDMSystemManager.getInstance();
-        String username = SessionUtils.getUsername(req);
-        res.setContentType("text/html");
+        try (PrintWriter out = res.getWriter()) {
+            String GENERAL_ERROR_MESSAGE = "General failure occurred while loading your file. Make sure you've entered a valid XML file.";
+            SystemManager systemManager = SDMSystemManager.getInstance();
+            String username = SessionUtils.getUsername(req);
+            res.setContentType("text/html");
 
-        Part filePart = req.getPart("file-key");
-        InputStream fileInputStream = filePart.getInputStream();
-        String fileType = filePart.getContentType();
+            Part filePart = req.getPart("file-key");
+            InputStream fileInputStream = filePart.getInputStream();
+            String fileType = filePart.getContentType();
 
-        if (!fileType.contains("xml")) {
-            res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            out.print("Invalid XML file. Please choose only XML file type.");
-        } else {
-            try {
-                systemManager.loadNewRegionDataFromFile(username, fileInputStream);
-                out.print("File loaded successfully!");
-            } catch (JAXBException e) {
+            if (!fileType.contains("xml")) {
                 res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                out.print("Invalid XML file. " + GENERAL_ERROR_MESSAGE);
-            } catch (Exception e) {
-                res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                String errorMessage = e.getMessage() == null ? GENERAL_ERROR_MESSAGE : e.getMessage();
-                out.print("Invalid XML file. " + errorMessage);
+                out.print("Invalid file. Please choose only XML file type.");
+            } else {
+                try {
+                    systemManager.loadNewRegionDataFromFile(username, fileInputStream);
+                    out.print("File uploaded successfully!");
+                } catch (JAXBException e) {
+                    res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    out.print("Invalid file. " + GENERAL_ERROR_MESSAGE);
+                } catch (Exception e) {
+                    res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    String errorMessage = e.getMessage() == null ? GENERAL_ERROR_MESSAGE : e.getMessage();
+                    out.print("Invalid file. " + errorMessage);
+                }
             }
-        }
 
-        out.flush();
+            out.flush();
+        }
     }
 }

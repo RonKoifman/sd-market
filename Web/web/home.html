@@ -7,7 +7,6 @@
     <title>SDMarket · Home</title>
     <link rel="icon" href="common/images/app-icon.png">
     <link rel="stylesheet" href="common/assets/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="pages/home/home.css">
     <script src="common/assets/jquery-2.0.3.min.js"></script>
     <script src="common/assets/bootstrap.min.js"></script>
@@ -46,12 +45,12 @@
     <div id="jumbotron" class="jumbotron">
         <h1 class="display-4">Hello, <span id="username"></span>!</h1><br>
         <p class="lead">
-            Here you can find general information about all the orders, stores, and items in the various regions uploaded to the app. <br> If you are interested in visiting a specific region, click on the dedicated button next to the requested region.</p>
+            Here you can find general information about all the orders, stores, and items in the various regions uploaded to the app. <br> If you are interested in visiting a specific region, click on the dedicated link next to the requested region.</p>
     </div>
 
     <!--  Regions table -->
     <div class="regions-table text-center">
-        <h3 class="h4">Regions</h3> <br>
+        <h3 class="h4">Sales Regions</h3> <br>
         <div class="table-responsive">
             <table class="table table-striped table-sm">
                 <thead>
@@ -62,10 +61,10 @@
                     <th>Total Stores</th>
                     <th>Total Orders Made</th>
                     <th>Average Orders Cost</th>
-                    <th>More Information</th>
+                    <th>See More</th>
                 </tr>
                 </thead>
-                <tbody class="transactions-data">
+                <tbody id="regionsTableBody">
                 </tbody>
             </table>
         </div>

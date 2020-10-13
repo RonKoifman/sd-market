@@ -31,6 +31,7 @@ public class SDMRegionManager implements RegionManager {
         this.storeIdToStore = storeIdToStore;
         this.itemIdToItem = itemIdToItem;
         initializeItemsSellsInStores();
+        initializeStoresOwner();
     }
 
     @Override
@@ -146,7 +147,7 @@ public class SDMRegionManager implements RegionManager {
     }
 
     @Override
-    public synchronized void addNewStoreToRegion(int storeId, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Integer> itemIdToItemPriceInStore) {
+    public synchronized void addNewStoreToRegion(String ownerUsername, int storeId, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Integer> itemIdToItemPriceInStore) {
         if (storeIdToStore.containsKey(storeId)) {
             throw new IllegalStateException("The store id '" + storeId + "' is already taken.");
         }
@@ -156,6 +157,7 @@ public class SDMRegionManager implements RegionManager {
         }
 
         Store newStore = new Store(storeId, storeName, storeDeliveryPPK, new Location(storeLocation.x, storeLocation.y));
+        newStore.setOwnerUsername(ownerUsername);
         itemIdToItemPriceInStore.forEach((itemId, itemPrice) -> addNewItemToStore(storeId, itemId, itemPrice));
         storeIdToStore.put(newStore.getId(), newStore);
     }
@@ -282,6 +284,10 @@ public class SDMRegionManager implements RegionManager {
 
         assert cheapestStore != null;
         return cheapestStore.toStoreDTO();
+    }
+
+    private void initializeStoresOwner() {
+        storeIdToStore.values().forEach(store -> store.setOwnerUsername(regionOwnerUsername));
     }
 
     private void initializeItemsSellsInStores() {

@@ -16,7 +16,7 @@ public interface RegionManager {
 
     void updateItemPriceInStore(int storeId, int itemId, int newItemPrice);
 
-    void addNewStoreToRegion(int storeId, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Integer> itemIdToItemPriceInStore);
+    void addNewStoreToRegion(String ownerUsername, int storeId, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Integer> itemIdToItemPriceInStore);
 
     void addNewItemToRegion(int itemId, String itemName, String itemPurchaseForm, Map<Integer, Integer> storeIdToItemPriceInStore);
 

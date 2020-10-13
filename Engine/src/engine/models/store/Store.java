@@ -19,7 +19,7 @@ public class Store implements Locationable, Identifiable {
 
     private final int id;
     private final String name;
-    //private final String ownerName;
+    private String ownerUsername;
     private final Location location;
     private final int deliveryPPK;
     private float totalIncomeFromDeliveries;
@@ -49,12 +49,12 @@ public class Store implements Locationable, Identifiable {
         return name;
     }
 
-    public int getDeliveryPPK() {
-        return deliveryPPK;
-    }
-
     public int getAmountOfItemsForSell() {
         return itemIdToItem.size();
+    }
+
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
     }
 
     public StoreDTO toStoreDTO() {
@@ -178,6 +178,7 @@ public class Store implements Locationable, Identifiable {
         return "Store{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", ownerName='" + ownerUsername + '\'' +
                 ", location=" + location +
                 ", deliveryPPK=" + deliveryPPK +
                 ", totalIncomeFromDeliveries=" + totalIncomeFromDeliveries +

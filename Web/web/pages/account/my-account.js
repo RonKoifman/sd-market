@@ -1,9 +1,9 @@
-const userInfoURL = buildUrlWithContextPath("userInfo");
+const USER_INFO_URL = buildUrlWithContextPath("userInfo");
 let user;
 
 $(function () {
     $.ajax({
-        url: userInfoURL,
+        url: USER_INFO_URL,
         async: false,
         success: function (loggedInUser) {
             user = loggedInUser;

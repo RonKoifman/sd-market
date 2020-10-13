@@ -7,6 +7,7 @@ public class StoreDTO {
 
     private final int id;
     private final String name;
+    private final String ownerUsername;
     private final int deliveryPPK;
     private final Point location;
     private final Map<Integer, StoreItemDTO> itemIdToItem;
@@ -17,6 +18,7 @@ public class StoreDTO {
     private StoreDTO(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
+        this.ownerUsername = builder.ownerUsername;
         this.location = builder.location;
         this.deliveryPPK = builder.deliveryPPK;
         this.totalIncomeFromDeliveries = builder.totalIncomeFromDeliveries;
@@ -69,6 +71,7 @@ public class StoreDTO {
 
         private int id;
         private String name;
+        private String ownerUsername;
         private int deliveryPPK;
         private Point location;
         private Map<Integer, StoreItemDTO> itemIdToItem;
@@ -83,6 +86,11 @@ public class StoreDTO {
 
         public Builder name(String name) {
             this.name = name;
+            return this;
+        }
+
+        public Builder ownerUsername(String ownerUsername) {
+            this.ownerUsername = ownerUsername;
             return this;
         }
 
@@ -139,6 +147,7 @@ public class StoreDTO {
         return "StoreDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", ownerUsername='" + ownerUsername + '\'' +
                 ", deliveryPPK=" + deliveryPPK +
                 ", location=" + location +
                 ", itemIdToItem=" + itemIdToItem +

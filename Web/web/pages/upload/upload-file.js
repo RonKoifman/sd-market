@@ -1,4 +1,4 @@
-const uploadFileURL = buildUrlWithContextPath("upload-file");
+const UPLOAD_FILE_URL = buildUrlWithContextPath("upload-file");
 
 $(function () {
     $('#uploadForm').submit(function () {
@@ -13,7 +13,7 @@ $(function () {
         $.ajax({
             method:'POST',
             data: formData,
-            url: uploadFileURL,
+            url: UPLOAD_FILE_URL,
             processData: false,
             contentType: false,
             timeout: 4000,
