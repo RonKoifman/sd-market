@@ -22,10 +22,9 @@ public class GetRegionsServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        res.setContentType("application/json");
-        RegionsManager regionsManager = SDMRegionsManager.getInstance();
-
         try (PrintWriter out = res.getWriter()) {
+            res.setContentType("application/json");
+            RegionsManager regionsManager = SDMRegionsManager.getInstance();
             Gson gson = new Gson();
             Collection<RegionDTO> regions = regionsManager.getAllRegions();
             String json = gson.toJson(regions);

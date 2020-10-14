@@ -28,9 +28,9 @@ public class NewTransactionServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        UsersManager usersManager = SDMUsersManager.getInstance();
-
         try (PrintWriter out = res.getWriter()) {
+            res.setContentType("text/html");
+            UsersManager usersManager = SDMUsersManager.getInstance();
             String transactionAmountFromParameter = req.getParameter(Constants.TRANSACTION_AMOUNT);
             String transactionDateFromParameter = req.getParameter(Constants.TRANSACTION_DATE);
             String transactionTypeFromParameter = req.getParameter(Constants.TRANSACTION_TYPE);

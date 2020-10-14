@@ -27,10 +27,10 @@ public class UploadFileServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         try (PrintWriter out = res.getWriter()) {
+            res.setContentType("text/html");
             String GENERAL_ERROR_MESSAGE = "General failure occurred while loading your file. Make sure you've entered a valid XML file.";
             RegionsManager regionsManager = SDMRegionsManager.getInstance();
             String username = SessionUtils.getUsername(req);
-            res.setContentType("text/html");
 
             Part filePart = req.getPart("file-key");
             InputStream fileInputStream = filePart.getInputStream();
