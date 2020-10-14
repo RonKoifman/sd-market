@@ -18,6 +18,17 @@ public class StoreOwner extends User {
                 .id(id)
                 .username(username)
                 .userRole(userRole.getValue())
+                .account(account.toAccountDTO())
                 .build();
+    }
+
+    @Override
+    public String toString() {
+        return "StoreOwner{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", userRole=" + userRole +
+                ", account=" + account +
+                '}';
     }
 }

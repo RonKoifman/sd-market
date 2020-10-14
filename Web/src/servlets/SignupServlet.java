@@ -31,19 +31,19 @@ public class SignupServlet extends HttpServlet {
                 String userRoleFromParameter = req.getParameter(Constants.USER_ROLE);
 
                 if (usernameFromParameter == null) {
-                    out.print(Constants.SIGNUP_URL);
+                    out.println(Constants.SIGNUP_URL);
                 } else if (usernameFromParameter.trim().isEmpty()) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    out.print("Please enter at least one character.");
+                    out.println("Please enter at least one character.");
                 } else if (!usernameFromParameter.trim().matches("[a-zA-Z0-9 ]+")) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    out.print("Please enter only english letters and digits.");
+                    out.println("Please enter only english letters and digits.");
                 } else {
                     usernameFromParameter = usernameFromParameter.trim();
                     synchronized (this) {
                         if (usersManager.isUserExists(usernameFromParameter)) {
                             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                            out.print("This username is already taken.");
+                            out.println("This username is already taken.");
                         } else {
                             switch (userRoleFromParameter) {
                                 case Constants.STORE_OWNER:
@@ -57,12 +57,12 @@ public class SignupServlet extends HttpServlet {
 
                             req.getSession(true).setAttribute(Constants.USERNAME, usernameFromParameter);
                             req.getSession(true).setAttribute(Constants.USER_ROLE, userRoleFromParameter);
-                            out.print(Constants.HOME_URL);
+                            out.println(Constants.HOME_URL);
                         }
                     }
                 }
             } else {
-                out.print(Constants.HOME_URL);
+                out.println(Constants.HOME_URL);
             }
 
             out.flush();

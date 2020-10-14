@@ -1,14 +1,12 @@
-const USER_INFO_URL = buildUrlWithContextPath("userInfo");
-let user;
+const USER_INFO_URL = buildUrlWithContextPath("user-info");
 
 $(function () {
     $.ajax({
         url: USER_INFO_URL,
         async: false,
         success: function (loggedInUser) {
-            user = loggedInUser;
-            $('#username').text(user.username);
-            switch (user.userRole) {
+            $('#username').text(loggedInUser.username);
+            switch (loggedInUser.userRole) {
                 case 'Customer':
                     $('#uploadNavLink').hide();
                     break;

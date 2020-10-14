@@ -1,7 +1,7 @@
 package servlets;
 
-import engine.managers.SDMSystemManager;
-import engine.managers.SystemManager;
+import engine.managers.SDMRegionsManager;
+import engine.managers.RegionsManager;
 import utils.SessionUtils;
 
 import javax.servlet.ServletException;
@@ -28,7 +28,7 @@ public class UploadFileServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         try (PrintWriter out = res.getWriter()) {
             String GENERAL_ERROR_MESSAGE = "General failure occurred while loading your file. Make sure you've entered a valid XML file.";
-            SystemManager systemManager = SDMSystemManager.getInstance();
+            RegionsManager regionsManager = SDMRegionsManager.getInstance();
             String username = SessionUtils.getUsername(req);
             res.setContentType("text/html");
 
@@ -38,18 +38,18 @@ public class UploadFileServlet extends HttpServlet {
 
             if (!fileType.contains("xml")) {
                 res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                out.print("Invalid file. Please choose only XML file type.");
+                out.println("Invalid file. Please choose only XML file type.");
             } else {
                 try {
-                    systemManager.loadNewRegionDataFromFile(username, fileInputStream);
-                    out.print("File uploaded successfully!");
+                    regionsManager.loadNewRegionDataFromFile(username, fileInputStream);
+                    out.println("File uploaded successfully!");
                 } catch (JAXBException e) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    out.print("Invalid file. " + GENERAL_ERROR_MESSAGE);
+                    out.println("Invalid file. " + GENERAL_ERROR_MESSAGE);
                 } catch (Exception e) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     String errorMessage = e.getMessage() == null ? GENERAL_ERROR_MESSAGE : e.getMessage();
-                    out.print("Invalid file. " + errorMessage);
+                    out.println("Invalid file. " + errorMessage);
                 }
             }
 

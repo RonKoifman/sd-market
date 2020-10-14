@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "UserInfoServlet", urlPatterns = {"/userInfo"})
-public class UserInfoServlet extends HttpServlet {
+@WebServlet(name = "UserInfoServlet", urlPatterns = {"/user-info"})
+public class GetUserInfoServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -29,7 +29,7 @@ public class UserInfoServlet extends HttpServlet {
             UsersManager usersManager = SDMUsersManager.getInstance();
             UserDTO user = usersManager.getUserByUsername(SessionUtils.getUsername(req));
             String json = gson.toJson(user);
-            out.print(json);
+            out.println(json);
             out.flush();
         }
     }

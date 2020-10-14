@@ -4,6 +4,7 @@ import dto.models.UserDTO;
 import engine.enums.UserRole;
 import engine.interfaces.Identifiable;
 import engine.models.account.Account;
+import engine.models.account.Transaction;
 
 import java.util.Objects;
 
@@ -23,6 +24,14 @@ public abstract class User implements Identifiable {
 
     public abstract UserDTO toUserDTO();
 
+    public void addNewTransaction(Transaction newTransaction) {
+        account.addNewTransaction(newTransaction);
+    }
+
+    public float getAccountBalance() {
+        return account.getBalance();
+    }
+
     @Override
     public int getId() {
         return id;
@@ -39,5 +48,15 @@ public abstract class User implements Identifiable {
     @Override
     public int hashCode() {
         return Objects.hash(username);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", userRole=" + userRole +
+                ", account=" + account +
+                '}';
     }
 }

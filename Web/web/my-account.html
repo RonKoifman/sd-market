@@ -44,17 +44,17 @@
 <br><br>
 
 <!-- My account form -->
-<form id="formAccount" class="card p-2 form-account">
+<form id="formAccount" class="card p-2 form-account" method="GET" action="new-deposit-transaction">
     <h5 class="card-title text-center">My Account</h5><br>
     <h5 class="justify-content-between align-items-center mb-3">
         <span class="h6">Current Balance:</span>
-        <span id="balance" class="badge badge-secondary badge-pill ml-3">$1000</span>
+        <span id="balance" class="badge badge-secondary badge-pill ml-3">$0.00</span>
     </h5>
 
     <!--  Customer additional labels  -->
     <div id="depositLabels" class="input-group">
-        <label for="amount"></label><input type="number" min="1" class="form-control" placeholder="Amount" id="amount" required>
-        <label for="date"></label><input type="date" class="form-control" id="date" required min="2020-11-01">
+        <label for="amount"></label><input name="amount" type="number" min="1" max="100000" class="form-control" placeholder="Amount" id="amount" required>
+        <label for="date"></label><input name="date" type="date" class="form-control" id="date" required min="2020-11-01" max="2024-11-01">
         <div class="input-group-append">
             <button type="submit" class="btn btn-primary" id="deposit">Deposit</button>
         </div>
@@ -66,7 +66,7 @@
 <div class="transactions-table text-center">
     <h3 class="h4">Transactions History</h3> <br>
     <div class="table-responsive">
-        <table class="table table-striped table-sm">
+        <table id="transactionsTable" class="table table-striped table-sm">
             <thead>
             <tr>
                 <th>Transaction Type</th>
@@ -76,7 +76,7 @@
                 <th>Balance After</th>
             </tr>
             </thead>
-            <tbody id="transactionsData" class="transactions-data">
+            <tbody>
             </tbody>
         </table>
     </div>

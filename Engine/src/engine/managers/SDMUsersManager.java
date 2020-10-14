@@ -1,14 +1,15 @@
 package engine.managers;
 
 import dto.models.UserDTO;
+import engine.enums.TransactionType;
 import engine.enums.UserRole;
+import engine.models.account.Transaction;
 import engine.models.user.Customer;
 import engine.models.user.StoreOwner;
 import engine.models.user.User;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class SDMUsersManager implements UsersManager {
@@ -30,6 +31,13 @@ public class SDMUsersManager implements UsersManager {
         }
 
         return instance;
+    }
+
+    @Override
+    public synchronized void addNewTransactionToUser(String username, float transactionAmount, LocalDate transactionDate, TransactionType transactionType) {
+        User user = usernameToUser.get(username);
+        Transaction newTransaction = new Transaction(transactionType, transactionDate, transactionAmount, user.getAccountBalance(), user.getAccountBalance() + transactionAmount);
+        user.addNewTransaction(newTransaction);
     }
 
     @Override
@@ -63,21 +71,5 @@ public class SDMUsersManager implements UsersManager {
     @Override
     public synchronized UserDTO getUserByUsername(String username) {
        return usernameToUser.get(username).toUserDTO();
-    }
-
-    static SDMUsersManager getUserManager() {
-        if (instance == null) {
-            synchronized (CREATION_CONTEXT_LOCK) {
-                if (instance == null) {
-                    instance = new SDMUsersManager();
-                }
-            }
-        }
-
-        return instance;
-    }
-
-    synchronized User getUserModelByUsername(String username) {
-        return usernameToUser.getOrDefault(username, null);
     }
 }

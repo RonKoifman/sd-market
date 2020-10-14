@@ -15,7 +15,7 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SDMRegionManager implements RegionManager {
+public class SDMSingleRegionManager implements SingleRegionManager {
 
     private final String regionName;
     private final String regionOwnerUsername;
@@ -25,7 +25,7 @@ public class SDMRegionManager implements RegionManager {
     private float averageOrdersCost;
     private GeneralOrder pendingOrder;
 
-    SDMRegionManager(String regionName, String regionOwnerUsername, Map<Integer, Store> storeIdToStore, Map<Integer, RegionItem> itemIdToItem) {
+    SDMSingleRegionManager(String regionName, String regionOwnerUsername, Map<Integer, Store> storeIdToStore, Map<Integer, RegionItem> itemIdToItem) {
         this.regionName = regionName;
         this.regionOwnerUsername = regionOwnerUsername;
         this.storeIdToStore = storeIdToStore;
@@ -188,7 +188,7 @@ public class SDMRegionManager implements RegionManager {
         pendingOrder.generateOrderId();
         orderIdToOrder.put(pendingOrder.getId(), pendingOrder);
         //userIdToUser.get(pendingOrder.getCustomer().getId()).addNewOrder(pendingOrder);
-        // TODO: add new order to customer...
+        // TODO: add new order to customer in UsersManager...
         updateItemsPurchaseAmountAfterNewOrder(pendingOrder);
         updateStoresOrdersAfterNewOrder(pendingOrder);
         updateAverageOrdersCost(pendingOrder);

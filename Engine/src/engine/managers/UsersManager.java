@@ -1,9 +1,11 @@
 package engine.managers;
 
 import dto.models.UserDTO;
+import engine.enums.TransactionType;
 import engine.enums.UserRole;
 
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 
 public interface UsersManager {
 
@@ -14,4 +16,6 @@ public interface UsersManager {
     boolean isUserExists(String username);
 
     UserDTO getUserByUsername(String username);
+
+    void addNewTransactionToUser(String username, float transactionAmount, LocalDate transactionDate, TransactionType transactionType);
 }

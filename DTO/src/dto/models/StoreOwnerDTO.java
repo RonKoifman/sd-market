@@ -5,7 +5,7 @@ public class StoreOwnerDTO extends UserDTO {
 
 
     private StoreOwnerDTO(Builder builder) {
-        super(builder.id, builder.userRole, builder.username);
+        super(builder.id, builder.userRole, builder.username, builder.account);
     }
 
     public static final class Builder {
@@ -13,6 +13,7 @@ public class StoreOwnerDTO extends UserDTO {
         private int id;
         private String username;
         private String userRole;
+        private AccountDTO account;
 
         public Builder id(int id) {
             this.id = id;
@@ -29,8 +30,23 @@ public class StoreOwnerDTO extends UserDTO {
             return this;
         }
 
+        public Builder account(AccountDTO account) {
+            this.account = account;
+            return this;
+        }
+
         public StoreOwnerDTO build() {
             return new StoreOwnerDTO(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "StoreOwnerDTO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", userRole='" + userRole + '\'' +
+                ", account=" + account +
+                '}';
     }
 }

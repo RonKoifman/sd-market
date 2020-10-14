@@ -1,9 +1,11 @@
 package servlets;
 
 import com.google.gson.Gson;
-import dto.models.RegionDTO;
-import engine.managers.SDMSystemManager;
-import engine.managers.SystemManager;
+import dto.models.AccountDTO;
+import dto.models.UserDTO;
+import engine.managers.SDMUsersManager;
+import engine.managers.UsersManager;
+import utils.SessionUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,10 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collection;
 
-@WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
-public class HomeServlet extends HttpServlet {
+@WebServlet(name = "GetUserAccountServlet", urlPatterns = {"/user-account"})
+public class GetUserAccountServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -23,12 +24,13 @@ public class HomeServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         res.setContentType("application/json");
-        SystemManager systemManager = SDMSystemManager.getInstance();
+        UsersManager usersManager = SDMUsersManager.getInstance();
 
         try (PrintWriter out = res.getWriter()) {
             Gson gson = new Gson();
-            Collection<RegionDTO> regions = systemManager.getAllRegions();
-            String json = gson.toJson(regions);
+            UserDTO user = usersManager.getUserByUsername(SessionUtils.getUsername(req));
+            AccountDTO userAccount = user.getAccount();
+            String json = gson.toJson(userAccount);
             out.println(json);
             out.flush();
         }

@@ -6,11 +6,11 @@ import javax.xml.bind.JAXBException;
 import java.io.InputStream;
 import java.util.Collection;
 
-public interface SystemManager {
+public interface RegionsManager {
 
     void loadNewRegionDataFromFile(String ownerUsername, InputStream fileInputStream) throws JAXBException;
 
     Collection<RegionDTO> getAllRegions();
 
-    RegionManager getRegionManagerByRegionName(String regionName);
+    SingleRegionManager getSingleRegionManagerByRegionName(String regionName);
 }
