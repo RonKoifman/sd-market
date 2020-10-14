@@ -13,12 +13,12 @@ public class Transaction {
     private final float balanceBefore;
     private final float balanceAfter;
 
-    public Transaction(TransactionType transactionType, LocalDate date, float amount, float balanceBefore, float balanceAfter) {
+    public Transaction(TransactionType transactionType, LocalDate date, float amount, float currentBalance) {
         this.transactionType = transactionType;
         this.date = date;
         this.amount = amount;
-        this.balanceBefore = balanceBefore;
-        this.balanceAfter = balanceAfter;
+        this.balanceBefore = currentBalance;
+        this.balanceAfter = calculateBalanceAfterTransaction();
     }
 
     public TransactionDTO toTransactionDTO() {
@@ -49,6 +49,23 @@ public class Transaction {
 
     public float getBalanceAfter() {
         return balanceAfter;
+    }
+
+    private float calculateBalanceAfterTransaction() {
+        float newBalance = 0;
+
+        switch (transactionType) {
+            case CHARGE:
+                newBalance = balanceBefore - amount;
+                break;
+
+            case DEPOSIT:
+            case RECEIVE:
+                newBalance = balanceBefore + amount;
+                break;
+        }
+
+        return newBalance;
     }
 
     @Override

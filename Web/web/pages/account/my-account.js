@@ -1,5 +1,4 @@
 const USER_INFO_URL = buildUrlWithContextPath("user-info");
-const USER_ACCOUNT_URL = buildUrlWithContextPath("user-account");
 const refreshRate = 2000;
 
 $(function () {
@@ -24,10 +23,10 @@ $(function () {
 
 $(function () {
     $.ajax({
-        url: USER_ACCOUNT_URL,
-        success: function (userAccount) {
-            refreshBalance(userAccount.balance)
-            refreshTransactionsTable(userAccount.transactions);
+        url: USER_INFO_URL,
+        success: function (user) {
+            refreshBalance(user.account.balance)
+            refreshTransactionsTable(user.account.transactions);
         }
     })
 });
@@ -83,10 +82,10 @@ function refreshBalance(balance) {
 
 function ajaxUserAccount() {
     $.ajax({
-        url: USER_ACCOUNT_URL,
-        success: function (userAccount) {
-            refreshTransactionsTable(userAccount.transactions);
-            refreshBalance(userAccount.balance);
+        url: USER_INFO_URL,
+        success: function (user) {
+            refreshTransactionsTable(user.account.transactions);
+            refreshBalance(user.account.balance);
         }
     });
 }

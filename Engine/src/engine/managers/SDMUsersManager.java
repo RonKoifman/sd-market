@@ -36,7 +36,7 @@ public class SDMUsersManager implements UsersManager {
     @Override
     public synchronized void addNewTransactionToUser(String username, float transactionAmount, LocalDate transactionDate, TransactionType transactionType) {
         User user = usernameToUser.get(username);
-        Transaction newTransaction = new Transaction(transactionType, transactionDate, transactionAmount, user.getAccountBalance(), user.getAccountBalance() + transactionAmount);
+        Transaction newTransaction = new Transaction(transactionType, transactionDate, transactionAmount, user.getAccountBalance());
         user.addNewTransaction(newTransaction);
     }
 
