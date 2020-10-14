@@ -24,8 +24,8 @@ public class GetUserInfoServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            Gson gson = new Gson();
             UsersManager usersManager = SDMUsersManager.getInstance();
+            Gson gson = new Gson();
             UserDTO user = usersManager.getUserByUsername(SessionUtils.getUsername(req));
             String json = gson.toJson(user);
             out.println(json);

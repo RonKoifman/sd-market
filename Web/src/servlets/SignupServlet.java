@@ -24,8 +24,8 @@ public class SignupServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("text/html");
-            String usernameFromSession = SessionUtils.getUsername(req);
             UsersManager usersManager = SDMUsersManager.getInstance();
+            String usernameFromSession = SessionUtils.getUsername(req);
 
             if (usernameFromSession == null) {
                 String usernameFromParameter = req.getParameter(Constants.USERNAME);
