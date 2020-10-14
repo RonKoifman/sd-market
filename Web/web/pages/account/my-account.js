@@ -9,7 +9,6 @@ $(function () {
 $(function () {
     $.ajax({
         url: USER_INFO_URL,
-        async: false,
         success: function (loggedInUser) {
             $('#username').text(loggedInUser.username);
             switch (loggedInUser.userRole) {
@@ -24,6 +23,16 @@ $(function () {
 });
 
 $(function () {
+    $.ajax({
+        url: USER_ACCOUNT_URL,
+        success: function (userAccount) {
+            refreshBalance(userAccount.balance)
+            refreshTransactionsTable(userAccount.transactions);
+        }
+    })
+});
+
+$(function () {
     $('#formAccount').submit(function () {
         const parameters = $(this).serialize();
 
@@ -31,7 +40,6 @@ $(function () {
             data: parameters,
             url: this.action,
             timeout: 2000,
-            async: false,
             success: function (res) {
                 $('#amount').val('');
                 $('#date').val('');
@@ -76,7 +84,6 @@ function refreshBalance(balance) {
 function ajaxUserAccount() {
     $.ajax({
         url: USER_ACCOUNT_URL,
-        async: false,
         success: function (userAccount) {
             refreshTransactionsTable(userAccount.transactions);
             refreshBalance(userAccount.balance);

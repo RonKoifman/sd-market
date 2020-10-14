@@ -4,13 +4,12 @@ const SALE_REGION_URL = buildUrlWithContextPath('sale-region');
 const refreshRate = 2000;
 
 $(function () {
-    setInterval(ajaxRegionsTable, refreshRate);
+    setInterval(ajaxRegionsInfo, refreshRate);
 });
 
 $(function () {
     $.ajax({
         url: USER_INFO_URL,
-        async: false,
         success: function (loggedInUser) {
             $('#username').text(loggedInUser.username);
             switch (loggedInUser.userRole) {
@@ -66,7 +65,7 @@ function onRegionChosen() {
     // TODO: implement on region chosen
 }
 
-function ajaxRegionsTable() {
+function ajaxRegionsInfo() {
     $.ajax({
         url: REGIONS_URL,
         success: function (regions) {
