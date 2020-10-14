@@ -33,7 +33,7 @@ $(function () {
 
 $(function () {
     $('#formAccount').submit(function () {
-        const parameters = $(this).serialize();
+        let parameters = $(this).serialize() + '&type=Deposit';
 
         $.ajax({
             data: parameters,

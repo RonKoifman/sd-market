@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 
-@WebServlet(name = "NewDepositTransactionServlet", urlPatterns = {"/new-deposit-transaction"})
-public class NewDepositTransactionServlet extends HttpServlet {
+@WebServlet(name = "NewTransactionServlet", urlPatterns = {"/new-transaction"})
+public class NewTransactionServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -33,12 +33,13 @@ public class NewDepositTransactionServlet extends HttpServlet {
         try (PrintWriter out = res.getWriter()) {
             String transactionAmountFromParameter = req.getParameter(Constants.TRANSACTION_AMOUNT);
             String transactionDateFromParameter = req.getParameter(Constants.TRANSACTION_DATE);
+            String transactionTypeFromParameter = req.getParameter(Constants.TRANSACTION_TYPE);
             String username = SessionUtils.getUsername(req);
 
             try {
                 float transactionAmount = Float.parseFloat(transactionAmountFromParameter);
                 LocalDate transactionDate = LocalDate.parse(transactionDateFromParameter);
-                usersManager.addNewTransactionToUser(username, transactionAmount, transactionDate, TransactionType.DEPOSIT);
+                usersManager.addNewTransactionToUser(username, transactionAmount, transactionDate, TransactionType.valueOf(transactionTypeFromParameter.toUpperCase()));
                 out.println("A deposit of $" + transactionAmountFromParameter + " was made successfully.");
             } catch (Exception e) {
                 res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
