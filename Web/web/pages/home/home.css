@@ -2,6 +2,31 @@ body {
     background-color: #f5f5f5;
 }
 
-#jumbotron {
-    background-color: #f5f5f5;
+#users {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#users li {
+    float: left;
+    padding-right: 50px;
+}
+
+.user-avatar {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 85px
+}
+
+.user-info {
+    font-size: 17px;
+}
+
+#usersContainer {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
 }
