@@ -31,18 +31,18 @@ public class SDMAccountsManager implements AccountsManager {
     }
 
     @Override
-    public void addNewAccount(String username) {
+    public synchronized void addNewAccount(String username) {
         usernameToUserAccount.put(username, new Account());
     }
 
     @Override
-    public void deposit(String executorUsername, float transactionAmount, LocalDate transactionDate) {
+    public synchronized void deposit(String executorUsername, float transactionAmount, LocalDate transactionDate) {
         Account executorUserAccount = usernameToUserAccount.get(executorUsername);
         executorUserAccount.addNewTransaction(new Transaction(TransactionType.DEPOSIT, transactionDate, transactionAmount, executorUserAccount.getBalance()));
     }
 
     @Override
-    public void charge(String chargedUsername, String chargingUsername, float transactionAmount, LocalDate transactionDate) {
+    public synchronized void charge(String chargedUsername, String chargingUsername, float transactionAmount, LocalDate transactionDate) {
         Account chargedUserAccount = usernameToUserAccount.get(chargedUsername);
         Account chargingUserAccount = usernameToUserAccount.get(chargingUsername);
         chargedUserAccount.addNewTransaction(new Transaction(TransactionType.CHARGE, transactionDate, transactionAmount, chargedUserAccount.getBalance()));
@@ -50,7 +50,7 @@ public class SDMAccountsManager implements AccountsManager {
     }
 
     @Override
-    public AccountDTO getAccountByUsername(String username) {
+    public synchronized AccountDTO getAccountByUsername(String username) {
         return usernameToUserAccount.get(username).toAccountDTO();
     }
 
