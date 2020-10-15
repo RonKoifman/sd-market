@@ -18,6 +18,9 @@ $(function () {
                 case 'Store Owner':
                     $('#depositLabels').hide();
             }
+        },
+        error: function () {
+            console.error('Error from user-info URL')
         }
     })
 });
@@ -28,6 +31,9 @@ $(function () {
         success: function (account) {
             refreshBalance(account.balance)
             refreshTransactionsTable(account.transactions);
+        },
+        error: function () {
+            console.error('Error from user-account URL')
         }
     })
 });
@@ -47,6 +53,9 @@ $(function () {
                     $('#formAccount').append('<br><div class="alert alert-success" role="alert"></div>');
                 }
                 $('.alert').text(res);
+            },
+            error: function () {
+                console.error('Error from new-deposit-transaction URL')
             }
         });
 
@@ -87,6 +96,9 @@ function ajaxUserAccount() {
         success: function (account) {
             refreshTransactionsTable(account.transactions);
             refreshBalance(account.balance);
+        },
+        error: function () {
+            console.error('Error from user-account URL')
         }
     });
 }

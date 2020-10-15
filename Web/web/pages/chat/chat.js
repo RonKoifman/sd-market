@@ -10,6 +10,9 @@ $(function () {
                     $('#uploadNavLink').hide();
                     break;
             }
+        },
+        error: function () {
+            console.error('Error from user-info URL')
         }
     })
 });

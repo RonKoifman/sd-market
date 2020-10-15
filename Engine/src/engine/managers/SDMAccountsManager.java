@@ -38,8 +38,7 @@ public class SDMAccountsManager implements AccountsManager {
     @Override
     public void deposit(String executorUsername, float transactionAmount, LocalDate transactionDate) {
         Account executorUserAccount = usernameToUserAccount.get(executorUsername);
-        Transaction newDepositTransaction = new Transaction(TransactionType.DEPOSIT, transactionDate, transactionAmount, executorUserAccount.getBalance());
-        executorUserAccount.addNewTransaction(newDepositTransaction);
+        executorUserAccount.addNewTransaction(new Transaction(TransactionType.DEPOSIT, transactionDate, transactionAmount, executorUserAccount.getBalance()));
     }
 
     @Override

@@ -19,6 +19,9 @@ $(function () {
                     $('#uploadNavLink').hide();
                     break;
             }
+        },
+        error: function () {
+            console.error('Error from user-info URL')
         }
     })
 });
@@ -28,6 +31,9 @@ $(function () {
         url: USERS_URL,
         success: function (users) {
             refreshUsersDiv(users);
+        },
+        error: function () {
+            console.error('Error from users URL')
         }
     })
 });
@@ -37,6 +43,9 @@ $(function () {
         url: REGIONS_URL,
         success: function (regions) {
             refreshRegionsTable(regions);
+        },
+        error: function () {
+            console.error('Error from regions URL')
         }
     })
 });
@@ -100,6 +109,9 @@ function ajaxRegionsInfo() {
         url: REGIONS_URL,
         success: function (regions) {
             refreshRegionsTable(regions);
+        },
+        error: function () {
+            console.error('Error from regions URL')
         }
     });
 }
@@ -109,6 +121,9 @@ function ajaxUsersInfo() {
         url: USERS_URL,
         success: function (users) {
             refreshUsersDiv(users);
+        },
+        error: function () {
+            console.error('Error from users URL')
         }
     });
 }
