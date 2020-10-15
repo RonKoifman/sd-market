@@ -11,7 +11,7 @@ $(function () {
         formData.append('file-key', file);
 
         $.ajax({
-            method:'POST',
+            method: 'POST',
             data: formData,
             url: UPLOAD_FILE_URL,
             processData: false,

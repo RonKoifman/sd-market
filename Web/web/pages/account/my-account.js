@@ -44,6 +44,7 @@ $(function () {
 
         $.ajax({
             data: parameters,
+            method: 'POST',
             url: this.action,
             timeout: 2000,
             success: function (res) {

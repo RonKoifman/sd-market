@@ -21,11 +21,6 @@ public class NewDepositTransactionServlet extends HttpServlet {
         processRequest(req, res);
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        processRequest(req, res);
-    }
-
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("text/html");

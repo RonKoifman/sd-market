@@ -23,6 +23,11 @@ public class SignupServlet extends HttpServlet {
         processRequest(req, res);
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        processRequest(req, res);
+    }
+
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("text/html");
