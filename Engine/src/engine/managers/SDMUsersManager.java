@@ -1,14 +1,11 @@
 package engine.managers;
 
 import dto.models.UserDTO;
-import engine.enums.TransactionType;
 import engine.enums.UserRole;
-import engine.models.account.Transaction;
 import engine.models.user.Customer;
 import engine.models.user.StoreOwner;
 import engine.models.user.User;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -34,14 +31,7 @@ public class SDMUsersManager implements UsersManager {
     }
 
     @Override
-    public synchronized void addNewTransactionToUser(String username, float transactionAmount, LocalDate transactionDate, TransactionType transactionType) {
-        User user = usernameToUser.get(username);
-        Transaction newTransaction = new Transaction(transactionType, transactionDate, transactionAmount, user.getAccountBalance());
-        user.addNewTransaction(newTransaction);
-    }
-
-    @Override
-    public synchronized void addUser(String username, UserRole userRole) {
+    public synchronized void addNewUser(String username, UserRole userRole) {
         switch (userRole) {
             case STORE_OWNER:
                 usernameToUser.put(username, new StoreOwner(username, userRole));
@@ -71,5 +61,12 @@ public class SDMUsersManager implements UsersManager {
     @Override
     public synchronized UserDTO getUserByUsername(String username) {
        return usernameToUser.get(username).toUserDTO();
+    }
+
+    @Override
+    public String toString() {
+        return "SDMUsersManager{" +
+                "usernameToUser=" + usernameToUser +
+                '}';
     }
 }

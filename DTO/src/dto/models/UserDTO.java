@@ -7,13 +7,11 @@ public abstract class UserDTO {
     protected final int id;
     protected final String username;
     protected final String userRole;
-    protected final AccountDTO account;
 
-    public UserDTO(int id, String userRole, String username, AccountDTO account) {
+    public UserDTO(int id, String userRole, String username) {
         this.id = id;
         this.username = username;
         this.userRole = userRole;
-        this.account = account;
     }
 
     public int getId() {
@@ -26,10 +24,6 @@ public abstract class UserDTO {
 
     public String getUsername() {
         return username;
-    }
-
-    public AccountDTO getAccount() {
-        return account;
     }
 
     @Override
@@ -51,7 +45,6 @@ public abstract class UserDTO {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", userRole='" + userRole + '\'' +
-                ", account=" + account +
                 '}';
     }
 }

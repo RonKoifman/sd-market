@@ -3,8 +3,6 @@ package engine.models.user;
 import dto.models.UserDTO;
 import engine.enums.UserRole;
 import engine.interfaces.Identifiable;
-import engine.models.account.Account;
-import engine.models.account.Transaction;
 
 import java.util.Objects;
 
@@ -13,7 +11,6 @@ public abstract class User implements Identifiable {
     protected final int id;
     protected final String username;
     protected final UserRole userRole;
-    protected final Account account = new Account();
     private static int idGenerator;
 
     public User(String username, UserRole userRole) {
@@ -23,14 +20,6 @@ public abstract class User implements Identifiable {
     }
 
     public abstract UserDTO toUserDTO();
-
-    public void addNewTransaction(Transaction newTransaction) {
-        account.addNewTransaction(newTransaction);
-    }
-
-    public float getAccountBalance() {
-        return account.getBalance();
-    }
 
     @Override
     public int getId() {
@@ -56,7 +45,6 @@ public abstract class User implements Identifiable {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", userRole=" + userRole +
-                ", account=" + account +
                 '}';
     }
 }

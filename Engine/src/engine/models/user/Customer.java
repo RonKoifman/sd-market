@@ -18,7 +18,6 @@ public class Customer extends User {
                 .id(id)
                 .username(username)
                 .userRole(userRole.getValue())
-                .account(account.toAccountDTO())
                 .build();
     }
 
@@ -28,7 +27,6 @@ public class Customer extends User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", userRole=" + userRole +
-                ", account=" + account +
                 '}';
     }
 }

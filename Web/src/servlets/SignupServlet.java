@@ -1,6 +1,8 @@
 package servlets;
 
 import constants.Constants;
+import engine.managers.AccountsManager;
+import engine.managers.SDMAccountsManager;
 import engine.managers.UsersManager;
 import engine.enums.UserRole;
 import engine.managers.SDMUsersManager;
@@ -25,6 +27,7 @@ public class SignupServlet extends HttpServlet {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("text/html");
             UsersManager usersManager = SDMUsersManager.getInstance();
+            AccountsManager accountsManager = SDMAccountsManager.getInstance();
             String usernameFromSession = SessionUtils.getUsername(req);
 
             if (usernameFromSession == null) {
@@ -48,14 +51,15 @@ public class SignupServlet extends HttpServlet {
                         } else {
                             switch (userRoleFromParameter) {
                                 case Constants.STORE_OWNER:
-                                    usersManager.addUser(usernameFromParameter, UserRole.valueOf(Constants.STORE_OWNER.toUpperCase()));
+                                    usersManager.addNewUser(usernameFromParameter, UserRole.valueOf(Constants.STORE_OWNER.toUpperCase()));
                                     break;
 
                                 case Constants.CUSTOMER:
-                                    usersManager.addUser(usernameFromParameter, UserRole.valueOf(Constants.CUSTOMER.toUpperCase()));
+                                    usersManager.addNewUser(usernameFromParameter, UserRole.valueOf(Constants.CUSTOMER.toUpperCase()));
                                     break;
                             }
 
+                            accountsManager.addNewAccount(usernameFromParameter);
                             req.getSession(true).setAttribute(Constants.USERNAME, usernameFromParameter);
                             req.getSession(true).setAttribute(Constants.USER_ROLE, userRoleFromParameter);
                             out.println(Constants.HOME_URL);

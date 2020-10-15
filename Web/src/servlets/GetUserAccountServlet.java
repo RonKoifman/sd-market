@@ -1,9 +1,9 @@
 package servlets;
 
 import com.google.gson.Gson;
-import dto.models.UserDTO;
-import engine.managers.SDMUsersManager;
-import engine.managers.UsersManager;
+import dto.models.AccountDTO;
+import engine.managers.AccountsManager;
+import engine.managers.SDMAccountsManager;
 import utils.SessionUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "GetUserInfoServlet", urlPatterns = {"/user-info"})
-public class GetUserInfoServlet extends HttpServlet {
+@WebServlet(name = "GetUserAccountServlet", urlPatterns = {"/user-account"})
+public class GetUserAccountServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -24,10 +24,10 @@ public class GetUserInfoServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            UsersManager usersManager = SDMUsersManager.getInstance();
+            AccountsManager accountsManager = SDMAccountsManager.getInstance();
             Gson gson = new Gson();
-            UserDTO user = usersManager.getUserByUsername(SessionUtils.getUsername(req));
-            String json = gson.toJson(user);
+            AccountDTO account = accountsManager.getAccountByUsername(SessionUtils.getUsername(req));
+            String json = gson.toJson(account);
             out.println(json);
             out.flush();
         }
