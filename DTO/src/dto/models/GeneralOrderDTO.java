@@ -41,10 +41,6 @@ public class GeneralOrderDTO {
         return storeToOrder.get(store);
     }
 
-    public float getDistanceFromUserByStore(StoreDTO store) {
-        return storeToOrder.get(store).getDistanceFromCustomer();
-    }
-
     public LocalDate getOrderDate() {
         return orderDate;
     }

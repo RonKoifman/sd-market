@@ -92,9 +92,9 @@ public class SDMUsersManager implements UsersManager {
     }
 
     @Override
-    public Map<StoreDTO, List<SubOrderDTO>> getStoreOwnerStoreToOrdersByRegionName(String storeOwnerUsername, String regionName) {
+    public Map<StoreDTO, Collection<SubOrderDTO>> getStoreOwnerStoreToOrdersByRegionName(String storeOwnerUsername, String regionName) {
         StoreOwner storeOwner = (StoreOwner)usernameToUser.get(storeOwnerUsername);
-        Map<StoreDTO, List<SubOrderDTO>> storeToOrders = storeOwner.getStoreToOrdersByRegionName(regionName);
+        Map<StoreDTO, Collection<SubOrderDTO>> storeToOrders = storeOwner.getStoreToOrdersByRegionName(regionName);
 
         return Collections.unmodifiableMap(storeToOrders);
     }

@@ -212,7 +212,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
 
         for (Store store : pendingOrder.getStores()) {
             List<OrderItem> storeOrderedItems = pendingOrder.getOrderByStore(store).getOrderedItems();
-            Collection<DiscountInformationDTO> discountsInStore = storeIdToStore.get(store.getId()).findAvailableDiscountsByPurchases(storeOrderedItems);
+            Collection<DiscountInformationDTO> discountsInStore = store.findAvailableDiscountsByPurchases(storeOrderedItems);
             storeToAvailableDiscounts.put(store.toStoreDTO(), discountsInStore);
         }
 
@@ -255,7 +255,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     }
 
     private void updateStoresOrdersAfterNewOrder(GeneralOrder newOrder) {
-        newOrder.getStores().forEach(store -> storeIdToStore.get(store.getId()).addNewOrder(newOrder.getOrderByStore(store)));
+        newOrder.getStores().forEach(store -> store.addNewOrder(newOrder.getOrderByStore(store)));
     }
 
     private void updateItemsPurchaseAmountAfterNewOrder(GeneralOrder newOrder) {
@@ -268,7 +268,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         } else {
             storeToOrderedItems.put(chosenStore, new LinkedList<>());
             itemToItemPurchaseAmount.forEach((item, purchaseAmount) -> {
-                OrderItem orderedItemToAdd = new OrderItem(storeIdToStore.get(chosenStore.getId()).getItemById(item.getId()), chosenStore.getItemById(item.getId()).getPrice(), purchaseAmount, false);
+                OrderItem orderedItemToAdd = new OrderItem(chosenStore.getItemById(item.getId()), chosenStore.getItemById(item.getId()).getPrice(), purchaseAmount, false);
                 allOrderedItems.add(orderedItemToAdd);
                 storeToOrderedItems.get(chosenStore).add(orderedItemToAdd);
             });
@@ -278,7 +278,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     private void findCheapestStoresToOrderFrom(List<OrderItem> allOrderedItems, Map<Store, List<OrderItem>> storeToOrderedItems, Map<RegionItemDTO, Float> itemToItemPurchaseAmount) {
         itemToItemPurchaseAmount.forEach((item, purchaseAmount) -> {
             Store cheapestStore = findCheapestStore(item);
-            OrderItem orderedItemToAdd = new OrderItem(storeIdToStore.get(cheapestStore.getId()).getItemById(item.getId()), cheapestStore.getItemById(item.getId()).getPrice(), purchaseAmount, false);
+            OrderItem orderedItemToAdd = new OrderItem(cheapestStore.getItemById(item.getId()), cheapestStore.getItemById(item.getId()).getPrice(), purchaseAmount, false);
             allOrderedItems.add(orderedItemToAdd);
             if (!storeToOrderedItems.containsKey(cheapestStore)) {
                 storeToOrderedItems.put(cheapestStore, new LinkedList<>());

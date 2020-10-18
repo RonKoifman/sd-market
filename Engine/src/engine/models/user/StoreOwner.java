@@ -28,8 +28,8 @@ public class StoreOwner extends User {
         newStore.setOwnerUsername(username);
     }
 
-    public Map<StoreDTO, List<SubOrderDTO>> getStoreToOrdersByRegionName(String regionName) {
-        Map<StoreDTO, List<SubOrderDTO>> storeToOrders = new HashMap<>();
+    public Map<StoreDTO, Collection<SubOrderDTO>> getStoreToOrdersByRegionName(String regionName) {
+        Map<StoreDTO, Collection<SubOrderDTO>> storeToOrders = new HashMap<>();
         Collection<Store> ownedStores = regionNameToOwnedStoresInRegion.getOrDefault(regionName, new HashSet<>());
 
         ownedStores.forEach(store -> storeToOrders.put(store.toStoreDTO(), store.getOrdersMade().stream().map(SubOrder::toSubOrderDTO).collect(Collectors.toList())));
