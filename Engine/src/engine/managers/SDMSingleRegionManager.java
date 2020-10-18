@@ -323,7 +323,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         return storeIdToStore.values()
                 .stream()
                 .map(Store::getLocation)
-                .anyMatch(currentLocation -> currentLocation.x == location.x && currentLocation.y == location.y);
+                .anyMatch(currentLocation -> currentLocation.equals(location));
     }
 
     @Override

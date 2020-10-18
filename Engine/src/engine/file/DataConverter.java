@@ -2,6 +2,7 @@ package engine.file;
 
 import engine.enums.DiscountOfferType;
 import engine.enums.PurchaseForm;
+import engine.exceptions.IdenticalLocationsException;
 import engine.exceptions.LocationOutOfRangeException;
 import engine.file.jaxb.schema.generated.*;
 import engine.models.location.Location;
@@ -63,6 +64,19 @@ class DataConverter {
                             store.getName() + "' store, does not exist in region's items.");
                 }
             }
+        }
+    }
+
+    private void checkEachStoreInDifferentLocation() {
+        List<Location> storeLocations = new LinkedList<>();
+
+        for (Store store : convertedStoreIdToStore.values()) {
+            if (storeLocations.contains(store.getLocation())) {
+                throw new IdenticalLocationsException("The location (" + store.getLocation().x + ", " +
+                        store.getLocation().y + ") exists more than once in the region.");
+            }
+
+            storeLocations.add(store.getLocation());
         }
     }
 
@@ -129,6 +143,8 @@ class DataConverter {
                         System.lineSeparator() + e.getMessage());
             }
         }
+
+        checkEachStoreInDifferentLocation();
     }
 
     private void convertItems(Collection<SDMItem> generatedItems) {
