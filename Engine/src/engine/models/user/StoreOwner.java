@@ -24,15 +24,14 @@ public class StoreOwner extends User {
         }
 
         regionNameToOwnedStoresInRegion.get(regionName).add(newStore);
+        newStore.setOwnerUsername(username);
     }
 
     public Map<StoreDTO, List<SubOrderDTO>> getStoreToOrdersByRegionName(String regionName) {
         Map<StoreDTO, List<SubOrderDTO>> storeToOrders = new HashMap<>();
         Collection<Store> ownedStores = regionNameToOwnedStoresInRegion.getOrDefault(regionName, new HashSet<>());
 
-        for (Store store : ownedStores) {
-            storeToOrders.put(store.toStoreDTO(), store.getOrdersMade().stream().map(SubOrder::toSubOrderDTO).collect(Collectors.toList()));
-        }
+        ownedStores.forEach(store -> storeToOrders.put(store.toStoreDTO(), store.getOrdersMade().stream().map(SubOrder::toSubOrderDTO).collect(Collectors.toList())));
 
         return Collections.unmodifiableMap(storeToOrders);
     }

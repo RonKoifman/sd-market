@@ -159,8 +159,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         Store newStore = new Store(storeId, storeName, storeDeliveryPPK, new Location(storeLocation.x, storeLocation.y));
         itemIdToItemPriceInStore.forEach((itemId, itemPrice) -> addNewItemToStore(storeId, itemId, itemPrice));
         storeIdToStore.put(newStore.getId(), newStore);
-        newStore.setOwnerUsername(ownerUsername);
-        SDMUsersManager.getInstance().addStoreOwnerNewStore(ownerUsername, newStore, regionName);
+        SDMUsersManager.getInstance().addNewStoreToStoreOwner(ownerUsername, newStore, regionName);
 
         // TODO: send notification to the region owner (only if the new store owner is not himself)
     }
@@ -196,7 +195,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         updateItemsPurchaseAmountAfterNewOrder(pendingOrder);
         updateStoresOrdersAfterNewOrder(pendingOrder);
         updateAverageOrderItemsCost(pendingOrder);
-        SDMUsersManager.getInstance().addCustomerNewOrder(username, pendingOrder, regionName);
+        SDMUsersManager.getInstance().addNewOrderToCustomer(username, pendingOrder, regionName);
 
         // TODO: send notification about new order to all the store owners of the stores participated in the order
         // TODO: add new transactions to the customer and all the store owners of the stores participated in the order
@@ -219,10 +218,10 @@ public class SDMSingleRegionManager implements SingleRegionManager {
 
     @Override
     public void addFeedbacksToStoresFromOrder(String username, Map<StoreDTO, FeedbackDTO> storeToFeedback) {
-        for (StoreDTO storeDTO : storeToFeedback.keySet()) {
+        storeToFeedback.forEach((storeDTO, feedback) -> {
             Store store = storeIdToStore.get(storeDTO.getId());
-            store.addNewFeedback(storeToFeedback.get(storeDTO));
-        }
+            store.addNewFeedback(feedback);
+        });
 
         // TODO: send notifications to the store owner about all the stores who got a feedback
     }
@@ -263,25 +262,25 @@ public class SDMSingleRegionManager implements SingleRegionManager {
             findCheapestStoresToOrderFrom(allOrderedItems, storeToOrderedItems, itemToItemPurchaseAmount);
         } else {
             storeToOrderedItems.put(chosenStore, new LinkedList<>());
-            for (Map.Entry<RegionItemDTO, Float> entry : itemToItemPurchaseAmount.entrySet()) {
-                OrderItemDTO orderedItemToAdd = new OrderItemDTO.Builder().item(chosenStore.getItemById(entry.getKey().getId())).itemOrderPrice(chosenStore.getItemById(entry.getKey().getId()).getPrice()).quantity(entry.getValue()).isFromDiscount(false).build();
+            itemToItemPurchaseAmount.forEach((item, purchaseAmount) -> {
+                OrderItemDTO orderedItemToAdd = new OrderItemDTO.Builder().item(chosenStore.getItemById(item.getId())).itemOrderPrice(chosenStore.getItemById(item.getId()).getPrice()).quantity(purchaseAmount).isFromDiscount(false).build();
                 allOrderedItems.add(orderedItemToAdd);
                 storeToOrderedItems.get(chosenStore).add(orderedItemToAdd);
-            }
+            });
         }
     }
 
     private void findCheapestStoresToOrderFrom(List<OrderItemDTO> allOrderedItems, Map<StoreDTO, List<OrderItemDTO>> storeToOrderedItems, Map<RegionItemDTO, Float> itemToItemPurchaseAmount) {
-        for (Map.Entry<RegionItemDTO, Float> entry : itemToItemPurchaseAmount.entrySet()) {
-            StoreDTO cheapestStore = findCheapestStore(entry.getKey());
-            OrderItemDTO orderedItemToAdd = new OrderItemDTO.Builder().item(cheapestStore.getItemById(entry.getKey().getId())).itemOrderPrice(cheapestStore.getItemById(entry.getKey().getId()).getPrice()).quantity(entry.getValue()).isFromDiscount(false).build();
+        itemToItemPurchaseAmount.forEach((item, purchaseAmount) -> {
+            StoreDTO cheapestStore = findCheapestStore(item);
+            OrderItemDTO orderedItemToAdd = new OrderItemDTO.Builder().item(cheapestStore.getItemById(item.getId())).itemOrderPrice(cheapestStore.getItemById(item.getId()).getPrice()).quantity(purchaseAmount).isFromDiscount(false).build();
             allOrderedItems.add(orderedItemToAdd);
             if (!storeToOrderedItems.containsKey(cheapestStore)) {
                 storeToOrderedItems.put(cheapestStore, new LinkedList<>());
             }
 
             storeToOrderedItems.get(cheapestStore).add(orderedItemToAdd);
-        }
+        });
     }
 
     private StoreDTO findCheapestStore(RegionItemDTO item) {
@@ -302,8 +301,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     }
 
     private void initializeStoresOwner() {
-        storeIdToStore.values().forEach(store -> store.setOwnerUsername(regionOwnerUsername));
-        storeIdToStore.values().forEach(store -> SDMUsersManager.getInstance().addStoreOwnerNewStore(regionOwnerUsername, store, regionName));
+        storeIdToStore.values().forEach(store -> SDMUsersManager.getInstance().addNewStoreToStoreOwner(regionOwnerUsername, store, regionName));
     }
 
     private void initializeItemsSellsInStores() {

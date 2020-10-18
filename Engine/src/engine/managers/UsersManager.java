@@ -17,9 +17,9 @@ public interface UsersManager {
 
     UserDTO getUserByUsername(String username);
 
-    void addCustomerNewOrder(String customerUsername, GeneralOrder newOrder, String regionName);
+    void addNewOrderToCustomer(String customerUsername, GeneralOrder newOrder, String regionName);
 
-    void addStoreOwnerNewStore(String storeOwnerUsername, Store newStore, String regionName);
+    void addNewStoreToStoreOwner(String storeOwnerUsername, Store newStore, String regionName);
 
     Collection<GeneralOrderDTO> getCustomerOrdersByRegionName(String customerUsername, String regionName);
 
