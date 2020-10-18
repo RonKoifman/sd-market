@@ -43,10 +43,6 @@ public class Transaction {
         return amount;
     }
 
-    public float getBalanceBefore() {
-        return balanceBefore;
-    }
-
     public float getBalanceAfter() {
         return balanceAfter;
     }

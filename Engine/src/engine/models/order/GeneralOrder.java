@@ -1,7 +1,9 @@
 package engine.models.order;
 
 import dto.models.*;
+import engine.models.item.OrderItem;
 import engine.models.location.Location;
+import engine.models.store.Store;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -9,9 +11,9 @@ import java.util.stream.Collectors;
 
 public class GeneralOrder extends Order {
 
-    private final Map<StoreDTO, SubOrder> storeToOrder = new HashMap<>();
+    private final Map<Store, SubOrder> storeToOrder = new HashMap<>();
 
-    public GeneralOrder(String customerUsername, Location orderDestination, LocalDate orderDate, List<OrderItemDTO> allOrderedItems, Map<StoreDTO, List<OrderItemDTO>> storeToOrderedItems) {
+    public GeneralOrder(String customerUsername, Location orderDestination, LocalDate orderDate, List<OrderItem> allOrderedItems, Map<Store, List<OrderItem>> storeToOrderedItems) {
         super(customerUsername, orderDate, orderDestination, allOrderedItems);
         createStoresSubOrders(storeToOrderedItems);
         this.totalItemsCost = calculateTotalItemsCost();
@@ -27,8 +29,8 @@ public class GeneralOrder extends Order {
                 .orderDate(orderDate)
                 .customerUsername(customerUsername)
                 .orderDestination(orderDestination)
-                .orderedItems(orderedItems)
-                .storeToOrder(storeToOrder.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().toSubOrderDTO())))
+                .orderedItems(orderedItems.stream().map(OrderItem::toOrderItemDTO).collect(Collectors.toList()))
+                .storeToOrder(storeToOrder.entrySet().stream().collect(Collectors.toMap(entry -> entry.getKey().toStoreDTO(), entry -> entry.getValue().toSubOrderDTO())))
                 .totalItemsCost(totalItemsCost)
                 .deliveryCost(deliveryCost)
                 .totalOrderCost(totalOrderCost)
@@ -37,15 +39,15 @@ public class GeneralOrder extends Order {
                 .build();
     }
 
-    public Collection<StoreDTO> getStores() {
+    public Collection<Store> getStores() {
         return Collections.unmodifiableCollection(storeToOrder.keySet());
     }
 
-    public SubOrder getOrderByStore(StoreDTO store) {
+    public SubOrder getOrderByStore(Store store) {
         return storeToOrder.get(store);
     }
 
-    public void addItemsFromDiscountOffers(Map<StoreDTO, List<OrderItemDTO>> storeToDiscountOfferItems) {
+    public void addItemsFromDiscountOffers(Map<Store, List<OrderItem>> storeToDiscountOfferItems) {
         addDiscountItemsToStoresSubOrders(storeToDiscountOfferItems);
         totalItemsCost = calculateTotalItemsCost();
         totalOrderCost = calculateTotalOrderCost();
@@ -67,15 +69,15 @@ public class GeneralOrder extends Order {
                 .reduce(0.0f, Float::sum);
     }
 
-    private void addDiscountItemsToStoresSubOrders(Map<StoreDTO, List<OrderItemDTO>> storeToDiscountOfferItems) {
-        for (StoreDTO store : storeToDiscountOfferItems.keySet()) {
+    private void addDiscountItemsToStoresSubOrders(Map<Store, List<OrderItem>> storeToDiscountOfferItems) {
+        for (Store store : storeToDiscountOfferItems.keySet()) {
             getOrderByStore(store).addItemsFromDiscountOffers(storeToDiscountOfferItems.get(store));
             orderedItems.addAll(storeToDiscountOfferItems.get(store));
         }
     }
 
-    private void createStoresSubOrders(Map<StoreDTO, List<OrderItemDTO>> storeToOrderedItems) {
-        for (StoreDTO store : storeToOrderedItems.keySet()) {
+    private void createStoresSubOrders(Map<Store, List<OrderItem>> storeToOrderedItems) {
+        for (Store store : storeToOrderedItems.keySet()) {
             storeToOrder.put(store, new SubOrder(store, customerUsername, orderDestination, orderDate, storeToOrderedItems.get(store)));
         }
     }

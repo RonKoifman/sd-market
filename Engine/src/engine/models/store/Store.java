@@ -4,14 +4,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import dto.models.DiscountInformationDTO;
-import dto.models.FeedbackDTO;
-import dto.models.OrderItemDTO;
 import dto.models.StoreDTO;
 import engine.exceptions.DiscountOffersRemovedException;
 import engine.interfaces.Locationable;
 import engine.interfaces.Identifiable;
 import engine.models.discount.DiscountInformation;
 import engine.models.discount.DiscountTrigger;
+import engine.models.feedback.Feedback;
+import engine.models.item.OrderItem;
 import engine.models.item.StoreItem;
 import engine.models.location.Location;
 import engine.models.order.SubOrder;
@@ -28,7 +28,7 @@ public class Store implements Locationable, Identifiable {
     private final Map<Integer, StoreItem> itemIdToItem = new HashMap<>();
     private final List<DiscountInformation> discountsInformation = new LinkedList<>();
     private final Map<Integer, SubOrder> orderIdToOrder = new HashMap<>();
-    private final List<FeedbackDTO> feedbacksReceived = new LinkedList<>();
+    private final List<Feedback> feedbacksReceived = new LinkedList<>();
 
     public Store(int id, String name, int deliveryPPK, Location location) {
         this.id = id;
@@ -68,6 +68,10 @@ public class Store implements Locationable, Identifiable {
         return itemIdToItem.size();
     }
 
+    public int getDeliveryPPK() {
+        return deliveryPPK;
+    }
+
     public void setOwnerUsername(String ownerUsername) {
         this.ownerUsername = ownerUsername;
     }
@@ -87,11 +91,11 @@ public class Store implements Locationable, Identifiable {
         increaseItemsPurchaseAmountFromStore(newOrder.getOrderedItems());
     }
 
-    public void addNewFeedback(FeedbackDTO newFeedback) {
+    public void addNewFeedback(Feedback newFeedback) {
         feedbacksReceived.add(newFeedback);
     }
 
-    public Collection<FeedbackDTO> getFeedbacksReceived() {
+    public Collection<Feedback> getFeedbacksReceived() {
         return Collections.unmodifiableCollection(feedbacksReceived);
     }
 
@@ -116,10 +120,10 @@ public class Store implements Locationable, Identifiable {
         removeDiscountOffersAfterDeletingItem(itemIdToDelete);
     }
 
-    public Collection<DiscountInformationDTO> findAvailableDiscountsByPurchases(List<OrderItemDTO> orderedItems) {
+    public Collection<DiscountInformationDTO> findAvailableDiscountsByPurchases(List<OrderItem> orderedItems) {
         Collection<DiscountInformationDTO> availableDiscounts = new LinkedList<>();
 
-        for (OrderItemDTO orderedItem : orderedItems) {
+        for (OrderItem orderedItem : orderedItems) {
             Map<DiscountInformationDTO, Integer> matchingDiscountToDiscountAmount = findMatchingDiscountsByOrderedItem(orderedItem);
             addMatchingDiscountsToAvailableDiscounts(availableDiscounts, matchingDiscountToDiscountAmount);
         }
@@ -127,7 +131,7 @@ public class Store implements Locationable, Identifiable {
         return Collections.unmodifiableCollection(availableDiscounts);
     }
 
-    private Map<DiscountInformationDTO, Integer> findMatchingDiscountsByOrderedItem(OrderItemDTO orderedItem) {
+    private Map<DiscountInformationDTO, Integer> findMatchingDiscountsByOrderedItem(OrderItem orderedItem) {
         Map<DiscountInformationDTO, Integer> matchingDiscountToDiscountAmount = new HashMap<>();
 
         for (DiscountInformation discountInformation : discountsInformation) {
@@ -148,7 +152,7 @@ public class Store implements Locationable, Identifiable {
         }
     }
 
-    private void increaseItemsPurchaseAmountFromStore(List<OrderItemDTO> orderedItems) {
+    private void increaseItemsPurchaseAmountFromStore(List<OrderItem> orderedItems) {
        orderedItems.forEach(orderedItem -> itemIdToItem.get(orderedItem.getItem().getId()).increasePurchaseAmount(orderedItem.getQuantity()));
     }
 

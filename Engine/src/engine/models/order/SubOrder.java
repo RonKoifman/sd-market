@@ -1,20 +1,23 @@
 package engine.models.order;
 
 import dto.models.*;
+import engine.models.item.OrderItem;
 import engine.models.location.Location;
+import engine.models.store.Store;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SubOrder extends Order {
 
-    private final StoreDTO store;
-    private final float distanceFromUser;
+    private final Store store;
+    private final float distanceFromCustomer;
 
-    public SubOrder(StoreDTO store, String customerUsername, Location orderDestination, LocalDate orderDate, List<OrderItemDTO> orderedItems) {
+    public SubOrder(Store store, String customerUsername, Location orderDestination, LocalDate orderDate, List<OrderItem> orderedItems) {
         super(customerUsername, orderDate, orderDestination, orderedItems);
         this.store = store;
-        this.distanceFromUser = calculateDistanceFromUser();
+        this.distanceFromCustomer = calculateDistanceFromCustomer();
         this.totalItemsCost = calculateTotalItemsCost();
         this.deliveryCost = calculateDeliveryCost();
         this.totalOrderCost = calculateTotalOrderCost();
@@ -26,7 +29,7 @@ public class SubOrder extends Order {
         return new SubOrderDTO.Builder()
                 .id(id)
                 .deliveryCost(deliveryCost)
-                .distanceFromUser(distanceFromUser)
+                .distanceFromCustomer(distanceFromCustomer)
                 .customerUsername(customerUsername)
                 .orderDate(orderDate)
                 .orderDestination(orderDestination)
@@ -34,11 +37,11 @@ public class SubOrder extends Order {
                 .totalItemsCost(totalItemsCost)
                 .totalOrderCost(totalOrderCost)
                 .totalItemsTypes(totalItemsTypes)
-                .orderedItems(orderedItems)
+                .orderedItems(orderedItems.stream().map(OrderItem::toOrderItemDTO).collect(Collectors.toList()))
                 .build();
     }
 
-    public void addItemsFromDiscountOffers(List<OrderItemDTO> discountItems) {
+    public void addItemsFromDiscountOffers(List<OrderItem> discountItems) {
         orderedItems.addAll(discountItems);
         totalItemsCost = calculateTotalItemsCost();
         totalOrderCost = calculateTotalOrderCost();
@@ -48,10 +51,10 @@ public class SubOrder extends Order {
 
     @Override
     protected float calculateDeliveryCost() {
-        return store.getDeliveryPPK() * distanceFromUser;
+        return store.getDeliveryPPK() * distanceFromCustomer;
     }
 
-    private float calculateDistanceFromUser() {
+    private float calculateDistanceFromCustomer() {
         return (float)orderDestination.distance(store.getLocation());
     }
 
@@ -72,7 +75,7 @@ public class SubOrder extends Order {
     public String toString() {
         return "SubOrder{" +
                 "store=" + store +
-                ", distanceFromUser=" + distanceFromUser +
+                ", distanceFromUser=" + distanceFromCustomer +
                 ", id=" + id +
                 ", customerUsername=" + customerUsername +
                 ", orderDestination=" + orderDestination +

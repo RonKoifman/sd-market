@@ -78,8 +78,8 @@ public class SDMUsersManager implements UsersManager {
     }
 
     @Override
-    public void addNewStoreToStoreOwner(String storeOwnerUsername, Store newStore, String regionName) {
-        StoreOwner storeOwner = (StoreOwner)usernameToUser.get(storeOwnerUsername);
+    public void addNewStoreToStoreOwner(String ownerUsername, Store newStore, String regionName) {
+        StoreOwner storeOwner = (StoreOwner)usernameToUser.get(ownerUsername);
         storeOwner.addNewOwnedStore(regionName, newStore);
     }
 

@@ -24,18 +24,6 @@ public class NewCompetitorNotification extends Notification {
         return competitorUsername;
     }
 
-    public String getStoreName() {
-        return storeName;
-    }
-
-    public Point getStoreLocation() {
-        return storeLocation;
-    }
-
-    public int getAmountOfItemsSoldByStore() {
-        return amountOfItemsSoldByStore;
-    }
-
     public int getTotalItemsInRegion() {
         return totalItemsInRegion;
     }

@@ -30,7 +30,7 @@ public interface SingleRegionManager {
 
     void addChosenDiscountOffersToPendingOrderByUsername(String username, Map<StoreDTO, List<DiscountOfferDTO>> storeToDiscountOffers);
 
-    void addFeedbacksToStoresFromOrder(String username, Map<StoreDTO, FeedbackDTO> storeToFeedback);
+    void addFeedbacksToStoresAfterOrder(String username, Map<StoreDTO, FeedbackDTO> storeToFeedback);
 
     void addPendingOrderToOrdersStockByUsername(String username);
 

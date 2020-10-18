@@ -40,6 +40,10 @@ public class StoreItemDTO {
         return price;
     }
 
+    public int getSellingStoreId() {
+        return sellingStoreId;
+    }
+
     public static final class Builder {
 
         private int id;

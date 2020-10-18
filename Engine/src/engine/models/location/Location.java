@@ -17,14 +17,6 @@ public class Location extends Point {
         this.y = y;
     }
 
-    public static int getMinCoordinate() {
-        return MIN_COORDINATE;
-    }
-
-    public static int getMaxCoordinate() {
-        return MAX_COORDINATE;
-    }
-
     private void checkForLegalCoordinate(int coordinate) {
         if (!(MIN_COORDINATE <= coordinate && coordinate <= MAX_COORDINATE)) {
             throw new LocationOutOfRangeException("Location coordinates must be between " + MIN_COORDINATE +

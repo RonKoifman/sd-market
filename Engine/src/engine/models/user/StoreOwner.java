@@ -4,6 +4,7 @@ import dto.models.FeedbackDTO;
 import dto.models.StoreDTO;
 import dto.models.SubOrderDTO;
 import engine.enums.UserRole;
+import engine.models.feedback.Feedback;
 import engine.models.order.SubOrder;
 import engine.models.store.Store;
 
@@ -41,6 +42,7 @@ public class StoreOwner extends User {
                 .stream()
                 .map(Store::getFeedbacksReceived)
                 .flatMap(Collection::stream)
+                .map(Feedback::toFeedbackDTO)
                 .collect(Collectors.toList()));
     }
 

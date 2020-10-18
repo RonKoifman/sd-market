@@ -35,10 +35,6 @@ public class StoreItem extends Item {
         return price;
     }
 
-    public int getSellingStoreId() {
-        return sellingStoreId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

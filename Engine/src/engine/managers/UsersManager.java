@@ -19,7 +19,7 @@ public interface UsersManager {
 
     void addNewOrderToCustomer(String customerUsername, GeneralOrder newOrder, String regionName);
 
-    void addNewStoreToStoreOwner(String storeOwnerUsername, Store newStore, String regionName);
+    void addNewStoreToStoreOwner(String ownerUsername, Store newStore, String regionName);
 
     Collection<GeneralOrderDTO> getCustomerOrdersByRegionName(String customerUsername, String regionName);
 

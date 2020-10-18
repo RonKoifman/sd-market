@@ -20,14 +20,6 @@ public class NewFeedbackNotification extends Notification {
         return username;
     }
 
-    public String getStoreName() {
-        return storeName;
-    }
-
-    public Rating getRating() {
-        return rating;
-    }
-
     private String buildMessage() {
        return String.format("You've just received a new feedback from the customer '%s'." + System.lineSeparator() +
                "Your store '%s' got a rate of %d stars!",

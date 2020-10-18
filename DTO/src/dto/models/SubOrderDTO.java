@@ -4,7 +4,6 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SubOrderDTO {
 
@@ -12,7 +11,7 @@ public class SubOrderDTO {
     private final LocalDate orderDate;
     private final String customerUsername;
     private final Point orderDestination;
-    private final float distanceFromUser;
+    private final float distanceFromCustomer;
     private final int totalItemsAmount;
     private final int totalItemsTypes;
     private final float totalItemsCost;
@@ -25,7 +24,7 @@ public class SubOrderDTO {
         this.orderDate = builder.orderDate;
         this.orderDestination = builder.orderDestination;
         this.customerUsername = builder.customerUsername;
-        this.distanceFromUser = builder.distanceFromUser;
+        this.distanceFromCustomer = builder.distanceFromCustomer;
         this.totalItemsAmount = builder.totalItemsAmount;
         this.totalItemsCost = builder.totalItemsCost;
         this.deliveryCost = builder.deliveryCost;
@@ -50,8 +49,8 @@ public class SubOrderDTO {
         return orderDestination;
     }
 
-    public float getDistanceFromUser() {
-        return distanceFromUser;
+    public float getDistanceFromCustomer() {
+        return distanceFromCustomer;
     }
 
     public String getCustomerUsername() {
@@ -84,7 +83,7 @@ public class SubOrderDTO {
         private LocalDate orderDate;
         private Point orderDestination;
         private String customerUsername;
-        private float distanceFromUser;
+        private float distanceFromCustomer;
         private int totalItemsTypes;
         private int totalItemsAmount;
         private float totalItemsCost;
@@ -112,8 +111,8 @@ public class SubOrderDTO {
             return this;
         }
 
-        public Builder distanceFromUser(float distanceFromUser) {
-            this.distanceFromUser = distanceFromUser;
+        public Builder distanceFromCustomer(float distanceFromCustomer) {
+            this.distanceFromCustomer = distanceFromCustomer;
             return this;
         }
 
@@ -172,7 +171,7 @@ public class SubOrderDTO {
                 ", orderDate=" + orderDate +
                 ", orderDestination=" + orderDestination +
                 ", customerUsername=" + customerUsername +
-                ", distanceFromUser=" + distanceFromUser +
+                ", distanceFromUser=" + distanceFromCustomer +
                 ", totalItemsAmount=" + totalItemsAmount +
                 ", totalItemsTypes=" + totalItemsTypes +
                 ", totalItemsCost=" + totalItemsCost +

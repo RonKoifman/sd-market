@@ -1,9 +1,9 @@
 package engine.models.order;
 
-import dto.models.OrderItemDTO;
 import engine.enums.PurchaseForm;
 import engine.interfaces.Identifiable;
 import engine.interfaces.Locationable;
+import engine.models.item.OrderItem;
 import engine.models.location.Location;
 
 import java.io.Serializable;
@@ -17,7 +17,7 @@ public abstract class Order implements Identifiable, Locationable, Serializable 
     protected final String customerUsername;
     protected final Location orderDestination;
     protected final LocalDate orderDate;
-    protected final List<OrderItemDTO> orderedItems = new LinkedList<>();
+    protected final List<OrderItem> orderedItems = new LinkedList<>();
     protected float totalItemsCost;
     protected float deliveryCost;
     protected float totalOrderCost;
@@ -25,7 +25,7 @@ public abstract class Order implements Identifiable, Locationable, Serializable 
     protected int totalItemsAmount;
     private static int idGenerator;
 
-    public Order(String customerUsername, LocalDate orderDate, Location orderDestination, List<OrderItemDTO> orderedItems) {
+    public Order(String customerUsername, LocalDate orderDate, Location orderDestination, List<OrderItem> orderedItems) {
         this.customerUsername = customerUsername;
         this.orderDate = orderDate;
         this.orderDestination = orderDestination;
@@ -42,11 +42,7 @@ public abstract class Order implements Identifiable, Locationable, Serializable 
         return orderDestination;
     }
 
-    public String getCustomerUsername() {
-        return customerUsername;
-    }
-
-    public List<OrderItemDTO> getOrderedItems() {
+    public List<OrderItem> getOrderedItems() {
         return Collections.unmodifiableList(orderedItems);
     }
 
@@ -79,7 +75,7 @@ public abstract class Order implements Identifiable, Locationable, Serializable 
 
     protected int calculateTotalItemsAmount() {
         return Math.round(orderedItems.stream()
-                .map(orderedItem -> PurchaseForm.valueOf(orderedItem.getItem().getPurchaseForm().toUpperCase()).equals(PurchaseForm.WEIGHT) ? 1.0f : orderedItem.getQuantity())
+                .map(orderedItem -> orderedItem.getItem().getPurchaseForm().equals(PurchaseForm.WEIGHT) ? 1.0f : orderedItem.getQuantity())
                 .reduce(0.0f, Float::sum));
     }
 

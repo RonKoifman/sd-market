@@ -29,14 +29,6 @@ public class DiscountOffer {
         return item;
     }
 
-    public float getQuantity() {
-        return quantity;
-    }
-
-    public float getItemOfferPrice() {
-        return itemOfferPrice;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
