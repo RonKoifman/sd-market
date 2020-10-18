@@ -31,17 +31,17 @@ public class RegionItem extends Item {
         return averagePrice;
     }
 
-    public void increaseAmountOfStoresSelling(int itemPrice) {
+    public void increaseAmountOfStoresSelling(float itemPrice) {
         amountOfStoresSelling++;
         averagePrice = (averagePrice * (amountOfStoresSelling - 1) + itemPrice) / amountOfStoresSelling;
     }
 
-    public void decreaseAmountOfStoresSelling(int itemPrice) {
+    public void decreaseAmountOfStoresSelling(float itemPrice) {
         amountOfStoresSelling--;
         averagePrice = (averagePrice * (amountOfStoresSelling + 1) - itemPrice) / amountOfStoresSelling;
     }
 
-    public void updateAveragePrice(int oldItemPrice, int newItemPrice) {
+    public void updateAveragePrice(float oldItemPrice, float newItemPrice) {
         averagePrice = (averagePrice * amountOfStoresSelling - oldItemPrice + newItemPrice) / amountOfStoresSelling;
     }
 

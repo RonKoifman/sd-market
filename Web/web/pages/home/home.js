@@ -90,7 +90,7 @@ function refreshRegionsTable(regions) {
             '<td>' + region.totalItems + '</td>' +
             '<td>' + region.totalStores + '</td>' +
             '<td>' + region.totalOrdersMade + '</td>' +
-            '<td>' + '$' + parseFloat(region.averageOrdersCost).toFixed(2) + '</td>' +
+            '<td>' + '$' + parseFloat(region.averageOrderItemsCost).toFixed(2) + '</td>' +
             '<td>' + "<a href='" + SALE_REGION_URL +"'>Go to region &raquo;</a>" + '</td>' +
             '</tr>').appendTo(regionsTable)
             .find('a')
@@ -101,7 +101,7 @@ function refreshRegionsTable(regions) {
 }
 
 function onRegionChosen() {
-    // TODO: implement on region chosen
+
 }
 
 function ajaxRegionsInfo() {

@@ -1,5 +1,6 @@
 package dto.models;
 
+import java.util.Collections;
 import java.util.List;
 
 public class AccountDTO {
@@ -17,7 +18,7 @@ public class AccountDTO {
     }
 
     public List<TransactionDTO> getTransactions() {
-        return transactions;
+        return Collections.unmodifiableList(transactions);
     }
 
     public static final class Builder {

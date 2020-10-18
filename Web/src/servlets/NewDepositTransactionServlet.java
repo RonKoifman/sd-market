@@ -17,14 +17,13 @@ import java.time.LocalDate;
 public class NewDepositTransactionServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected synchronized void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("text/html");
-            AccountsManager accountsManager = SDMAccountsManager.getInstance();
             String transactionAmountFromParameter = req.getParameter(Constants.TRANSACTION_AMOUNT);
             String transactionDateFromParameter = req.getParameter(Constants.TRANSACTION_DATE);
             String username = SessionUtils.getUsername(req);
@@ -32,11 +31,13 @@ public class NewDepositTransactionServlet extends HttpServlet {
             try {
                 float transactionAmount = Float.parseFloat(transactionAmountFromParameter);
                 LocalDate transactionDate = LocalDate.parse(transactionDateFromParameter);
-                accountsManager.deposit(username, transactionAmount, transactionDate);
-                out.println("A deposit of $" + transactionAmountFromParameter + " was made successfully.");
+                SDMAccountsManager.getInstance().deposit(username, transactionAmount, transactionDate);
+                out.println("A deposit of $" + String.format("%.2f", transactionAmount) + " was made successfully.");
             } catch (Exception e) {
                 res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
+
+            out.flush();
         }
     }
 }

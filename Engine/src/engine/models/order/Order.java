@@ -1,6 +1,5 @@
 package engine.models.order;
 
-import dto.models.CustomerDTO;
 import dto.models.OrderItemDTO;
 import engine.enums.PurchaseForm;
 import engine.interfaces.Identifiable;
@@ -15,10 +14,10 @@ import java.util.stream.Collectors;
 public abstract class Order implements Identifiable, Locationable, Serializable {
 
     protected int id;
-    protected final CustomerDTO customer;
+    protected final String customerUsername;
     protected final Location orderDestination;
     protected final LocalDate orderDate;
-    protected final List <OrderItemDTO> orderedItems = new LinkedList<>();
+    protected final List<OrderItemDTO> orderedItems = new LinkedList<>();
     protected float totalItemsCost;
     protected float deliveryCost;
     protected float totalOrderCost;
@@ -26,8 +25,8 @@ public abstract class Order implements Identifiable, Locationable, Serializable 
     protected int totalItemsAmount;
     private static int idGenerator;
 
-    public Order(CustomerDTO customer, LocalDate orderDate, Location orderDestination, List<OrderItemDTO> orderedItems) {
-        this.customer = customer;
+    public Order(String customerUsername, LocalDate orderDate, Location orderDestination, List<OrderItemDTO> orderedItems) {
+        this.customerUsername = customerUsername;
         this.orderDate = orderDate;
         this.orderDestination = orderDestination;
         this.orderedItems.addAll(orderedItems);
@@ -43,12 +42,12 @@ public abstract class Order implements Identifiable, Locationable, Serializable 
         return orderDestination;
     }
 
-    public CustomerDTO getCustomer() {
-        return customer;
+    public String getCustomerUsername() {
+        return customerUsername;
     }
 
     public List<OrderItemDTO> getOrderedItems() {
-        return orderedItems;
+        return Collections.unmodifiableList(orderedItems);
     }
 
     public float getDeliveryCost() {
@@ -79,8 +78,7 @@ public abstract class Order implements Identifiable, Locationable, Serializable 
     }
 
     protected int calculateTotalItemsAmount() {
-        return Math.round(orderedItems
-                .stream()
+        return Math.round(orderedItems.stream()
                 .map(orderedItem -> PurchaseForm.valueOf(orderedItem.getItem().getPurchaseForm().toUpperCase()).equals(PurchaseForm.WEIGHT) ? 1.0f : orderedItem.getQuantity())
                 .reduce(0.0f, Float::sum));
     }
@@ -110,7 +108,7 @@ public abstract class Order implements Identifiable, Locationable, Serializable 
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", customer=" + customer +
+                ", customerUsername=" + customerUsername +
                 ", orderDestination=" + orderDestination +
                 ", orderDate=" + orderDate +
                 ", orderedItems=" + orderedItems +

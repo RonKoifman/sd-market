@@ -19,11 +19,25 @@ public abstract class User implements Identifiable {
         this.userRole = userRole;
     }
 
-    public abstract UserDTO toUserDTO();
+    public UserDTO toUserDTO() {
+        return new UserDTO.Builder()
+                .username(username)
+                .id(id)
+                .userRole(userRole.getValue())
+                .build();
+    }
 
     @Override
     public int getId() {
         return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
     }
 
     @Override

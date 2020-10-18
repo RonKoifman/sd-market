@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import dto.models.DiscountInformationDTO;
+import dto.models.FeedbackDTO;
 import dto.models.OrderItemDTO;
 import dto.models.StoreDTO;
 import engine.exceptions.DiscountOffersRemovedException;
@@ -27,6 +28,7 @@ public class Store implements Locationable, Identifiable {
     private final Map<Integer, StoreItem> itemIdToItem = new HashMap<>();
     private final List<DiscountInformation> discountsInformation = new LinkedList<>();
     private final Map<Integer, SubOrder> orderIdToOrder = new HashMap<>();
+    private final List<FeedbackDTO> feedbacksReceived = new LinkedList<>();
 
     public Store(int id, String name, int deliveryPPK, Location location) {
         this.id = id;
@@ -45,18 +47,6 @@ public class Store implements Locationable, Identifiable {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getAmountOfItemsForSell() {
-        return itemIdToItem.size();
-    }
-
-    public void setOwnerUsername(String ownerUsername) {
-        this.ownerUsername = ownerUsername;
-    }
-
     public StoreDTO toStoreDTO() {
         return new StoreDTO.Builder()
                 .id(id)
@@ -70,6 +60,18 @@ public class Store implements Locationable, Identifiable {
                 .build();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getAmountOfItemsForSell() {
+        return itemIdToItem.size();
+    }
+
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
+    }
+
     public boolean isItemSold(int itemId) {
         return itemIdToItem.containsKey(itemId);
     }
@@ -80,9 +82,21 @@ public class Store implements Locationable, Identifiable {
 
     public void addNewOrder(SubOrder newOrder) {
         orderIdToOrder.put(newOrder.getId(), newOrder);
-        increaseItemsPurchaseAmountFromStore(newOrder.getOrderedItems());
         totalIncomeFromDeliveries += newOrder.getDeliveryCost();
         totalIncomeFromItems += newOrder.getTotalItemsCost();
+        increaseItemsPurchaseAmountFromStore(newOrder.getOrderedItems());
+    }
+
+    public void addNewFeedback(FeedbackDTO newFeedback) {
+        feedbacksReceived.add(newFeedback);
+    }
+
+    public Collection<FeedbackDTO> getFeedbacksReceived() {
+        return Collections.unmodifiableCollection(feedbacksReceived);
+    }
+
+    public Collection<SubOrder> getOrdersMade() {
+        return Collections.unmodifiableCollection(orderIdToOrder.values());
     }
 
     public void addNewDiscount(DiscountInformation newDiscount) {
@@ -93,7 +107,7 @@ public class Store implements Locationable, Identifiable {
         itemIdToItem.put(newItem.getId(), newItem);
     }
 
-    public void updateItemPrice(int itemIdToUpdate, int newPrice) {
+    public void updateItemPrice(int itemIdToUpdate, float newPrice) {
         itemIdToItem.get(itemIdToUpdate).setPrice(newPrice);
     }
 
@@ -110,7 +124,7 @@ public class Store implements Locationable, Identifiable {
             addMatchingDiscountsToAvailableDiscounts(availableDiscounts, matchingDiscountToDiscountAmount);
         }
 
-        return availableDiscounts;
+        return Collections.unmodifiableCollection(availableDiscounts);
     }
 
     private Map<DiscountInformationDTO, Integer> findMatchingDiscountsByOrderedItem(OrderItemDTO orderedItem) {
@@ -178,7 +192,7 @@ public class Store implements Locationable, Identifiable {
         return "Store{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", ownerName='" + ownerUsername + '\'' +
+                ", ownerUsername='" + ownerUsername + '\'' +
                 ", location=" + location +
                 ", deliveryPPK=" + deliveryPPK +
                 ", totalIncomeFromDeliveries=" + totalIncomeFromDeliveries +
@@ -186,6 +200,7 @@ public class Store implements Locationable, Identifiable {
                 ", itemIdToItem=" + itemIdToItem +
                 ", discountsInformation=" + discountsInformation +
                 ", orderIdToOrder=" + orderIdToOrder +
+                ", feedbacksReceived=" + feedbacksReceived +
                 '}';
     }
 }

@@ -9,9 +9,9 @@ public class DiscountOffer {
 
     private final StoreItem item;
     private final float quantity;
-    private final int itemOfferPrice;
+    private final float itemOfferPrice;
 
-    public DiscountOffer(StoreItem item, float quantity, int itemOfferPrice) {
+    public DiscountOffer(StoreItem item, float quantity, float itemOfferPrice) {
         this.item = item;
         this.quantity = quantity;
         this.itemOfferPrice = itemOfferPrice;
@@ -33,7 +33,7 @@ public class DiscountOffer {
         return quantity;
     }
 
-    public int getItemOfferPrice() {
+    public float getItemOfferPrice() {
         return itemOfferPrice;
     }
 

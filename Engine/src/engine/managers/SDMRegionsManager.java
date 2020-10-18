@@ -6,6 +6,7 @@ import engine.file.FileManager;
 import javax.xml.bind.JAXBException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,23 +34,23 @@ public class SDMRegionsManager implements RegionsManager {
     }
 
     @Override
-    public synchronized void loadNewRegionDataFromFile(String ownerUsername, InputStream fileInputStream) throws JAXBException {
+    public void loadNewRegionDataFromFile(String ownerUsername, InputStream fileInputStream) throws JAXBException {
         fileManager.loadRegionDataFromFile(fileInputStream);
         checkForUniqueRegionName(fileManager.getLoadedRegionName());
         SDMSingleRegionManager newRegionManager = new SDMSingleRegionManager(fileManager.getLoadedRegionName(), ownerUsername, fileManager.getLoadedStoreIdToStore(), fileManager.getLoadedItemIdToItem());
-        regionNameToRegionManager.put(newRegionManager.getRegionDTO().getName(), newRegionManager);
+        regionNameToRegionManager.put(newRegionManager.getRegionDetails().getName(), newRegionManager);
     }
 
     @Override
-    public synchronized Collection<RegionDTO> getAllRegions() {
-        return regionNameToRegionManager.values()
+    public Collection<RegionDTO> getAllRegions() {
+        return Collections.unmodifiableCollection(regionNameToRegionManager.values()
                 .stream()
-                .map(SingleRegionManager::getRegionDTO)
-                .collect(Collectors.toSet());
+                .map(SingleRegionManager::getRegionDetails)
+                .collect(Collectors.toSet()));
     }
 
     @Override
-    public synchronized SingleRegionManager getSingleRegionManagerByRegionName(String regionName) {
+    public SingleRegionManager getSingleRegionManagerByRegionName(String regionName) {
         return regionNameToRegionManager.get(regionName);
     }
 

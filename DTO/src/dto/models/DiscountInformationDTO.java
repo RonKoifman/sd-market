@@ -1,5 +1,6 @@
 package dto.models;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,7 +31,7 @@ public class DiscountInformationDTO {
     }
 
     public List<DiscountOfferDTO> getDiscountOffers() {
-        return discountOffers;
+        return Collections.unmodifiableList(discountOffers);
     }
 
     public static final class Builder {

@@ -1,7 +1,9 @@
 package engine.managers;
 
-import dto.models.UserDTO;
+import dto.models.*;
 import engine.enums.UserRole;
+import engine.models.order.GeneralOrder;
+import engine.models.store.Store;
 import engine.models.user.Customer;
 import engine.models.user.StoreOwner;
 import engine.models.user.User;
@@ -31,24 +33,30 @@ public class SDMUsersManager implements UsersManager {
     }
 
     @Override
-    public synchronized void addNewUser(String username, UserRole userRole) {
+    public void addNewUser(String username, UserRole userRole) {
+        if (isUserExists(username)) {
+            throw new IllegalStateException("The user '" + username + "' already exists.");
+        }
+
         switch (userRole) {
             case STORE_OWNER:
-                usernameToUser.put(username, new StoreOwner(username, userRole));
+                usernameToUser.put(username, new StoreOwner(username));
                 break;
 
             case CUSTOMER:
-                usernameToUser.put(username, new Customer(username, userRole));
+                usernameToUser.put(username, new Customer(username));
                 break;
         }
+
+        SDMAccountsManager.getInstance().addNewAccount(username);
     }
 
     @Override
-    public synchronized Set<UserDTO> getUsers() {
-        return usernameToUser.values()
+    public Set<UserDTO> getUsers() {
+        return Collections.unmodifiableSet(usernameToUser.values()
                 .stream()
                 .map(User::toUserDTO)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toSet()));
     }
 
     @Override
@@ -59,8 +67,44 @@ public class SDMUsersManager implements UsersManager {
     }
 
     @Override
-    public synchronized UserDTO getUserByUsername(String username) {
+    public UserDTO getUserByUsername(String username) {
        return usernameToUser.get(username).toUserDTO();
+    }
+
+    @Override
+    public void addCustomerNewOrder(String customerUsername, GeneralOrder newOrder, String regionName) {
+        Customer customer = (Customer)usernameToUser.get(customerUsername);
+        customer.addNewOrder(regionName, newOrder);
+    }
+
+    @Override
+    public void addStoreOwnerNewStore(String storeOwnerUsername, Store newStore, String regionName) {
+        StoreOwner storeOwner = (StoreOwner)usernameToUser.get(storeOwnerUsername);
+        storeOwner.addNewOwnedStore(regionName, newStore);
+    }
+
+    @Override
+    public Collection<GeneralOrderDTO> getCustomerOrdersByRegionName(String customerUsername, String regionName) {
+        Customer customer = (Customer)usernameToUser.get(customerUsername);
+        Set<GeneralOrderDTO> customerOrders = customer.getOrdersByRegionName(regionName).stream().map(GeneralOrder::toGeneralOrderDTO).collect(Collectors.toSet());
+
+        return Collections.unmodifiableCollection(customerOrders);
+    }
+
+    @Override
+    public Map<StoreDTO, List<SubOrderDTO>> getStoreOwnerStoreToOrdersByRegionName(String storeOwnerUsername, String regionName) {
+        StoreOwner storeOwner = (StoreOwner)usernameToUser.get(storeOwnerUsername);
+        Map<StoreDTO, List<SubOrderDTO>> storeToOrders = storeOwner.getStoreToOrdersByRegionName(regionName);
+
+        return Collections.unmodifiableMap(storeToOrders);
+    }
+
+    @Override
+    public Collection<FeedbackDTO> getStoreOwnerOwnedStoresFeedbacksByRegionName(String storeOwnerUsername, String regionName) {
+        StoreOwner storeOwner = (StoreOwner)usernameToUser.get(storeOwnerUsername);
+        Collection<FeedbackDTO> feedbacks = storeOwner.getOwnedStoresFeedbacksByRegionName(regionName);
+
+        return Collections.unmodifiableCollection(feedbacks);
     }
 
     @Override

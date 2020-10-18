@@ -10,8 +10,9 @@ public class SubOrderDTO {
 
     private final int id;
     private final LocalDate orderDate;
+    private final String customerUsername;
     private final Point orderDestination;
-    private final float distanceFromCustomer;
+    private final float distanceFromUser;
     private final int totalItemsAmount;
     private final int totalItemsTypes;
     private final float totalItemsCost;
@@ -23,7 +24,8 @@ public class SubOrderDTO {
         this.id = builder.id;
         this.orderDate = builder.orderDate;
         this.orderDestination = builder.orderDestination;
-        this.distanceFromCustomer = builder.distanceFromCustomer;
+        this.customerUsername = builder.customerUsername;
+        this.distanceFromUser = builder.distanceFromUser;
         this.totalItemsAmount = builder.totalItemsAmount;
         this.totalItemsCost = builder.totalItemsCost;
         this.deliveryCost = builder.deliveryCost;
@@ -36,16 +38,8 @@ public class SubOrderDTO {
         return id;
     }
 
-    public Collection<OrderItemDTO> getDiscountOrderedItems() {
-        return orderedItems.stream()
-                .filter(OrderItemDTO::isFromDiscount)
-                .collect(Collectors.toList());
-    }
-
-    public Collection<OrderItemDTO> getNonDiscountOrderedItems() {
-        return orderedItems.stream()
-                .filter(orderedItem -> !orderedItem.isFromDiscount())
-                .collect(Collectors.toList());
+    public Collection<OrderItemDTO> getOrderedItems() {
+        return Collections.unmodifiableCollection(orderedItems);
     }
 
     public LocalDate getOrderDate() {
@@ -56,8 +50,12 @@ public class SubOrderDTO {
         return orderDestination;
     }
 
-    public float getDistanceFromCustomer() {
-        return distanceFromCustomer;
+    public float getDistanceFromUser() {
+        return distanceFromUser;
+    }
+
+    public String getCustomerUsername() {
+        return customerUsername;
     }
 
     public int getTotalItemsAmount() {
@@ -85,7 +83,8 @@ public class SubOrderDTO {
         private int id;
         private LocalDate orderDate;
         private Point orderDestination;
-        private float distanceFromCustomer;
+        private String customerUsername;
+        private float distanceFromUser;
         private int totalItemsTypes;
         private int totalItemsAmount;
         private float totalItemsCost;
@@ -108,8 +107,13 @@ public class SubOrderDTO {
             return this;
         }
 
-        public Builder distanceFromCustomer(float distanceFromCustomer) {
-            this.distanceFromCustomer = distanceFromCustomer;
+        public Builder customerUsername(String customerUsername) {
+            this.customerUsername = customerUsername;
+            return this;
+        }
+
+        public Builder distanceFromUser(float distanceFromUser) {
+            this.distanceFromUser = distanceFromUser;
             return this;
         }
 
@@ -167,7 +171,8 @@ public class SubOrderDTO {
                 "id=" + id +
                 ", orderDate=" + orderDate +
                 ", orderDestination=" + orderDestination +
-                ", distanceFromCustomer=" + distanceFromCustomer +
+                ", customerUsername=" + customerUsername +
+                ", distanceFromUser=" + distanceFromUser +
                 ", totalItemsAmount=" + totalItemsAmount +
                 ", totalItemsTypes=" + totalItemsTypes +
                 ", totalItemsCost=" + totalItemsCost +

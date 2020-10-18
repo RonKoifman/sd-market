@@ -1,44 +1,47 @@
 package engine.models.notification;
 
-import java.util.Objects;
+import dto.models.NotificationDTO;
 
-public class Notification {
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-    private final String title;
-    private final String text;
+public abstract class Notification {
 
-    public Notification(String title, String text) {
+    protected final String title;
+    protected final Date date;
+    protected String message;
+
+    public Notification(String title) {
         this.title = title;
-        this.text = text;
+        this.date = new Date(System.currentTimeMillis());
+    }
+
+    public NotificationDTO toNotificationDTO() {
+        return new NotificationDTO.Builder()
+                .title(title)
+                .message(message)
+                .date(new SimpleDateFormat("HH:mm dd/MM/yyyy").format(date))
+                .build();
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getText() {
-        return text;
+    public String getMessage() {
+        return message;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Notification that = (Notification) o;
-        return Objects.equals(title, that.title) &&
-                Objects.equals(text, that.text);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(title, text);
+    public Date getDate() {
+        return date;
     }
 
     @Override
     public String toString() {
         return "Notification{" +
                 "title='" + title + '\'' +
-                ", text='" + text + '\'' +
+                ", message='" + message + '\'' +
+                ", date=" + date +
                 '}';
     }
 }

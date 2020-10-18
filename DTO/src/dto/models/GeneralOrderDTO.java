@@ -2,18 +2,17 @@ package dto.models;
 
 import java.awt.*;
 import java.time.LocalDate;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 public class GeneralOrderDTO {
 
     private final int id;
     private final LocalDate orderDate;
     private final Point orderDestination;
-    private final List<OrderItemDTO> orderedItems;
+    private final String customerUsername;
     private final Map<StoreDTO, SubOrderDTO> storeToOrder;
+    private final List<OrderItemDTO> orderedItems;
     private final float totalItemsCost;
     private final float deliveryCost;
     private final float totalOrderCost;
@@ -23,6 +22,7 @@ public class GeneralOrderDTO {
     private GeneralOrderDTO(Builder builder) {
         this.id = builder.id;
         this.orderDate = builder.orderDate;
+        this.customerUsername = builder.customerUsername;
         this.orderDestination = builder.orderDestination;
         this.orderedItems = builder.orderedItems;
         this.storeToOrder = builder.storeToOrder;
@@ -41,12 +41,16 @@ public class GeneralOrderDTO {
         return storeToOrder.get(store);
     }
 
-    public float getDistanceFromCustomerByStore(StoreDTO store) {
-        return storeToOrder.get(store).getDistanceFromCustomer();
+    public float getDistanceFromUserByStore(StoreDTO store) {
+        return storeToOrder.get(store).getDistanceFromUser();
     }
 
     public LocalDate getOrderDate() {
         return orderDate;
+    }
+
+    public String getCustomerUsername() {
+        return customerUsername;
     }
 
     public Point getOrderDestination() {
@@ -74,11 +78,11 @@ public class GeneralOrderDTO {
     }
 
     public Collection<OrderItemDTO> getOrderedItems() {
-        return orderedItems;
+        return Collections.unmodifiableCollection(orderedItems);
     }
 
     public Collection<StoreDTO> getStores() {
-        return storeToOrder.keySet();
+        return Collections.unmodifiableCollection(storeToOrder.keySet());
     }
 
     public static final class Builder {
@@ -86,6 +90,7 @@ public class GeneralOrderDTO {
         private int id;
         private LocalDate orderDate;
         private Point orderDestination;
+        private String customerUsername;
         private List<OrderItemDTO> orderedItems;
         private Map<StoreDTO, SubOrderDTO> storeToOrder;
         private float totalItemsCost;
@@ -106,6 +111,11 @@ public class GeneralOrderDTO {
 
         public Builder orderDestination(Point orderDestination) {
             this.orderDestination = orderDestination;
+            return this;
+        }
+
+        public Builder customerUsername(String customerUsername) {
+            this.customerUsername = customerUsername;
             return this;
         }
 
@@ -168,8 +178,9 @@ public class GeneralOrderDTO {
                 "id=" + id +
                 ", orderDate=" + orderDate +
                 ", orderDestination=" + orderDestination +
-                ", orderedItems=" + orderedItems +
+                ", customerUsername=" + customerUsername +
                 ", storeToOrder=" + storeToOrder +
+                ", orderedItems=" + orderedItems +
                 ", totalItemsCost=" + totalItemsCost +
                 ", deliveryCost=" + deliveryCost +
                 ", totalOrderCost=" + totalOrderCost +

@@ -17,16 +17,15 @@ import java.io.PrintWriter;
 public class GetUserAccountServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            AccountsManager accountsManager = SDMAccountsManager.getInstance();
             Gson gson = new Gson();
-            AccountDTO account = accountsManager.getAccountByUsername(SessionUtils.getUsername(req));
+            AccountDTO account = SDMAccountsManager.getInstance().getAccountByUsername(SessionUtils.getUsername(req));
             String json = gson.toJson(account);
             out.println(json);
             out.flush();

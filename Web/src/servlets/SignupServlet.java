@@ -19,20 +19,18 @@ import java.io.PrintWriter;
 public class SignupServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected synchronized void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("text/html");
-            UsersManager usersManager = SDMUsersManager.getInstance();
-            AccountsManager accountsManager = SDMAccountsManager.getInstance();
             String usernameFromSession = SessionUtils.getUsername(req);
 
             if (usernameFromSession == null) {
@@ -49,26 +47,14 @@ public class SignupServlet extends HttpServlet {
                     out.println("Please enter only english letters and digits.");
                 } else {
                     usernameFromParameter = usernameFromParameter.trim();
-                    synchronized (this) {
-                        if (usersManager.isUserExists(usernameFromParameter)) {
-                            res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                            out.println("This username is already taken.");
-                        } else {
-                            switch (userRoleFromParameter) {
-                                case Constants.STORE_OWNER:
-                                    usersManager.addNewUser(usernameFromParameter, UserRole.valueOf(Constants.STORE_OWNER.toUpperCase()));
-                                    break;
-
-                                case Constants.CUSTOMER:
-                                    usersManager.addNewUser(usernameFromParameter, UserRole.valueOf(Constants.CUSTOMER.toUpperCase()));
-                                    break;
-                            }
-
-                            accountsManager.addNewAccount(usernameFromParameter);
-                            req.getSession(true).setAttribute(Constants.USERNAME, usernameFromParameter);
-                            req.getSession(true).setAttribute(Constants.USER_ROLE, userRoleFromParameter);
-                            out.println(Constants.HOME_URL);
-                        }
+                    if (SDMUsersManager.getInstance().isUserExists(usernameFromParameter)) {
+                        res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                        out.println("This username is already taken.");
+                    } else {
+                        SDMUsersManager.getInstance().addNewUser(usernameFromParameter, UserRole.valueOf(userRoleFromParameter.toUpperCase()));
+                        SessionUtils.setUsername(req, usernameFromParameter);
+                        SessionUtils.setUserRole(req, userRoleFromParameter);
+                        out.println(Constants.HOME_URL);
                     }
                 }
             } else {

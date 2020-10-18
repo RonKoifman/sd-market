@@ -7,9 +7,9 @@ public class RegionItemDTO {
     private final int id;
     private final String name;
     private final String purchaseForm;
-    private final float purchaseAmount;
     private final int amountOfStoresSelling;
     private final float averagePrice;
+    private final float purchaseAmount;
 
     private RegionItemDTO(Builder builder) {
         this.id = builder.id;

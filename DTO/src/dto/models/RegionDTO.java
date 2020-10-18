@@ -9,7 +9,7 @@ public class RegionDTO {
     private final int totalItems;
     private final int totalStores;
     private final int totalOrdersMade;
-    private final float averageOrdersCost;
+    private final float averageOrderItemsCost;
 
     private RegionDTO(Builder builder) {
         this.name = builder.name;
@@ -17,7 +17,7 @@ public class RegionDTO {
         this.totalItems = builder.totalItems;
         this.totalStores = builder.totalStores;
         this.totalOrdersMade = builder.totalOrdersMade;
-        this.averageOrdersCost = builder.averageOrdersCost;
+        this.averageOrderItemsCost = builder.averageOrderItemsCost;
     }
 
     public String getName() {
@@ -40,8 +40,8 @@ public class RegionDTO {
         return totalOrdersMade;
     }
 
-    public float getAverageOrdersCost() {
-        return averageOrdersCost;
+    public float getAverageOrderItemsCost() {
+        return averageOrderItemsCost;
     }
 
     public static final class Builder {
@@ -51,7 +51,7 @@ public class RegionDTO {
         private int totalItems;
         private int totalStores;
         private int totalOrdersMade;
-        private float averageOrdersCost;
+        private float averageOrderItemsCost;
 
         public Builder name(String name) {
             this.name = name;
@@ -79,7 +79,7 @@ public class RegionDTO {
         }
 
         public Builder averageOrdersCost(float averageOrdersCost) {
-            this.averageOrdersCost = averageOrdersCost;
+            this.averageOrderItemsCost = averageOrdersCost;
             return this;
         }
 
@@ -109,7 +109,7 @@ public class RegionDTO {
                 ", totalItems=" + totalItems +
                 ", totalStores=" + totalStores +
                 ", totalOrdersMade=" + totalOrdersMade +
-                ", averageOrdersCost=" + averageOrdersCost +
+                ", averageOrderItemsCost=" + averageOrderItemsCost +
                 '}';
     }
 }

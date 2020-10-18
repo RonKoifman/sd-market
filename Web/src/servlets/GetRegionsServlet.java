@@ -17,16 +17,15 @@ import java.util.Collection;
 public class GetRegionsServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            RegionsManager regionsManager = SDMRegionsManager.getInstance();
             Gson gson = new Gson();
-            Collection<RegionDTO> regions = regionsManager.getAllRegions();
+            Collection<RegionDTO> regions = SDMRegionsManager.getInstance().getAllRegions();
             String json = gson.toJson(regions);
             out.println(json);
             out.flush();

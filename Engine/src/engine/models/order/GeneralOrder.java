@@ -11,8 +11,8 @@ public class GeneralOrder extends Order {
 
     private final Map<StoreDTO, SubOrder> storeToOrder = new HashMap<>();
 
-    public GeneralOrder(CustomerDTO customer, Location orderDestination, LocalDate orderDate, List<OrderItemDTO> allOrderedItems, Map<StoreDTO, List<OrderItemDTO>> storeToOrderedItems) {
-        super(customer, orderDate, orderDestination, allOrderedItems);
+    public GeneralOrder(String customerUsername, Location orderDestination, LocalDate orderDate, List<OrderItemDTO> allOrderedItems, Map<StoreDTO, List<OrderItemDTO>> storeToOrderedItems) {
+        super(customerUsername, orderDate, orderDestination, allOrderedItems);
         createStoresSubOrders(storeToOrderedItems);
         this.totalItemsCost = calculateTotalItemsCost();
         this.deliveryCost = calculateDeliveryCost();
@@ -25,6 +25,7 @@ public class GeneralOrder extends Order {
         return new GeneralOrderDTO.Builder()
                 .id(id)
                 .orderDate(orderDate)
+                .customerUsername(customerUsername)
                 .orderDestination(orderDestination)
                 .orderedItems(orderedItems)
                 .storeToOrder(storeToOrder.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().toSubOrderDTO())))
@@ -37,7 +38,7 @@ public class GeneralOrder extends Order {
     }
 
     public Collection<StoreDTO> getStores() {
-        return storeToOrder.keySet();
+        return Collections.unmodifiableCollection(storeToOrder.keySet());
     }
 
     public SubOrder getOrderByStore(StoreDTO store) {
@@ -75,7 +76,7 @@ public class GeneralOrder extends Order {
 
     private void createStoresSubOrders(Map<StoreDTO, List<OrderItemDTO>> storeToOrderedItems) {
         for (StoreDTO store : storeToOrderedItems.keySet()) {
-            storeToOrder.put(store, new SubOrder(store, customer, orderDestination, orderDate, storeToOrderedItems.get(store)));
+            storeToOrder.put(store, new SubOrder(store, customerUsername, orderDestination, orderDate, storeToOrderedItems.get(store)));
         }
     }
 
@@ -97,7 +98,7 @@ public class GeneralOrder extends Order {
         return "GeneralOrder{" +
                 "storeToOrder=" + storeToOrder +
                 ", id=" + id +
-                ", customer=" + customer +
+                ", customerUsername=" + customerUsername +
                 ", orderDestination=" + orderDestination +
                 ", orderDate=" + orderDate +
                 ", orderedItems=" + orderedItems +

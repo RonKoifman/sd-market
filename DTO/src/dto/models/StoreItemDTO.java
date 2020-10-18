@@ -7,8 +7,8 @@ public class StoreItemDTO {
     private final int id;
     private final String name;
     private final String purchaseForm;
+    private final float price;
     private final float purchaseAmount;
-    private final int price;
     private final int sellingStoreId;
 
     private StoreItemDTO(Builder builder) {
@@ -36,7 +36,7 @@ public class StoreItemDTO {
         return purchaseAmount;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
@@ -46,7 +46,7 @@ public class StoreItemDTO {
         private String name;
         private String purchaseForm;
         private float purchaseAmount;
-        private int price;
+        private float price;
         private int sellingStoreId;
 
         public Builder id(int id) {
@@ -69,7 +69,7 @@ public class StoreItemDTO {
             return this;
         }
 
-        public Builder price(int price) {
+        public Builder price(float price) {
             this.price = price;
             return this;
         }
@@ -89,12 +89,13 @@ public class StoreItemDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StoreItemDTO that = (StoreItemDTO) o;
-        return id == that.id;
+        return id == that.id &&
+                sellingStoreId == that.sellingStoreId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, sellingStoreId);
     }
 
     @Override

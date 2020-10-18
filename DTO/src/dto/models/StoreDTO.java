@@ -8,12 +8,12 @@ public class StoreDTO {
     private final int id;
     private final String name;
     private final String ownerUsername;
-    private final int deliveryPPK;
     private final Point location;
     private final Map<Integer, StoreItemDTO> itemIdToItem;
     private final Collection<SubOrderDTO> ordersMade;
-    private final float totalIncomeFromDeliveries;
     private final float totalIncomeFromItems;
+    private final int deliveryPPK;
+    private final float totalIncomeFromDeliveries;
 
     private StoreDTO(Builder builder) {
         this.id = builder.id;
@@ -40,7 +40,7 @@ public class StoreDTO {
     }
 
     public Collection<StoreItemDTO> getItemsForSell() {
-        return itemIdToItem.values();
+        return Collections.unmodifiableCollection(itemIdToItem.values());
     }
 
     public StoreItemDTO getItemById(int itemId) {
@@ -48,7 +48,7 @@ public class StoreDTO {
     }
 
     public Collection<SubOrderDTO> getOrdersMade() {
-        return ordersMade;
+        return Collections.unmodifiableCollection(ordersMade);
     }
 
     public int getDeliveryPPK() {

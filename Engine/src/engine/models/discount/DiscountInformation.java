@@ -23,7 +23,7 @@ public class DiscountInformation {
         return new DiscountInformationDTO.Builder()
                 .name(name)
                 .discountTrigger(discountTrigger.toDiscountTriggerDTO())
-                .discountType(discountType == DiscountOfferType.IRRELEVANT ? "" : discountType.getValue())
+                .discountType(discountType.equals(DiscountOfferType.IRRELEVANT) ? "" : discountType.getValue())
                 .discountOffers(discountOffers.stream().map(DiscountOffer::toDiscountOfferDTO).collect(Collectors.toList()))
                 .build();
     }

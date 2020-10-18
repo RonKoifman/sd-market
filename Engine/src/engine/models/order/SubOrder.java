@@ -9,12 +9,12 @@ import java.util.*;
 public class SubOrder extends Order {
 
     private final StoreDTO store;
-    private final float distanceFromCustomer;
+    private final float distanceFromUser;
 
-    public SubOrder(StoreDTO store, CustomerDTO customer, Location orderDestination, LocalDate orderDate, List<OrderItemDTO> orderedItems) {
-        super(customer, orderDate, orderDestination, orderedItems);
+    public SubOrder(StoreDTO store, String customerUsername, Location orderDestination, LocalDate orderDate, List<OrderItemDTO> orderedItems) {
+        super(customerUsername, orderDate, orderDestination, orderedItems);
         this.store = store;
-        this.distanceFromCustomer = calculateDistanceFromCustomer();
+        this.distanceFromUser = calculateDistanceFromUser();
         this.totalItemsCost = calculateTotalItemsCost();
         this.deliveryCost = calculateDeliveryCost();
         this.totalOrderCost = calculateTotalOrderCost();
@@ -26,7 +26,8 @@ public class SubOrder extends Order {
         return new SubOrderDTO.Builder()
                 .id(id)
                 .deliveryCost(deliveryCost)
-                .distanceFromCustomer(distanceFromCustomer)
+                .distanceFromUser(distanceFromUser)
+                .customerUsername(customerUsername)
                 .orderDate(orderDate)
                 .orderDestination(orderDestination)
                 .totalItemsAmount(totalItemsAmount)
@@ -47,10 +48,10 @@ public class SubOrder extends Order {
 
     @Override
     protected float calculateDeliveryCost() {
-        return store.getDeliveryPPK() * distanceFromCustomer;
+        return store.getDeliveryPPK() * distanceFromUser;
     }
 
-    private float calculateDistanceFromCustomer() {
+    private float calculateDistanceFromUser() {
         return (float)orderDestination.distance(store.getLocation());
     }
 
@@ -71,9 +72,9 @@ public class SubOrder extends Order {
     public String toString() {
         return "SubOrder{" +
                 "store=" + store +
-                ", distanceFromCustomer=" + distanceFromCustomer +
+                ", distanceFromUser=" + distanceFromUser +
                 ", id=" + id +
-                ", customer=" + customer +
+                ", customerUsername=" + customerUsername +
                 ", orderDestination=" + orderDestination +
                 ", orderDate=" + orderDate +
                 ", orderedItems=" + orderedItems +

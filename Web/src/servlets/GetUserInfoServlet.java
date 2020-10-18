@@ -17,16 +17,15 @@ import java.io.PrintWriter;
 public class GetUserInfoServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            UsersManager usersManager = SDMUsersManager.getInstance();
             Gson gson = new Gson();
-            UserDTO user = usersManager.getUserByUsername(SessionUtils.getUsername(req));
+            UserDTO user = SDMUsersManager.getInstance().getUserByUsername(SessionUtils.getUsername(req));
             String json = gson.toJson(user);
             out.println(json);
             out.flush();

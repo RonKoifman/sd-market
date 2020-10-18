@@ -12,27 +12,27 @@ public interface SingleRegionManager {
 
     void deleteItemFromStore(int storeId, int itemId);
 
-    void addNewItemToStore(int storeId, int itemId, int itemPrice);
+    void addNewItemToStore(int storeId, int itemId, float itemPrice);
 
-    void updateItemPriceInStore(int storeId, int itemId, int newItemPrice);
+    void updateItemPriceInStore(int storeId, int itemId, float newItemPrice);
 
     void addNewStoreToRegion(String ownerUsername, int storeId, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Integer> itemIdToItemPriceInStore);
 
     void addNewItemToRegion(int itemId, String itemName, String itemPurchaseForm, Map<Integer, Integer> storeIdToItemPriceInStore);
 
-    void addPendingOrderToOrdersStock();
-
-    GeneralOrderDTO getPendingOrder();
-
     void checkForValidOrderDestination(Point orderDestination);
 
-    void createNewPendingOrder(boolean isDynamicOrder, LocalDate orderDate, Point orderDestination, CustomerDTO customer, StoreDTO chosenStore, Map<RegionItemDTO, Float> itemToItemPurchaseAmount);
+    void createNewPendingOrder(boolean isDynamicOrder, LocalDate orderDate, Point orderDestination, String customerUsername, StoreDTO chosenStore, Map<RegionItemDTO, Float> itemToItemPurchaseAmount);
 
-    Map<StoreDTO, Collection<DiscountInformationDTO>> getAvailableDiscountsFromPendingOrder();
+    GeneralOrderDTO getPendingOrderByUsername(String username);
 
-    void addChosenDiscountOffersToPendingOrder(Map<StoreDTO, List<DiscountOfferDTO>> storeToDiscountOffers);
+    Map<StoreDTO, Collection<DiscountInformationDTO>> getAvailableDiscountsFromPendingOrderByUsername(String username);
 
-    void addFeedbacksToPendingOrder(Map<StoreDTO, List<FeedbackDTO>> storeToFeedbacks);
+    void addChosenDiscountOffersToPendingOrderByUsername(String username, Map<StoreDTO, List<DiscountOfferDTO>> storeToDiscountOffers);
+
+    void addFeedbacksToStoresFromOrder(String username, Map<StoreDTO, FeedbackDTO> storeToFeedback);
+
+    void addPendingOrderToOrdersStockByUsername(String username);
 
     StoreDTO getStoreById(int storeId);
 
@@ -44,5 +44,5 @@ public interface SingleRegionManager {
 
     Collection<GeneralOrderDTO> getAllOrdersInRegion();
 
-    RegionDTO getRegionDTO();
+    RegionDTO getRegionDetails();
 }

@@ -21,14 +21,13 @@ import java.io.PrintWriter;
 public class UploadFileServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+    protected synchronized void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         processRequest(req, res);
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("text/html");
-            RegionsManager regionsManager = SDMRegionsManager.getInstance();
             String GENERAL_ERROR_MESSAGE = "General failure occurred while loading your file. Make sure you've entered a valid XML file.";
             String username = SessionUtils.getUsername(req);
 
@@ -41,7 +40,7 @@ public class UploadFileServlet extends HttpServlet {
                 out.println("Invalid file. Please choose only XML file type.");
             } else {
                 try {
-                    regionsManager.loadNewRegionDataFromFile(username, fileInputStream);
+                    SDMRegionsManager.getInstance().loadNewRegionDataFromFile(username, fileInputStream);
                     out.println("File uploaded successfully!");
                 } catch (JAXBException e) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);

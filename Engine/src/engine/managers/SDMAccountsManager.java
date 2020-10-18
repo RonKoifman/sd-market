@@ -31,18 +31,22 @@ public class SDMAccountsManager implements AccountsManager {
     }
 
     @Override
-    public synchronized void addNewAccount(String username) {
+    public void addNewAccount(String username) {
+        if (usernameToUserAccount.containsKey(username)) {
+            throw new IllegalStateException("The user '" + username + "' already has an account.");
+        }
+
         usernameToUserAccount.put(username, new Account());
     }
 
     @Override
-    public synchronized void deposit(String executorUsername, float transactionAmount, LocalDate transactionDate) {
+    public void deposit(String executorUsername, float transactionAmount, LocalDate transactionDate) {
         Account executorUserAccount = usernameToUserAccount.get(executorUsername);
         executorUserAccount.addNewTransaction(new Transaction(TransactionType.DEPOSIT, transactionDate, transactionAmount, executorUserAccount.getBalance()));
     }
 
     @Override
-    public synchronized void charge(String chargedUsername, String chargingUsername, float transactionAmount, LocalDate transactionDate) {
+    public void charge(String chargedUsername, String chargingUsername, float transactionAmount, LocalDate transactionDate) {
         Account chargedUserAccount = usernameToUserAccount.get(chargedUsername);
         Account chargingUserAccount = usernameToUserAccount.get(chargingUsername);
         chargedUserAccount.addNewTransaction(new Transaction(TransactionType.CHARGE, transactionDate, transactionAmount, chargedUserAccount.getBalance()));
@@ -50,7 +54,7 @@ public class SDMAccountsManager implements AccountsManager {
     }
 
     @Override
-    public synchronized AccountDTO getAccountByUsername(String username) {
+    public AccountDTO getAccountByUsername(String username) {
         return usernameToUserAccount.get(username).toAccountDTO();
     }
 

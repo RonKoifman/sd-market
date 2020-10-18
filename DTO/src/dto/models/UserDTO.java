@@ -2,16 +2,16 @@ package dto.models;
 
 import java.util.Objects;
 
-public abstract class UserDTO {
+public class UserDTO {
 
-    protected final int id;
-    protected final String username;
-    protected final String userRole;
+    private final int id;
+    private final String username;
+    private final String userRole;
 
-    public UserDTO(int id, String userRole, String username) {
-        this.id = id;
-        this.username = username;
-        this.userRole = userRole;
+    private UserDTO(Builder builder) {
+        this.id = builder.id;
+        this.username = builder.username;
+        this.userRole = builder.userRole;
     }
 
     public int getId() {
@@ -24,6 +24,32 @@ public abstract class UserDTO {
 
     public String getUsername() {
         return username;
+    }
+
+    public static final class Builder {
+
+        private int id;
+        private String username;
+        private String userRole;
+
+        public Builder id(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder userRole(String userRole) {
+            this.userRole = userRole;
+            return this;
+        }
+
+        public UserDTO build() {
+            return new UserDTO(this);
+        }
     }
 
     @Override

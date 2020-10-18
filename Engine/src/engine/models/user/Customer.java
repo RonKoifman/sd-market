@@ -1,30 +1,37 @@
 package engine.models.user;
 
-import dto.models.CustomerDTO;
-import dto.models.UserDTO;
 import engine.enums.UserRole;
+import engine.models.order.GeneralOrder;
+
+import java.util.*;
 
 public class Customer extends User {
 
+    private final Map<String, Set<GeneralOrder>> regionNameToOrdersFromRegion = new HashMap<>();
 
-
-    public Customer(String username, UserRole userRole) {
-        super(username, userRole);
+    public Customer(String username) {
+        super(username, UserRole.CUSTOMER);
     }
 
-    @Override
-    public UserDTO toUserDTO() {
-        return new CustomerDTO.Builder()
-                .id(id)
-                .username(username)
-                .userRole(userRole.getValue())
-                .build();
+    public void addNewOrder(String regionName, GeneralOrder newOrder) {
+        if (!regionNameToOrdersFromRegion.containsKey(regionName)) {
+            regionNameToOrdersFromRegion.put(regionName, new HashSet<>());
+        }
+
+        regionNameToOrdersFromRegion.get(regionName).add(newOrder);
+    }
+
+    public Collection<GeneralOrder> getOrdersByRegionName(String regionName) {
+        Collection<GeneralOrder> orders = regionNameToOrdersFromRegion.getOrDefault(regionName, new HashSet<>());
+
+        return Collections.unmodifiableCollection(orders);
     }
 
     @Override
     public String toString() {
         return "Customer{" +
-                "id=" + id +
+                "regionNameToOrdersFromRegion=" + regionNameToOrdersFromRegion +
+                ", id=" + id +
                 ", username='" + username + '\'' +
                 ", userRole=" + userRole +
                 '}';

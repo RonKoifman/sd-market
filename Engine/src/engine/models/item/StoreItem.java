@@ -3,12 +3,14 @@ package engine.models.item;
 import dto.models.StoreItemDTO;
 import engine.enums.PurchaseForm;
 
+import java.util.Objects;
+
 public class StoreItem extends Item {
 
     private final int sellingStoreId;
-    private int price;
+    private float price;
 
-    public StoreItem(int id, String name, PurchaseForm purchaseForm, int price, int sellingStoreId) {
+    public StoreItem(int id, String name, PurchaseForm purchaseForm, float price, int sellingStoreId) {
         super(id, name, purchaseForm);
         this.price = price;
         this.sellingStoreId = sellingStoreId;
@@ -25,16 +27,30 @@ public class StoreItem extends Item {
                 .build();
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
     public int getSellingStoreId() {
         return sellingStoreId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        StoreItem storeItem = (StoreItem) o;
+        return sellingStoreId == storeItem.sellingStoreId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), sellingStoreId);
     }
 
     @Override

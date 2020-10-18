@@ -20,16 +20,15 @@ import java.util.Collection;
 public class GetUsersServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            UsersManager usersManager = SDMUsersManager.getInstance();
             Gson gson = new Gson();
-            Collection<UserDTO> users = usersManager.getUsers();
+            Collection<UserDTO> users = SDMUsersManager.getInstance().getUsers();
             String json = gson.toJson(users);
             out.println(json);
             out.flush();

@@ -95,7 +95,7 @@ class DataConverter {
 
                 DiscountInformation newDiscount = new DiscountInformation(discount.getName().trim(),
                         new DiscountTrigger(store.getItemById(discount.getIfYouBuy().getItemId()), (float)discount.getIfYouBuy().getQuantity()),
-                        DiscountOfferType.valueOf(String.join("_", discount.getThenYouGet().getOperator().split("-"))));
+                        DiscountOfferType.valueOf(discount.getThenYouGet().getOperator().replace("-", "_")));
 
                 discount.getThenYouGet().getSDMOffer().forEach(sdmOffer -> newDiscount.addNewOffer(
                         new DiscountOffer(store.getItemById(sdmOffer.getItemId()), (float)sdmOffer.getQuantity(), sdmOffer.getForAdditional())));

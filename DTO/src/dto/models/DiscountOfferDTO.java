@@ -6,7 +6,7 @@ public class DiscountOfferDTO {
 
     private final StoreItemDTO item;
     private final float quantity;
-    private final int itemOfferPrice;
+    private final float itemOfferPrice;
 
     private DiscountOfferDTO(Builder builder) {
         this.item = builder.item;
@@ -22,7 +22,7 @@ public class DiscountOfferDTO {
         return quantity;
     }
 
-    public int getItemOfferPrice() {
+    public float getItemOfferPrice() {
         return itemOfferPrice;
     }
 
@@ -30,7 +30,7 @@ public class DiscountOfferDTO {
 
         private StoreItemDTO item;
         private float quantity;
-        private int itemOfferPrice;
+        private float itemOfferPrice;
 
         public Builder item(StoreItemDTO item) {
             this.item= item;
@@ -42,7 +42,7 @@ public class DiscountOfferDTO {
             return this;
         }
 
-        public Builder itemOfferPrice(int itemOfferPrice) {
+        public Builder itemOfferPrice(float itemOfferPrice) {
             this.itemOfferPrice = itemOfferPrice;
             return this;
         }

@@ -24,7 +24,7 @@ public class Transaction {
     public TransactionDTO toTransactionDTO() {
         return new TransactionDTO.Builder()
                 .transactionType(transactionType.getValue())
-                .date(date.toString())
+                .date(String.format("%d/%d/%d", date.getDayOfMonth(), date.getMonthValue(), date.getYear()))
                 .amount(amount)
                 .balanceBefore(balanceBefore)
                 .balanceAfter(balanceAfter)
