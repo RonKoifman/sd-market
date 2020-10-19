@@ -1,4 +1,4 @@
-package servlets;
+package servlets.account;
 
 import constants.Constants;
 import engine.managers.SDMAccountsManager;
@@ -31,7 +31,7 @@ public class NewDepositTransactionServlet extends HttpServlet {
                 float transactionAmount = Float.parseFloat(transactionAmountFromParameter);
                 LocalDate transactionDate = LocalDate.parse(transactionDateFromParameter);
                 SDMAccountsManager.getInstance().deposit(username, transactionAmount, transactionDate);
-                out.println("A deposit of $" + String.format("%.2f", transactionAmount) + " was made successfully.");
+                out.print("A deposit of $" + String.format("%.2f", transactionAmount) + " was made successfully.");
             } catch (Exception e) {
                 res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }

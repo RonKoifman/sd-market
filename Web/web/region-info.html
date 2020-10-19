@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>SDMarket · Sale Region</title>
+    <title>SDMarket · Region Info</title>
     <link rel="icon" href="common/images/app-icon.png">
     <link rel="stylesheet" href="common/assets/bootstrap.min.css">
-    <link rel="stylesheet" href="pages/region/sale-region-owner.css">
+    <link rel="stylesheet" href="pages/region/region-info.css">
     <script src="common/assets/jquery-2.0.3.min.js"></script>
     <script src="common/assets/bootstrap.min.js"></script>
     <script src="common/assets/context-path-helper.js"></script>
-    <script src="pages/region/sale-region-owner.js"></script>
+    <script src="pages/region/region-info.js"></script>
 </head>
 
 <body>
@@ -23,25 +23,26 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarMenu">
-        <ul class="nav">
+        <ul class="nav" id="navbarUl">
             <li class="nav-item">
                 <a class="nav-link" href="home.html">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="my-account.html">My Account</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="chat.html">Chat</a>
-            </li>
-            <li id="uploadNavLink" class="nav-item">
-                <a class="nav-link" href="upload-file.html">Upload File</a>
+                <a class="nav-link" href="region-info.html">Region Info</a>
             </li>
         </ul>
     </div>
 </nav>
 
+<!--  Jumbotron  -->
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to <span id="regionName"></span> region!</h1><br>
+    <p class="lead">
+        Here you can browse through all the items and stores the region has to offer. <br>
+        What is your impression of it?
+    </p>
+</div>
 
-*** Sale Region Owner ***
 </body>
 
 <!-- Footer -->

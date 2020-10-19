@@ -1,4 +1,4 @@
-package servlets;
+package servlets.signup;
 
 import constants.Constants;
 import engine.enums.UserRole;
@@ -35,27 +35,27 @@ public class SignupServlet extends HttpServlet {
                 String userRoleFromParameter = req.getParameter(Constants.USER_ROLE);
 
                 if (usernameFromParameter == null) {
-                    out.println(Constants.SIGNUP_URL);
+                    out.print(Constants.SIGNUP_URL);
                 } else if (usernameFromParameter.trim().isEmpty()) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    out.println("Please enter at least one character.");
+                    out.print("Please enter at least one character.");
                 } else if (!usernameFromParameter.trim().matches("[a-zA-Z0-9 ]+")) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    out.println("Please enter only english letters and digits.");
+                    out.print("Please enter only english letters and digits.");
                 } else {
                     usernameFromParameter = usernameFromParameter.trim();
                     if (SDMUsersManager.getInstance().isUserExists(usernameFromParameter)) {
                         res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                        out.println("This username is already taken.");
+                        out.print("This username is already taken.");
                     } else {
                         SDMUsersManager.getInstance().addNewUser(usernameFromParameter, UserRole.valueOf(userRoleFromParameter.toUpperCase()));
                         SessionUtils.setUsername(req, usernameFromParameter);
                         SessionUtils.setUserRole(req, userRoleFromParameter);
-                        out.println(Constants.HOME_URL);
+                        out.print(Constants.HOME_URL);
                     }
                 }
             } else {
-                out.println(Constants.HOME_URL);
+                out.print(Constants.HOME_URL);
             }
 
             out.flush();

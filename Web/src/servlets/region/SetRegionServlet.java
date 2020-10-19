@@ -1,4 +1,4 @@
-package servlets;
+package servlets.region;
 
 import constants.Constants;
 import utils.SessionUtils;

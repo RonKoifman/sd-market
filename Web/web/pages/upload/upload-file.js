@@ -1,4 +1,4 @@
-const UPLOAD_FILE_URL = buildUrlWithContextPath("upload-file");
+const UPLOAD_FILE_URL = buildUrlWithContextPath('upload-file');
 
 $(function () {
     $('#uploadForm').submit(function () {

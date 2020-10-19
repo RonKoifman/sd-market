@@ -1,13 +1,11 @@
 const USER_INFO_URL = buildUrlWithContextPath('user-info');
 const REGIONS_URL = buildUrlWithContextPath('regions');
 const USERS_URL = buildUrlWithContextPath('users');
-const SET_REGION_URL = buildUrlWithContextPath("set-region");
+const SET_REGION_URL = buildUrlWithContextPath('set-region');
 const refreshRate = 2000;
-let userRole;
-let regionURLByUserRole;
 
 $(function () {
-    setInterval(ajaxUsersInfo, refreshRate)
+    setInterval(ajaxUsersInfo, refreshRate);
     setInterval(ajaxRegionsInfo, refreshRate);
 });
 
@@ -16,15 +14,14 @@ $(function () {
         url: USER_INFO_URL,
         success: function (loggedInUser) {
             $('#username').text(loggedInUser.username);
-            userRole = loggedInUser.userRole;
-            switch (userRole) {
+            switch (loggedInUser['userRole']) {
                 case 'Customer':
                     $('#uploadNavLink').hide();
                     break;
             }
         },
         error: function () {
-            console.error('Error from user-info URL')
+            console.error('Error from user-info URL');
         }
     })
 });
@@ -36,7 +33,7 @@ $(function () {
             refreshUsersDiv(users);
         },
         error: function () {
-            console.error('Error from users URL')
+            console.error('Error from users URL');
         }
     })
 });
@@ -48,7 +45,7 @@ $(function () {
             refreshRegionsTable(regions);
         },
         error: function () {
-            console.error('Error from regions URL')
+            console.error('Error from regions URL');
         }
     })
 });
@@ -58,7 +55,7 @@ function refreshUsersDiv(users) {
 
     usersDiv.empty();
     $.each(users || [], function (index, user) {
-        const imgByUser = user.userRole === 'Customer' ? '<img class="user-avatar" src="common/images/customer-avatar.png" alt="">' : '<img class="user-avatar" src="common/images/store-owner-avatar.png" alt="">';
+        const imgByUser = user['userRole'] === 'Customer' ? '<img class="user-avatar" src="common/images/customer-avatar.png" alt="">' : '<img class="user-avatar" src="common/images/store-owner-avatar.png" alt="">';
 
         $('<li class="text-center">' +
         imgByUser +
@@ -68,12 +65,11 @@ function refreshUsersDiv(users) {
 
     const userInfoElements = document.getElementsByClassName('user-info');
     for (let i = 0; i < userInfoElements.length; i++) {
-        userInfoElements[i].innerHTML = users[i].username + '<br>' + users[i].userRole;
+        userInfoElements[i].innerHTML = users[i].username + '<br>' + users[i]['userRole'];
     }
 }
 
 function refreshRegionsTable(regions) {
-    regionURLByUserRole = `sale-region-${userRole === 'Customer' ? 'customer' : 'owner'}.html`;
     const regionsTable = $('#regionsTable');
     regionsTable.empty();
 
@@ -90,12 +86,12 @@ function refreshRegionsTable(regions) {
     $.each(regions || [], function (index, region) {
         $('<tr>' +
             '<td>' + region.name + '</td>' +
-            '<td>' + region.ownerUsername + '</td>' +
-            '<td>' + region.totalItems + '</td>' +
-            '<td>' + region.totalStores + '</td>' +
-            '<td>' + region.totalOrdersMade + '</td>' +
-            '<td>' + '$' + parseFloat(region.averageOrderItemsCost).toFixed(2) + '</td>' +
-            '<td>' + "<a href='" + regionURLByUserRole +"'>Go to region &raquo;</a>" + '</td>' +
+            '<td>' + region['ownerUsername'] + '</td>' +
+            '<td>' + region['totalItems'] + '</td>' +
+            '<td>' + region['totalStores'] + '</td>' +
+            '<td>' + region['totalOrdersMade'] + '</td>' +
+            '<td>' + '$' + parseFloat(region['averageOrderItemsCost']).toFixed(2) + '</td>' +
+            '<td>' + "<a href='" + "region-info.html" +"'>Go to region &raquo;</a>" + '</td>' +
             '</tr>').appendTo(regionsTable)
             .find('a')
             .click(function () {
@@ -106,7 +102,7 @@ function refreshRegionsTable(regions) {
 
 function onRegionChosen(region) {
     setRegionNameOnSession(region.name);
-    window.location.assign(regionURLByUserRole);
+    window.location.assign('region-info.html');
 }
 
 function setRegionNameOnSession(regionName) {
@@ -115,7 +111,7 @@ function setRegionNameOnSession(regionName) {
         data: `region_name=${regionName}`,
         dataType: 'json',
         error: function () {
-            console.error("Error from set region URL");
+            console.error('Error from set region URL');
         }
     });
 }
@@ -127,7 +123,7 @@ function ajaxRegionsInfo() {
             refreshRegionsTable(regions);
         },
         error: function () {
-            console.error('Error from regions URL')
+            console.error('Error from regions URL');
         }
     });
 }
@@ -139,7 +135,7 @@ function ajaxUsersInfo() {
             refreshUsersDiv(users);
         },
         error: function () {
-            console.error('Error from users URL')
+            console.error('Error from users URL');
         }
     });
 }

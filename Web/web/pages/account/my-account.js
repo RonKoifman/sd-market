@@ -1,5 +1,5 @@
-const USER_INFO_URL = buildUrlWithContextPath("user-info");
-const USER_ACCOUNT_URL = buildUrlWithContextPath("user-account");
+const USER_INFO_URL = buildUrlWithContextPath('user-info');
+const USER_ACCOUNT_URL = buildUrlWithContextPath('user-account');
 const refreshRate = 2000;
 
 $(function () {
@@ -11,7 +11,7 @@ $(function () {
         url: USER_INFO_URL,
         success: function (loggedInUser) {
             $('#username').text(loggedInUser.username);
-            switch (loggedInUser.userRole) {
+            switch (loggedInUser['userRole']) {
                 case 'Customer':
                     $('#uploadNavLink').hide();
                     break;
@@ -31,8 +31,8 @@ $(function () {
     $.ajax({
         url: USER_ACCOUNT_URL,
         success: function (account) {
-            refreshBalance(account.balance)
-            refreshTransactionsTable(account.transactions);
+            refreshBalance(account['balance'])
+            refreshTransactionsTable(account['transactions']);
         },
         error: function () {
             console.error('Error from user-account URL')
@@ -80,11 +80,11 @@ function refreshTransactionsTable(transactions) {
 
     $.each(transactions || [], function (index, transaction) {
         $('<tr>' +
-            '<td>' + transaction.transactionType + '</td>' +
+            '<td>' + transaction['transactionType'] + '</td>' +
             '<td>' + transaction.date + '</td>' +
-            '<td>' + '$' + parseFloat(transaction.amount).toFixed(2) + '</td>' +
-            '<td>' + '$' + parseFloat(transaction.balanceBefore).toFixed(2) + '</td>' +
-            '<td>' + '$' + parseFloat(transaction.balanceAfter).toFixed(2) + '</td>' +
+            '<td>' + '$' + parseFloat(transaction['amount']).toFixed(2) + '</td>' +
+            '<td>' + '$' + parseFloat(transaction['balanceBefore']).toFixed(2) + '</td>' +
+            '<td>' + '$' + parseFloat(transaction['balanceAfter']).toFixed(2) + '</td>' +
             '</tr>').appendTo(transactionsTable);
     });
 }
@@ -97,8 +97,8 @@ function ajaxUserAccount() {
     $.ajax({
         url: USER_ACCOUNT_URL,
         success: function (account) {
-            refreshTransactionsTable(account.transactions);
-            refreshBalance(account.balance);
+            refreshTransactionsTable(account['transactions']);
+            refreshBalance(account['balance']);
         },
         error: function () {
             console.error('Error from user-account URL')

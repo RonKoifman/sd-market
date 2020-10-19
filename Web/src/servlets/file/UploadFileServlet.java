@@ -1,4 +1,4 @@
-package servlets;
+package servlets.file;
 
 import engine.managers.SDMRegionsManager;
 import utils.SessionUtils;
@@ -36,18 +36,18 @@ public class UploadFileServlet extends HttpServlet {
 
             if (!fileType.contains("xml")) {
                 res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                out.println("Invalid file. Please choose only XML file type.");
+                out.print("Invalid file. Please choose only XML file type.");
             } else {
                 try {
                     SDMRegionsManager.getInstance().loadNewRegionDataFromFile(username, fileInputStream);
-                    out.println("File uploaded successfully!");
+                    out.print("File uploaded successfully!");
                 } catch (JAXBException e) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    out.println("Invalid file. " + GENERAL_ERROR_MESSAGE);
+                    out.print("Invalid file. " + GENERAL_ERROR_MESSAGE);
                 } catch (Exception e) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     String errorMessage = e.getMessage() == null ? GENERAL_ERROR_MESSAGE : e.getMessage();
-                    out.println("Invalid file. " + errorMessage);
+                    out.print("Invalid file. " + errorMessage);
                 }
             }
 

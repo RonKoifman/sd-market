@@ -1,8 +1,9 @@
-package servlets;
+package servlets.getters;
 
 import com.google.gson.Gson;
-import dto.models.RegionDTO;
-import engine.managers.SDMRegionsManager;
+import dto.models.UserDTO;
+import engine.managers.SDMUsersManager;
+import utils.SessionUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,10 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collection;
 
-@WebServlet(name = "GetRegionsServlet", urlPatterns = {"/regions"})
-public class GetRegionsServlet extends HttpServlet {
+@WebServlet(name = "GetUserInfoServlet", urlPatterns = {"/user-info"})
+public class GetUserInfoServlet extends HttpServlet {
 
     @Override
     protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -24,9 +24,9 @@ public class GetRegionsServlet extends HttpServlet {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
             Gson gson = new Gson();
-            Collection<RegionDTO> regions = SDMRegionsManager.getInstance().getAllRegions();
-            String json = gson.toJson(regions);
-            out.println(json);
+            UserDTO user = SDMUsersManager.getInstance().getUserByUsername(SessionUtils.getUsername(req));
+            String json = gson.toJson(user);
+            out.print(json);
             out.flush();
         }
     }
