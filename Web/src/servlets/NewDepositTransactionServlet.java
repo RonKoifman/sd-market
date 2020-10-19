@@ -1,7 +1,6 @@
 package servlets;
 
 import constants.Constants;
-import engine.managers.AccountsManager;
 import engine.managers.SDMAccountsManager;
 import utils.SessionUtils;
 

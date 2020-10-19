@@ -1,8 +1,10 @@
 const USER_INFO_URL = buildUrlWithContextPath('user-info');
 const REGIONS_URL = buildUrlWithContextPath('regions');
 const USERS_URL = buildUrlWithContextPath('users');
-const SALE_REGION_URL = buildUrlWithContextPath('sale-region');
+const SET_REGION_URL = buildUrlWithContextPath("set-region");
 const refreshRate = 2000;
+let userRole;
+let regionURLByUserRole;
 
 $(function () {
     setInterval(ajaxUsersInfo, refreshRate)
@@ -14,7 +16,8 @@ $(function () {
         url: USER_INFO_URL,
         success: function (loggedInUser) {
             $('#username').text(loggedInUser.username);
-            switch (loggedInUser.userRole) {
+            userRole = loggedInUser.userRole;
+            switch (userRole) {
                 case 'Customer':
                     $('#uploadNavLink').hide();
                     break;
@@ -70,6 +73,7 @@ function refreshUsersDiv(users) {
 }
 
 function refreshRegionsTable(regions) {
+    regionURLByUserRole = `sale-region-${userRole === 'Customer' ? 'customer' : 'owner'}.html`;
     const regionsTable = $('#regionsTable');
     regionsTable.empty();
 
@@ -91,17 +95,29 @@ function refreshRegionsTable(regions) {
             '<td>' + region.totalStores + '</td>' +
             '<td>' + region.totalOrdersMade + '</td>' +
             '<td>' + '$' + parseFloat(region.averageOrderItemsCost).toFixed(2) + '</td>' +
-            '<td>' + "<a href='" + SALE_REGION_URL +"'>Go to region &raquo;</a>" + '</td>' +
+            '<td>' + "<a href='" + regionURLByUserRole +"'>Go to region &raquo;</a>" + '</td>' +
             '</tr>').appendTo(regionsTable)
             .find('a')
             .click(function () {
-                onRegionChosen();
+                onRegionChosen(region);
             });
     });
 }
 
-function onRegionChosen() {
+function onRegionChosen(region) {
+    setRegionNameOnSession(region.name);
+    window.location.assign(regionURLByUserRole);
+}
 
+function setRegionNameOnSession(regionName) {
+    $.ajax({
+        url: SET_REGION_URL,
+        data: `region_name=${regionName}`,
+        dataType: 'json',
+        error: function () {
+            console.error("Error from set region URL");
+        }
+    });
 }
 
 function ajaxRegionsInfo() {

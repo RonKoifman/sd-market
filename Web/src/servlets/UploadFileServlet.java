@@ -1,7 +1,6 @@
 package servlets;
 
 import engine.managers.SDMRegionsManager;
-import engine.managers.RegionsManager;
 import utils.SessionUtils;
 
 import javax.servlet.ServletException;

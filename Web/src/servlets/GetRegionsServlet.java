@@ -3,7 +3,6 @@ package servlets;
 import com.google.gson.Gson;
 import dto.models.RegionDTO;
 import engine.managers.SDMRegionsManager;
-import engine.managers.RegionsManager;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

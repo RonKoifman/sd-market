@@ -2,7 +2,6 @@ package servlets;
 
 import com.google.gson.Gson;
 import dto.models.AccountDTO;
-import engine.managers.AccountsManager;
 import engine.managers.SDMAccountsManager;
 import utils.SessionUtils;
 

@@ -1,12 +1,8 @@
 package servlets;
 
 import com.google.gson.Gson;
-import dto.models.RegionDTO;
 import dto.models.UserDTO;
-import engine.managers.RegionsManager;
-import engine.managers.SDMRegionsManager;
 import engine.managers.SDMUsersManager;
-import engine.managers.UsersManager;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
