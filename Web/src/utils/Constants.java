@@ -1,4 +1,4 @@
-package constants;
+package utils;
 
 public final class Constants {
 	
@@ -9,6 +9,7 @@ public final class Constants {
     public static final String TRANSACTION_DATE = "date";
     public static final String TRANSACTION_AMOUNT = "amount";
     public static final String REGION_NAME = "region_name";
+    public static final String VERSION = "version";
 
     public static final String SIGNUP_URL = "signup.html";
     public static final String HOME_URL = "home.html";

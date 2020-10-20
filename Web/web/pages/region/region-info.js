@@ -61,7 +61,7 @@ $(function () {
         error: function () {
             console.error('Error from user-info URL');
         }
-    })
+    });
 });
 
 function refreshRegionStores(regionStores) {
@@ -69,7 +69,28 @@ function refreshRegionStores(regionStores) {
 }
 
 function refreshRegionItems(regionItems) {
-    // TODO: implement refresh region items
+    const itemsTable = $('#itemsTable');
+
+    itemsTable.empty();
+    $('<tr>' +
+        '<th>Name</th>' +
+        '<th>ID</th>' +
+        '<th>Purchase Form</th>' +
+        '<th>Stores Selling</th>' +
+        '<th>Average Price</th>' +
+        '<th>Total Purchase Amount</th>' +
+        '</tr>').appendTo(itemsTable);
+
+    $.each(regionItems || [], function (index, item) {
+        $('<tr>' +
+            '<td>' + item['name'] + '</td>' +
+            '<td>' + item['id'] + '</td>' +
+            '<td>' + item['purchaseForm'] + '</td>' +
+            '<td>' + item['amountOfStoresSelling'] + '</td>' +
+            '<td>' + '$' + parseFloat(item['averagePrice']).toFixed(2) + '</td>' +
+            '<td>' + parseFloat(item['purchaseAmount']).toFixed(2) + '</td>' +
+            '</tr>').appendTo(itemsTable);
+    });
 }
 
 function renderCustomerNavbar() {

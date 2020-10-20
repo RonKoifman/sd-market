@@ -1,6 +1,6 @@
-package servlets.account;
+package servlets.transactions;
 
-import constants.Constants;
+import utils.Constants;
 import engine.managers.SDMAccountsManager;
 import utils.SessionUtils;
 

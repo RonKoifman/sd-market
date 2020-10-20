@@ -1,6 +1,6 @@
 package servlets.signup;
 
-import constants.Constants;
+import utils.Constants;
 import engine.enums.UserRole;
 import engine.managers.SDMUsersManager;
 import utils.SessionUtils;

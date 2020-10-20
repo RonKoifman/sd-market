@@ -68,8 +68,8 @@ $(function () {
 
 function refreshTransactionsTable(transactions) {
     const transactionsTable = $('#transactionsTable');
-    transactionsTable.empty();
 
+    transactionsTable.empty();
     $('<tr>' +
         '<th>Transaction Type</th>' +
         '<th>Date</th>' +

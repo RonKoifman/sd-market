@@ -1,6 +1,6 @@
 package servlets.region;
 
-import constants.Constants;
+import utils.Constants;
 import utils.SessionUtils;
 
 import javax.servlet.annotation.WebServlet;
