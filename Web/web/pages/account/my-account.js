@@ -23,7 +23,7 @@ $(function () {
             }
         },
         error: function () {
-            alert('Error from user-info URL')
+            console.error('Error from user-info URL')
         }
     })
 });
@@ -36,7 +36,7 @@ $(function () {
             refreshTransactionsTable(account['transactions']);
         },
         error: function () {
-            alert('Error from user-account URL')
+            console.error('Error from user-account URL')
         }
     })
 });
@@ -59,7 +59,7 @@ $(function () {
                 $('.alert').text(res);
             },
             error: function () {
-                alert('Error from new-deposit-transaction URL')
+                console.error('Error from new-deposit-transaction URL')
             }
         });
 
@@ -102,7 +102,7 @@ function ajaxUserAccount() {
             refreshBalance(account['balance']);
         },
         error: function () {
-            alert('Error from user-account URL')
+            console.error('Error from user-account URL')
         }
     });
 }

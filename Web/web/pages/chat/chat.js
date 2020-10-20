@@ -12,7 +12,7 @@ $(function () {
             }
         },
         error: function () {
-            alert('Error from user-info URL')
+            console.error('Error from user-info URL')
         }
     })
 });

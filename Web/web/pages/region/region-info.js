@@ -16,7 +16,7 @@ $(function () {
             refreshRegionStores(regionStores);
         },
         error: function () {
-            alert('Error from region stores URL');
+            console.error('Error from region stores URL');
         }
     });
 });
@@ -28,7 +28,7 @@ $(function () {
             refreshRegionItems(regionItems);
         },
         error: function () {
-            alert('Error from region items URL');
+            console.error('Error from region items URL');
         }
     });
 });
@@ -40,7 +40,7 @@ $(function () {
            $('#regionName').text(regionName);
        },
        error: function () {
-           alert('Error from region-name URL');
+           console.error('Error from region-name URL');
        }
    });
 });
@@ -59,7 +59,7 @@ $(function () {
             }
         },
         error: function () {
-            alert('Error from user-info URL');
+            console.error('Error from user-info URL');
         }
     });
 });
@@ -148,16 +148,16 @@ function refreshRegionItems(regionItems) {
 
 function renderCustomerNavbar() {
     $('#navbarUl').append(
-        '<li class="nav-item"><a class="nav-link" href="#">My Orders History</a></li>' +
-        '<li class="nav-item"><a class="nav-link" href="#">Place New Order</a></li>'
+        '<li class="nav-item"><a class="nav-link" href="my-orders-history.html">My Orders History</a></li>' +
+        '<li class="nav-item"><a class="nav-link" href="place-new-order.html">Place New Order</a></li>'
     );
 }
 
 function renderStoreOwnerNavbar() {
     $('#navbarUl').append(
-        '<li class="nav-item"><a class="nav-link" href="#">My Stores Orders History</a></li>' +
-        '<li class="nav-item"><a class="nav-link" href="#">My Feedbacks</a></li>' +
-        '<li class="nav-item"><a class="nav-link" href="#">Open New Store</a></li>'
+        '<li class="nav-item"><a class="nav-link" href="my-stores-orders-history.html">My Stores Orders History</a></li>' +
+        '<li class="nav-item"><a class="nav-link" href="my-feedbacks.html">My Feedbacks</a></li>' +
+        '<li class="nav-item"><a class="nav-link" href="add-new-store.html">Add New Store</a></li>'
     );
 }
 
@@ -168,7 +168,7 @@ function ajaxRegionStores() {
             refreshRegionStores(regionStores);
         },
         error: function () {
-            alert('Error from region stores URL');
+            console.error('Error from region stores URL');
         }
     });
 }
@@ -180,7 +180,7 @@ function ajaxRegionItems() {
             refreshRegionItems(regionItems);
         },
         error: function () {
-            alert('Error from region items URL');
+            console.error('Error from region items URL');
         }
     });
 }
