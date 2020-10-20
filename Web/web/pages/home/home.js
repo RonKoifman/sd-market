@@ -21,7 +21,7 @@ $(function () {
             }
         },
         error: function () {
-            console.error('Error from user-info URL');
+            alert('Error from user-info URL');
         }
     })
 });
@@ -33,7 +33,7 @@ $(function () {
             refreshUsersDiv(users);
         },
         error: function () {
-            console.error('Error from users URL');
+            alert('Error from users URL');
         }
     })
 });
@@ -45,7 +45,7 @@ $(function () {
             refreshRegionsTable(regions);
         },
         error: function () {
-            console.error('Error from regions URL');
+            alert('Error from regions URL');
         }
     })
 });
@@ -109,9 +109,10 @@ function setRegionNameOnSession(regionName) {
     $.ajax({
         url: SET_REGION_URL,
         data: `region_name=${regionName}`,
-        dataType: 'json',
+        success: function () {
+        },
         error: function () {
-            console.error('Error from set region URL');
+            alert('Error from set region URL');
         }
     });
 }
@@ -123,7 +124,7 @@ function ajaxRegionsInfo() {
             refreshRegionsTable(regions);
         },
         error: function () {
-            console.error('Error from regions URL');
+            alert('Error from regions URL');
         }
     });
 }
@@ -135,7 +136,7 @@ function ajaxUsersInfo() {
             refreshUsersDiv(users);
         },
         error: function () {
-            console.error('Error from users URL');
+            alert('Error from users URL');
         }
     });
 }

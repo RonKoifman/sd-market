@@ -16,7 +16,7 @@ $(function () {
             refreshRegionStores(regionStores);
         },
         error: function () {
-            console.error('Error from region stores URL');
+            alert('Error from region stores URL');
         }
     });
 });
@@ -28,7 +28,7 @@ $(function () {
             refreshRegionItems(regionItems);
         },
         error: function () {
-            console.error('Error from region items URL');
+            alert('Error from region items URL');
         }
     });
 });
@@ -40,7 +40,7 @@ $(function () {
            $('#regionName').text(regionName);
        },
        error: function () {
-           console.error('Error from region-name URL');
+           alert('Error from region-name URL');
        }
    });
 });
@@ -59,13 +59,66 @@ $(function () {
             }
         },
         error: function () {
-            console.error('Error from user-info URL');
+            alert('Error from user-info URL');
         }
     });
 });
 
 function refreshRegionStores(regionStores) {
-    // TODO: implement refresh region stores
+    const storesDiv = $('#storesDiv');
+
+    storesDiv.empty();
+    $.each(regionStores || [], function (index, store) {
+        $(
+            '<div class="col mb-4">' +
+            '<div class="card h-100">' +
+            '<div class="card-body">' +
+                '<h5 class="card-title">' + store['name'] + '</h5>' +
+                '<p class="card-text">' +
+                    'ID: ' + store['id'] + '<br>' +
+                    'Owner: ' + store['ownerUsername'] + '<br>' +
+                    'Location: (' + store['location']['x'] + ', ' + store['location']['y'] + ')' + '<br>' +
+                    'Orders Made: ' + store['ordersMade']['length'] + '<br>' +
+                    'Income From Items Sold: $' + parseFloat(store['totalIncomeFromItems']).toFixed(2) + '<br>' +
+                    'Delivery PPK: $' + parseFloat(store['deliveryPPK']).toFixed(2) + '<br>' +
+                    'Income From Deliveries: $' + parseFloat(store['totalIncomeFromDeliveries']).toFixed(2) + '<br>' +
+                    '</p> <br>' +
+            '<h5 class="font-italic">Items For Sale</h5><br>' +
+            '<div class="table-responsive">' +
+            '<table id="' + 'storeItemsTable' + index + '" class="table table-striped table-sm">' +
+            '<thead>' +
+            '</thead>' +
+            '<tbody>' +
+            '</tbody>' +
+            '</table> </div></div></div></div>').appendTo(storesDiv);
+            $(buildStoreItemsTable(store['items'], index)).appendTo(storesDiv);
+    });
+}
+
+function buildStoreItemsTable(storeItems, storeIndex) {
+    const storeItemsTable = $(`#storeItemsTable${storeIndex}`);
+
+    storeItems.sort(function (item1, item2) {
+        return item1['id'] - item2['id'];
+    });
+    storeItemsTable.empty();
+    $('<tr>' +
+        '<th>Item Name</th>' +
+        '<th>ID</th>' +
+        '<th>Purchase Form</th>' +
+        '<th>Price</th>' +
+        '<th>Total Purchase Amount</th>' +
+        '</tr>').appendTo(storeItemsTable);
+
+    $.each(storeItems || [], function (index, item) {
+        $('<tr>' +
+            '<td>' + item['name'] + '</td>' +
+            '<td>' + item['id'] + '</td>' +
+            '<td>' + item['purchaseForm'] + '</td>' +
+            '<td>' + '$' + parseFloat(item['price']).toFixed(2) + '</td>' +
+            '<td>' + parseFloat(item['purchaseAmount']).toFixed(2) + '</td>' +
+            '</tr>').appendTo(storeItemsTable);
+    });
 }
 
 function refreshRegionItems(regionItems) {
@@ -115,7 +168,7 @@ function ajaxRegionStores() {
             refreshRegionStores(regionStores);
         },
         error: function () {
-            console.error('Error from region stores URL');
+            alert('Error from region stores URL');
         }
     });
 }
@@ -127,7 +180,7 @@ function ajaxRegionItems() {
             refreshRegionItems(regionItems);
         },
         error: function () {
-            console.error('Error from region items URL');
+            alert('Error from region items URL');
         }
     });
 }

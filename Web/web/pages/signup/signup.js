@@ -1,10 +1,12 @@
+const SIGNUP_URL = buildUrlWithContextPath('signup');
+
 $(function () {
     const onSubmitClicked = function () {
         const parameters = $(this).serialize();
 
         $.ajax({
             data: parameters,
-            url: this.action,
+            url: SIGNUP_URL,
             timeout: 2000,
             success: function (res) {
                 window.location.assign(res);

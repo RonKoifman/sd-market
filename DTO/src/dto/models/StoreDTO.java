@@ -9,7 +9,7 @@ public class StoreDTO {
     private final String name;
     private final String ownerUsername;
     private final Point location;
-    private final Map<Integer, StoreItemDTO> itemIdToItem;
+    private final Collection<StoreItemDTO> items;
     private final Collection<SubOrderDTO> ordersMade;
     private final float totalIncomeFromItems;
     private final int deliveryPPK;
@@ -23,7 +23,7 @@ public class StoreDTO {
         this.deliveryPPK = builder.deliveryPPK;
         this.totalIncomeFromDeliveries = builder.totalIncomeFromDeliveries;
         this.totalIncomeFromItems = builder.totalIncomeFromItems;
-        this.itemIdToItem = builder.itemIdToItem;
+        this.items = builder.items;
         this.ordersMade = builder.ordersMade;
     }
 
@@ -40,11 +40,7 @@ public class StoreDTO {
     }
 
     public Collection<StoreItemDTO> getItemsForSell() {
-        return Collections.unmodifiableCollection(itemIdToItem.values());
-    }
-
-    public StoreItemDTO getItemById(int itemId) {
-        return itemIdToItem.get(itemId);
+        return Collections.unmodifiableCollection(items);
     }
 
     public Collection<SubOrderDTO> getOrdersMade() {
@@ -63,10 +59,6 @@ public class StoreDTO {
         return totalIncomeFromItems;
     }
 
-    public boolean isItemSold(int itemId) {
-        return itemIdToItem.containsKey(itemId);
-    }
-
     public static final class Builder {
 
         private int id;
@@ -74,7 +66,7 @@ public class StoreDTO {
         private String ownerUsername;
         private int deliveryPPK;
         private Point location;
-        private Map<Integer, StoreItemDTO> itemIdToItem;
+        private Collection<StoreItemDTO> items;
         private Collection<SubOrderDTO> ordersMade;
         private float totalIncomeFromDeliveries;
         private float totalIncomeFromItems;
@@ -104,8 +96,8 @@ public class StoreDTO {
             return this;
         }
 
-        public Builder itemIdToItem(Map<Integer, StoreItemDTO> itemIdToItem) {
-            this.itemIdToItem = itemIdToItem;
+        public Builder items(Collection<StoreItemDTO> items) {
+            this.items = items;
             return this;
         }
 
@@ -148,12 +140,12 @@ public class StoreDTO {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", ownerUsername='" + ownerUsername + '\'' +
-                ", deliveryPPK=" + deliveryPPK +
                 ", location=" + location +
-                ", itemIdToItem=" + itemIdToItem +
+                ", items=" + items +
                 ", ordersMade=" + ordersMade +
-                ", totalIncomeFromDeliveries=" + totalIncomeFromDeliveries +
                 ", totalIncomeFromItems=" + totalIncomeFromItems +
+                ", deliveryPPK=" + deliveryPPK +
+                ", totalIncomeFromDeliveries=" + totalIncomeFromDeliveries +
                 '}';
     }
 }

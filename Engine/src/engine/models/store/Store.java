@@ -53,9 +53,10 @@ public class Store implements Locationable, Identifiable {
                 .name(name)
                 .location(location)
                 .deliveryPPK(deliveryPPK)
+                .ownerUsername(ownerUsername)
                 .totalIncomeFromDeliveries(totalIncomeFromDeliveries)
                 .totalIncomeFromItems(totalIncomeFromItems)
-                .itemIdToItem(itemIdToItem.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().toStoreItemDTO())))
+                .items(itemIdToItem.values().stream().map(StoreItem::toStoreItemDTO).collect(Collectors.toSet()))
                 .ordersMade(orderIdToOrder.values().stream().map(SubOrder::toSubOrderDTO).collect(Collectors.toSet()))
                 .build();
     }

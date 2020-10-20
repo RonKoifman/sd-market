@@ -1,5 +1,6 @@
 const USER_INFO_URL = buildUrlWithContextPath('user-info');
 const USER_ACCOUNT_URL = buildUrlWithContextPath('user-account');
+const DEPOSIT_TRANSACTION_URL = buildUrlWithContextPath('new-deposit-transaction');
 const refreshRate = 2000;
 
 $(function () {
@@ -22,7 +23,7 @@ $(function () {
             }
         },
         error: function () {
-            console.error('Error from user-info URL')
+            alert('Error from user-info URL')
         }
     })
 });
@@ -35,7 +36,7 @@ $(function () {
             refreshTransactionsTable(account['transactions']);
         },
         error: function () {
-            console.error('Error from user-account URL')
+            alert('Error from user-account URL')
         }
     })
 });
@@ -47,7 +48,7 @@ $(function () {
         $.ajax({
             data: parameters,
             method: 'POST',
-            url: this.action,
+            url: DEPOSIT_TRANSACTION_URL,
             timeout: 2000,
             success: function (res) {
                 $('#amount').val('');
@@ -58,7 +59,7 @@ $(function () {
                 $('.alert').text(res);
             },
             error: function () {
-                console.error('Error from new-deposit-transaction URL')
+                alert('Error from new-deposit-transaction URL')
             }
         });
 
@@ -101,7 +102,7 @@ function ajaxUserAccount() {
             refreshBalance(account['balance']);
         },
         error: function () {
-            console.error('Error from user-account URL')
+            alert('Error from user-account URL')
         }
     });
 }
