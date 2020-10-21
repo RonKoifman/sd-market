@@ -1,5 +1,6 @@
 package servlets.transactions;
 
+import engine.enums.TransactionType;
 import utils.Constants;
 import engine.managers.SDMAccountsManager;
 import utils.SessionUtils;
@@ -30,7 +31,7 @@ public class NewDepositTransactionServlet extends HttpServlet {
             try {
                 float transactionAmount = Float.parseFloat(transactionAmountFromParameter);
                 LocalDate transactionDate = LocalDate.parse(transactionDateFromParameter);
-                SDMAccountsManager.getInstance().deposit(username, transactionAmount, transactionDate);
+                SDMAccountsManager.getInstance().addNewTransaction(TransactionType.DEPOSIT, username, transactionAmount, transactionDate);
                 out.print("A deposit of $" + String.format("%.2f", transactionAmount) + " was made successfully.");
             } catch (Exception e) {
                 res.setStatus(HttpServletResponse.SC_BAD_REQUEST);

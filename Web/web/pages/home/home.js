@@ -79,7 +79,7 @@ function refreshRegionsTable(regions) {
         '<th>Total Items</th>' +
         '<th>Total Stores</th>' +
         '<th>Total Orders Made</th>' +
-        '<th>Average Orders Cost</th>' +
+        '<th>Average Order Items Cost</th>' +
         '<th>See More</th>' +
         '</tr>').appendTo(regionsTable);
 

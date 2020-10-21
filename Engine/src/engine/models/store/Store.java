@@ -65,6 +65,10 @@ public class Store implements Locationable, Identifiable {
         return name;
     }
 
+    public String getOwnerUsername() {
+        return ownerUsername;
+    }
+
     public int getAmountOfItemsForSell() {
         return itemIdToItem.size();
     }

@@ -42,6 +42,18 @@ public abstract class Order implements Identifiable, Locationable, Serializable 
         return orderDestination;
     }
 
+    public String getCustomerUsername() {
+        return customerUsername;
+    }
+
+    public float getTotalOrderCost() {
+        return totalOrderCost;
+    }
+
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
     public List<OrderItem> getOrderedItems() {
         return Collections.unmodifiableList(orderedItems);
     }

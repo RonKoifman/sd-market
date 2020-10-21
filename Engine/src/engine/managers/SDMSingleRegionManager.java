@@ -3,6 +3,7 @@ package engine.managers;
 import dto.models.*;
 import engine.enums.PurchaseForm;
 import engine.enums.Rating;
+import engine.enums.TransactionType;
 import engine.exceptions.*;
 import engine.models.feedback.Feedback;
 import engine.models.item.OrderItem;
@@ -10,6 +11,7 @@ import engine.models.item.RegionItem;
 import engine.models.item.StoreItem;
 import engine.models.location.Location;
 import engine.models.order.GeneralOrder;
+import engine.models.order.SubOrder;
 import engine.models.store.Store;
 
 import java.awt.*;
@@ -200,9 +202,9 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         updateStoresOrdersAfterNewOrder(pendingOrder);
         updateAverageOrderItemsCost(pendingOrder);
         SDMUsersManager.getInstance().addNewOrderToCustomer(username, pendingOrder, regionName);
-
+        Map<String, Float> ownerUsernameToPayment = getStoreOwnersToPaymentFromOrder(pendingOrder);
+        addNewTransactionsAfterOrder(pendingOrder, ownerUsernameToPayment);
         // TODO: send notification about new order to all the store owners of the stores participated in the order
-        // TODO: add new transactions to the customer and all the store owners of the stores participated in the order
     }
 
     @Override
@@ -242,6 +244,23 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         }
 
         pendingOrder.addItemsFromDiscountOffers(storeToDiscountOfferItems);
+    }
+
+    private Map<String, Float> getStoreOwnersToPaymentFromOrder(GeneralOrder newOrder) {
+        Map<String, Float> ownerUsernameToPayment = newOrder.getStores().stream().map(Store::getOwnerUsername).collect(Collectors.toMap(owner -> owner, owner -> 0.0f));
+
+        for (Store store : newOrder.getStores()) {
+            SubOrder storeOrder = newOrder.getOrderByStore(store);
+            String ownerUsername = store.getOwnerUsername();
+            ownerUsernameToPayment.put(ownerUsername, ownerUsernameToPayment.get(ownerUsername) + storeOrder.getTotalOrderCost());
+        }
+
+        return ownerUsernameToPayment;
+    }
+
+    private void addNewTransactionsAfterOrder(GeneralOrder newOrder, Map<String, Float> ownerUsernameToPayment) {
+        ownerUsernameToPayment.forEach((ownerUsername, payment) -> SDMAccountsManager.getInstance().addNewTransaction(TransactionType.RECEIVE, ownerUsername, payment, newOrder.getOrderDate()));
+        SDMAccountsManager.getInstance().addNewTransaction(TransactionType.CHARGE, newOrder.getCustomerUsername(), newOrder.getTotalOrderCost(), newOrder.getOrderDate());
     }
 
     private void updateAverageOrderItemsCost(GeneralOrder newOrder) {
