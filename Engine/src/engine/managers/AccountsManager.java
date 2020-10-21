@@ -7,9 +7,9 @@ import java.time.LocalDate;
 
 public interface AccountsManager {
 
-    void addNewAccount(String username);
+    void createNewAccountToUser(String username);
 
-    void addNewTransaction(TransactionType transactionType, String username, float transactionAmount, LocalDate transactionDate);
+    void addNewTransactionToUser(TransactionType transactionType, String username, float transactionAmount, LocalDate transactionDate);
 
     AccountDTO getAccountByUsername(String username);
 }

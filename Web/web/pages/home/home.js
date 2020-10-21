@@ -98,6 +98,12 @@ function refreshRegionsTable(regions) {
                 onRegionChosen(region);
             });
     });
+
+    if (regions.length === 0) {
+        $('<tr>' +
+        '<td>No regions uploaded yet.</td>' +
+        '</tr>').appendTo(regionsTable);
+    }
 }
 
 function onRegionChosen(region) {

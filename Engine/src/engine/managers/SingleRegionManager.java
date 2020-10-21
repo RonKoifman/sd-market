@@ -32,7 +32,7 @@ public interface SingleRegionManager {
 
     void addFeedbacksToStoresAfterOrder(String username, Map<StoreDTO, FeedbackDTO> storeToFeedback);
 
-    void addPendingOrderToOrdersStockByUsername(String username);
+    void confirmPendingOrderByUsername(String username);
 
     StoreDTO getStoreById(int storeId);
 

@@ -101,6 +101,7 @@ function buildStoreItemsTable(storeItems, storeIndex) {
     storeItems.sort(function (item1, item2) {
         return item1['id'] - item2['id'];
     });
+
     storeItemsTable.empty();
     $('<tr>' +
         '<th>Item Name</th>' +

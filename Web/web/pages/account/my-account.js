@@ -88,6 +88,12 @@ function refreshTransactionsTable(transactions) {
             '<td>' + '$' + parseFloat(transaction['balanceAfter']).toFixed(2) + '</td>' +
             '</tr>').appendTo(transactionsTable);
     });
+
+    if (transactions.length === 0) {
+        $('<tr>' +
+            '<td>No transactions were made yet.</td>' +
+            '</tr>').appendTo(transactionsTable);
+    }
 }
 
 function refreshBalance(balance) {

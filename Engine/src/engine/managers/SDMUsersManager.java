@@ -48,7 +48,7 @@ public class SDMUsersManager implements UsersManager {
                 break;
         }
 
-        SDMAccountsManager.getInstance().addNewAccount(username);
+        SDMAccountsManager.getInstance().createNewAccountToUser(username);
     }
 
     @Override

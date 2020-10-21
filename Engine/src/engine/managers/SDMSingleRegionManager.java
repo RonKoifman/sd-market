@@ -193,7 +193,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     }
 
     @Override
-    public void addPendingOrderToOrdersStockByUsername(String username) {
+    public void confirmPendingOrderByUsername(String username) {
         GeneralOrder pendingOrder = usernameToPendingOrder.get(username);
         pendingOrder.generateOrderId();
         orderIdToOrder.put(pendingOrder.getId(), pendingOrder);
@@ -202,9 +202,9 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         updateStoresOrdersAfterNewOrder(pendingOrder);
         updateAverageOrderItemsCost(pendingOrder);
         SDMUsersManager.getInstance().addNewOrderToCustomer(username, pendingOrder, regionName);
-        Map<String, Float> ownerUsernameToPayment = getStoreOwnersToPaymentFromOrder(pendingOrder);
+        Map<String, Float> ownerUsernameToPayment = getOwnerUsernameToPaymentFromOrder(pendingOrder);
         addNewTransactionsAfterOrder(pendingOrder, ownerUsernameToPayment);
-        // TODO: send notification about new order to all the store owners of the stores participated in the order
+        // TODO: send notifications about new order to all the store owners of the stores participated in the order
     }
 
     @Override
@@ -224,9 +224,9 @@ public class SDMSingleRegionManager implements SingleRegionManager {
 
     @Override
     public void addFeedbacksToStoresAfterOrder(String username, Map<StoreDTO, FeedbackDTO> storeToFeedback) {
-        storeToFeedback.forEach((storeDTO, feedback) -> {
+        storeToFeedback.forEach((storeDTO, feedbackDTO) -> {
             Store store = storeIdToStore.get(storeDTO.getId());
-            Feedback newFeedback = new Feedback(feedback.getUsername(), Rating.values()[feedback.getRating() - 1], feedback.getMessage(), LocalDate.parse(feedback.getOrderDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), feedback.getStoreName());
+            Feedback newFeedback = new Feedback(feedbackDTO.getUsername(), Rating.values()[feedbackDTO.getRating() - 1], feedbackDTO.getMessage(), LocalDate.parse(feedbackDTO.getOrderDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), feedbackDTO.getStoreName());
             store.addNewFeedback(newFeedback);
         });
 
@@ -246,7 +246,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         pendingOrder.addItemsFromDiscountOffers(storeToDiscountOfferItems);
     }
 
-    private Map<String, Float> getStoreOwnersToPaymentFromOrder(GeneralOrder newOrder) {
+    private Map<String, Float> getOwnerUsernameToPaymentFromOrder(GeneralOrder newOrder) {
         Map<String, Float> ownerUsernameToPayment = newOrder.getStores().stream().map(Store::getOwnerUsername).collect(Collectors.toMap(owner -> owner, owner -> 0.0f));
 
         for (Store store : newOrder.getStores()) {
@@ -259,8 +259,8 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     }
 
     private void addNewTransactionsAfterOrder(GeneralOrder newOrder, Map<String, Float> ownerUsernameToPayment) {
-        ownerUsernameToPayment.forEach((ownerUsername, payment) -> SDMAccountsManager.getInstance().addNewTransaction(TransactionType.RECEIVE, ownerUsername, payment, newOrder.getOrderDate()));
-        SDMAccountsManager.getInstance().addNewTransaction(TransactionType.CHARGE, newOrder.getCustomerUsername(), newOrder.getTotalOrderCost(), newOrder.getOrderDate());
+        ownerUsernameToPayment.forEach((ownerUsername, payment) -> SDMAccountsManager.getInstance().addNewTransactionToUser(TransactionType.RECEIVE, ownerUsername, payment, newOrder.getOrderDate()));
+        SDMAccountsManager.getInstance().addNewTransactionToUser(TransactionType.CHARGE, newOrder.getCustomerUsername(), newOrder.getTotalOrderCost(), newOrder.getOrderDate());
     }
 
     private void updateAverageOrderItemsCost(GeneralOrder newOrder) {

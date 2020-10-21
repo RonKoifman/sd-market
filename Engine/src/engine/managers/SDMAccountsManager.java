@@ -31,7 +31,7 @@ public class SDMAccountsManager implements AccountsManager {
     }
 
     @Override
-    public void addNewAccount(String username) {
+    public void createNewAccountToUser(String username) {
         if (usernameToUserAccount.containsKey(username)) {
             throw new IllegalStateException("The user '" + username + "' already has an account.");
         }
@@ -40,7 +40,7 @@ public class SDMAccountsManager implements AccountsManager {
     }
 
     @Override
-    public void addNewTransaction(TransactionType transactionType, String username, float transactionAmount, LocalDate transactionDate) {
+    public void addNewTransactionToUser(TransactionType transactionType, String username, float transactionAmount, LocalDate transactionDate) {
         Account userAccount = usernameToUserAccount.get(username);
         userAccount.addNewTransaction(new Transaction(transactionType, transactionDate, transactionAmount, userAccount.getBalance()));
     }
