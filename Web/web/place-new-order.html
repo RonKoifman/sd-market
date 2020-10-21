@@ -36,6 +36,37 @@
     </div>
 </nav>
 
+<br><br>
+<!-- New order form -->
+<div id="newOrderDiv" class="card shadow p-3 mb-5 bg rounded">
+    <h5 class="card-title text-center">Place New Order</h5>
+    <form id="newOrderForm" class="form-new-order" method="POST" action="new-order"><br>
+        <div class="form-group">
+            <label class="h6" for="x">X Coordinate (Order Destination)</label>
+            <input id="x" name="x" type="number" value="1" min="1" max="50" class="form-control" placeholder="X Coordinate">
+            <br><label class="h6" for="y">Y Coordinate (Order Destination)</label>
+            <input id="y" name="y" type="number" value="1" min="1" max="50" class="form-control" placeholder="Y Coordinate">
+            <br> <label class="h6" for="orderDate">Order Date</label>
+            <input name="order_date" type="date" class="form-control" id="orderDate" min="2020-11-01" max="2024-11-01" required>
+            <br> <label class="h6" for="orderType">Order Type</label>
+            <select name="order_type" class="form-control" id="orderType" required>
+                <option value="staticOrder">Single Store</option>
+                <option value="dynamicOrder">Best Cart Price</option>
+            </select>
+            <div id="staticOrderLabels">
+                <br> <label class="h6" for="chosenStore">Store</label>
+                <select name="chosen_store_id" class="form-control" id="chosenStore">
+                </select>
+                <br> <h6>Delivery Price: <span id="deliveryPrice"></span></h6>
+            </div>
+            <!-- Alert  -->
+            <br> <div class="alert" role="alert">
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Continue</button>
+        </div>
+    </form>
+</div>
+
 </body>
 <!-- Footer -->
 <hr class="featurette-divider">

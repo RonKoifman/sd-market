@@ -1,3 +1,9 @@
 body {
     background-color: #f5f5f5;
 }
+
+#newOrderDiv {
+    margin: auto;
+    width: 510px;
+    height: 100%;
+}

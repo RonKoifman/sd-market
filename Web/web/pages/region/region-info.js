@@ -158,8 +158,7 @@ function renderStoreOwnerNavbar() {
     $('#navbarUl').append(
         '<li class="nav-item"><a class="nav-link" href="my-stores-orders-history.html">My Stores Orders History</a></li>' +
         '<li class="nav-item"><a class="nav-link" href="my-feedbacks.html">My Feedbacks</a></li>' +
-        '<li class="nav-item"><a class="nav-link" href="add-new-store.html">Add New Store</a></li>'
-    );
+        '<li class="nav-item"><a class="nav-link" href="add-new-store.html">Add New Store</a></li>');
 }
 
 function ajaxRegionStores() {
