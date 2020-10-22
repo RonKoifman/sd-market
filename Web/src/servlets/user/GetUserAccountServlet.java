@@ -1,8 +1,8 @@
-package servlets.getters;
+package servlets.user;
 
 import com.google.gson.Gson;
-import dto.models.UserDTO;
-import engine.managers.SDMUsersManager;
+import dto.models.AccountDTO;
+import engine.managers.SDMAccountsManager;
 import utils.SessionUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "GetRegionNameServlet", urlPatterns = {"/region-name"})
-public class GetRegionNameServlet extends HttpServlet {
+@WebServlet(name = "GetUserAccountServlet", urlPatterns = {"/user-account"})
+public class GetUserAccountServlet extends HttpServlet {
 
     @Override
     protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -22,9 +22,11 @@ public class GetRegionNameServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
-            res.setContentType("text/html");
-            String regionName = SessionUtils.getRegionName(req);
-            out.print(regionName);
+            res.setContentType("application/json");
+            Gson gson = new Gson();
+            AccountDTO account = SDMAccountsManager.getInstance().getAccountByUsername(SessionUtils.getUsername(req));
+            String json = gson.toJson(account);
+            out.print(json);
             out.flush();
         }
     }

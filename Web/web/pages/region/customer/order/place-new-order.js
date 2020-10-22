@@ -1,5 +1,5 @@
 const REGION_STORES_URL = buildUrlWithContextPath('region-stores');
-const NEW_ORDER_URL = buildUrlWithContextPath('new-order');
+const NEW_ORDER_URL = buildUrlWithContextPath('set-order-details');
 let regionStores;
 
 $(function () {
@@ -10,7 +10,7 @@ $(function () {
             const chosenStoreSelect = $('#chosenStore');
 
             $.each(regionStoresResponse || [], function (index, store) {
-                $('<option value="' + store['id'] + '">' + store['name'] + '</option>')
+                $('<option value="' + store['id'] + '">' + store['name'] + ' | ID: ' + store['id'] + ' | Location: (' + store['location']['x'] + ', ' + store['location']['y'] + ')' + '</option>')
                     .appendTo(chosenStoreSelect);
             });
 
@@ -36,7 +36,7 @@ $(function () {
     });
 
     $('#orderType').change(function () {
-        if ($("#orderType option:selected").val() === 'dynamicOrder') {
+        if ($('#orderType option:selected').val() === 'dynamicOrder') {
             $('#staticOrderLabels').hide();
         } else {
             $('#staticOrderLabels').show();
@@ -66,8 +66,8 @@ $(function () {
 });
 
 function renderOrderPrice() {
-    const chosenStoreId = $("#chosenStore option:selected").val();
-    const chosenStore = regionStores.filter(store => store['id'] === parseInt(chosenStoreId))[0];
+    const storeId = $('#chosenStore option:selected').val();
+    const chosenStore = regionStores.filter(store => store['id'] === parseInt(storeId))[0];
     const x1 = $('#x').val();
     const y1 = $('#y').val();
     const x2 = chosenStore['location']['x'];

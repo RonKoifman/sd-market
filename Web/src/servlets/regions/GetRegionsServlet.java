@@ -1,10 +1,8 @@
-package servlets.getters;
+package servlets.regions;
 
 import com.google.gson.Gson;
-import dto.models.RegionItemDTO;
+import dto.models.RegionDTO;
 import engine.managers.SDMRegionsManager;
-import engine.managers.SingleRegionManager;
-import utils.SessionUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +12,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
 
-@WebServlet(name = "GetRegionItemsServlet", urlPatterns = {"/region-items"})
-public class GetRegionItemsServlet extends HttpServlet {
+@WebServlet(name = "GetRegionsServlet", urlPatterns = {"/regions"})
+public class GetRegionsServlet extends HttpServlet {
 
     @Override
     protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -26,9 +24,8 @@ public class GetRegionItemsServlet extends HttpServlet {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
             Gson gson = new Gson();
-            SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
-            Collection<RegionItemDTO> items = singleRegionManager.getAllItemsInRegion();
-            String json = gson.toJson(items);
+            Collection<RegionDTO> regions = SDMRegionsManager.getInstance().getAllRegions();
+            String json = gson.toJson(regions);
             out.print(json);
             out.flush();
         }

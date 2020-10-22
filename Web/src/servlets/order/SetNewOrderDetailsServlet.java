@@ -14,8 +14,8 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "NewOrderServlet", urlPatterns = {"/new-order"})
-public class NewOrderServlet extends HttpServlet {
+@WebServlet(name = "SetNewOrderDetailsServlet", urlPatterns = {"/set-order-details"})
+public class SetNewOrderDetailsServlet extends HttpServlet {
 
     @Override
     protected synchronized void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -25,12 +25,12 @@ public class NewOrderServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("text/html");
+            String regionName = SessionUtils.getRegionName(req);
+            SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(regionName);
 
             try {
-                String regionName = SessionUtils.getRegionName(req);
                 int xCoordinate = Integer.parseInt(req.getParameter(Constants.X_COORDINATE));
                 int yCoordinate = Integer.parseInt(req.getParameter(Constants.Y_COORDINATE));
-                SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(regionName);
                 singleRegionManager.checkForValidOrderDestination(new Point(xCoordinate, yCoordinate));
                 req.getSession(true).setAttribute(Constants.X_COORDINATE, req.getParameter(Constants.X_COORDINATE));
                 req.getSession(true).setAttribute(Constants.Y_COORDINATE, req.getParameter(Constants.Y_COORDINATE));

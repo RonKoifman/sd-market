@@ -15,6 +15,7 @@ public final class Constants {
     public static final String ORDER_DATE = "order_date";
     public static final String ORDER_TYPE = "order_type";
     public static final String CHOSEN_STORE_ID = "chosen_store_id";
+    public static final String ITEM_PURCHASE_AMOUNT = "quantity";
 
     public static final String SIGNUP_URL = "signup.html";
     public static final String HOME_URL = "home.html";

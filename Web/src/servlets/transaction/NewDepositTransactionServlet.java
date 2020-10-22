@@ -1,4 +1,4 @@
-package servlets.transactions;
+package servlets.transaction;
 
 import engine.enums.TransactionType;
 import utils.Constants;
