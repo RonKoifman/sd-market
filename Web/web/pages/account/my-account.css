@@ -11,3 +11,7 @@ body {
 #account {
     text-align: center;
 }
+
+#headerDiv {
+    background-color: #e9ecef;
+}
