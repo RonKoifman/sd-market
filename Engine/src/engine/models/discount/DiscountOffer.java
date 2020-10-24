@@ -10,11 +10,13 @@ public class DiscountOffer {
     private final StoreItem item;
     private final float quantity;
     private final float itemOfferPrice;
+    private final int storeId;
 
-    public DiscountOffer(StoreItem item, float quantity, float itemOfferPrice) {
+    public DiscountOffer(StoreItem item, float quantity, float itemOfferPrice, int storeId) {
         this.item = item;
         this.quantity = quantity;
         this.itemOfferPrice = itemOfferPrice;
+        this.storeId = storeId;
     }
 
     DiscountOfferDTO toDiscountOfferDTO() {
@@ -22,6 +24,7 @@ public class DiscountOffer {
                 .item(item.toStoreItemDTO())
                 .quantity(quantity)
                 .itemOfferPrice(itemOfferPrice)
+                .storeId(storeId)
                 .build();
     }
 
@@ -50,6 +53,7 @@ public class DiscountOffer {
                 "item=" + item +
                 ", quantity=" + quantity +
                 ", itemOfferPrice=" + itemOfferPrice +
+                ", storeId=" + storeId +
                 '}';
     }
 }

@@ -26,13 +26,13 @@ public interface SingleRegionManager {
 
     GeneralOrderDTO getPendingOrderByUsername(String username);
 
-    Map<StoreDTO, Collection<DiscountInformationDTO>> getAvailableDiscountsFromPendingOrderByUsername(String username);
+    Collection<DiscountInformationDTO> getAvailableDiscountsFromPendingOrderByUsername(String username);
 
-    void addChosenDiscountOffersToPendingOrderByUsername(String username, Map<StoreDTO, List<DiscountOfferDTO>> storeToDiscountOffers);
-
-    void addFeedbacksToStoresAfterOrder(String username, Map<StoreDTO, FeedbackDTO> storeToFeedback);
+    void addChosenDiscountOffersToPendingOrderByUsername(String username, List<DiscountOfferDTO> chosenDiscountOffers);
 
     void confirmPendingOrderByUsername(String username);
+
+    void addFeedbacksToStoresAfterOrder(Map<StoreDTO, FeedbackDTO> storeToFeedback);
 
     StoreDTO getStoreById(int storeId);
 

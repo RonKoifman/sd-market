@@ -7,11 +7,13 @@ public class DiscountOfferDTO {
     private final StoreItemDTO item;
     private final float quantity;
     private final float itemOfferPrice;
+    private final int storeId;
 
     private DiscountOfferDTO(Builder builder) {
         this.item = builder.item;
         this.quantity = builder.quantity;
         this.itemOfferPrice = builder.itemOfferPrice;
+        this.storeId = builder.storeId;
     }
 
     public StoreItemDTO getItem() {
@@ -26,11 +28,16 @@ public class DiscountOfferDTO {
         return itemOfferPrice;
     }
 
+    public int getStoreId() {
+        return storeId;
+    }
+
     public static final class Builder {
 
         private StoreItemDTO item;
         private float quantity;
         private float itemOfferPrice;
+        private int storeId;
 
         public Builder item(StoreItemDTO item) {
             this.item= item;
@@ -44,6 +51,11 @@ public class DiscountOfferDTO {
 
         public Builder itemOfferPrice(float itemOfferPrice) {
             this.itemOfferPrice = itemOfferPrice;
+            return this;
+        }
+
+        public Builder storeId(int storeId) {
+            this.storeId = storeId;
             return this;
         }
 
@@ -73,6 +85,7 @@ public class DiscountOfferDTO {
                 "item=" + item +
                 ", quantity=" + quantity +
                 ", itemOfferPrice=" + itemOfferPrice +
+                ", storeId=" + storeId +
                 '}';
     }
 }

@@ -158,7 +158,10 @@ function renderStoreOwnerNavbar() {
     $('#navbarUl').append(
         '<li class="nav-item"><a class="nav-link" href="my-stores-orders-history.html">My Stores Orders History</a></li>' +
         '<li class="nav-item"><a class="nav-link" href="my-feedbacks.html">My Feedbacks</a></li>' +
-        '<li class="nav-item"><a class="nav-link" href="add-new-store.html">Add New Store</a></li>');
+        '<li class="nav-item"><a class="nav-link" href="add-new-store.html">Add New Store</a></li>' +
+        // TODO: remove this!!
+        '<li class="nav-item"><a class="nav-link" href="place-new-order.html">Place New Order</a></li>');
+
 }
 
 function ajaxRegionStores() {

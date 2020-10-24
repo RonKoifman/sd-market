@@ -14,7 +14,7 @@ $(function () {
                     .appendTo(chosenStoreSelect);
             });
 
-            renderOrderPrice();
+            renderDeliveryPrice();
         },
         error: function () {
             console.error('Error from region stores URL');
@@ -24,24 +24,22 @@ $(function () {
 
 $(function () {
    $('#x').change(function () {
-      renderOrderPrice();
+      renderDeliveryPrice();
    });
 
     $('#y').change(function () {
-        renderOrderPrice();
+        renderDeliveryPrice();
     });
 
     $('#chosenStore').change(function () {
-        renderOrderPrice();
+        renderDeliveryPrice();
     });
 
     $('#orderType').change(function () {
-        if ($('#orderType option:selected').val() === 'dynamicOrder') {
-            $('#staticOrderLabels').hide();
-        } else {
-            $('#staticOrderLabels').show();
-        }
+        toggleStaticOrderLabels();
     });
+
+    toggleStaticOrderLabels();
 });
 
 $(function () {
@@ -65,7 +63,15 @@ $(function () {
     });
 });
 
-function renderOrderPrice() {
+function toggleStaticOrderLabels() {
+    if ($('#orderType option:selected').val() === 'dynamicOrder') {
+        $('#staticOrderLabels').hide();
+    } else {
+        $('#staticOrderLabels').show();
+    }
+}
+
+function renderDeliveryPrice() {
     const storeId = $('#chosenStore option:selected').val();
     const chosenStore = regionStores.filter(store => store['id'] === parseInt(storeId))[0];
     const x1 = $('#x').val();

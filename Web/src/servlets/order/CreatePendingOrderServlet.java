@@ -2,7 +2,6 @@ package servlets.order;
 
 import dto.models.RegionItemDTO;
 import dto.models.StoreDTO;
-import dto.models.StoreItemDTO;
 import engine.managers.SDMRegionsManager;
 import engine.managers.SingleRegionManager;
 import utils.Constants;
@@ -16,10 +15,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet(name = "CreatePendingOrderServlet", urlPatterns = {"/create-pending-order"})
 public class CreatePendingOrderServlet extends HttpServlet {
@@ -32,25 +28,29 @@ public class CreatePendingOrderServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("text/html");
-            String regionName = SessionUtils.getRegionName(req);
-            SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(regionName);
-
-            String customerUsername = SessionUtils.getUsername(req);
-            Point orderDestination = new Point(Integer.parseInt(req.getSession().getAttribute(Constants.X_COORDINATE).toString()), Integer.parseInt(req.getSession().getAttribute(Constants.Y_COORDINATE).toString()));
-            LocalDate orderDate = LocalDate.parse(req.getSession().getAttribute(Constants.ORDER_DATE).toString());
-            boolean isDynamicOrder = req.getSession().getAttribute(Constants.ORDER_TYPE).toString().equals("dynamicOrder");
-            StoreDTO chosenStore = isDynamicOrder ? null : singleRegionManager.getStoreById(Integer.parseInt(req.getSession().getAttribute(Constants.CHOSEN_STORE_ID).toString()));
+            SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
             Map<RegionItemDTO, Float> itemToItemPurchaseAmount = new HashMap<>();
-
-            ArrayList<RegionItemDTO> regionItems = new ArrayList<>(singleRegionManager.getAllItemsInRegion());
-            String[] parameters = req.getParameterMap().get(Constants.ITEM_PURCHASE_AMOUNT);
-            for (int i = 0; i < parameters.length; i++) {
-                if (!parameters[i].isEmpty()) {
-                    itemToItemPurchaseAmount.put(regionItems.get(i), Float.parseFloat(parameters[i]));
+            Map<String, String[]> parameterMap = req.getParameterMap();
+            parameterMap.forEach((itemId, purchaseAmount) -> {
+                if (!purchaseAmount[0].isEmpty()) {
+                    RegionItemDTO item = singleRegionManager.getItemById(Integer.parseInt(itemId));
+                    itemToItemPurchaseAmount.put(item, Float.parseFloat(purchaseAmount[0]));
                 }
+            });
+
+            if (itemToItemPurchaseAmount.isEmpty()) {
+                res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                out.print("Please select at least one item to purchase before continuing to checkout.");
+            } else {
+                String customerUsername = SessionUtils.getUsername(req);
+                Point orderDestination = new Point(Integer.parseInt(req.getSession().getAttribute(Constants.X_COORDINATE).toString()), Integer.parseInt(req.getSession().getAttribute(Constants.Y_COORDINATE).toString()));
+                LocalDate orderDate = LocalDate.parse(req.getSession().getAttribute(Constants.ORDER_DATE).toString());
+                boolean isDynamicOrder = req.getSession().getAttribute(Constants.ORDER_TYPE).toString().equals(Constants.DYNAMIC_ORDER);
+                StoreDTO chosenStore = isDynamicOrder ? null : singleRegionManager.getStoreById(Integer.parseInt(req.getSession().getAttribute(Constants.CHOSEN_STORE_ID).toString()));
+                singleRegionManager.createNewPendingOrder(isDynamicOrder, orderDate, orderDestination, customerUsername, chosenStore, itemToItemPurchaseAmount);
+                out.print(Constants.CHECKOUT_URL);
             }
 
-            singleRegionManager.createNewPendingOrder(isDynamicOrder, orderDate, orderDestination, customerUsername, chosenStore, itemToItemPurchaseAmount);
             out.flush();
         }
     }

@@ -11,7 +11,8 @@ public class GeneralOrderDTO {
     private final LocalDate orderDate;
     private final Point orderDestination;
     private final String customerUsername;
-    private final Map<StoreDTO, SubOrderDTO> storeToOrder;
+    private final List<SubOrderDTO> subOrders;
+    private final List<StoreDTO> stores;
     private final List<OrderItemDTO> orderedItems;
     private final float totalItemsCost;
     private final float deliveryCost;
@@ -25,7 +26,8 @@ public class GeneralOrderDTO {
         this.customerUsername = builder.customerUsername;
         this.orderDestination = builder.orderDestination;
         this.orderedItems = builder.orderedItems;
-        this.storeToOrder = builder.storeToOrder;
+        this.subOrders = builder.subOrders;
+        this.stores = builder.stores;
         this.totalItemsCost = builder.totalItemsCost;
         this.deliveryCost = builder.deliveryCost;
         this.totalOrderCost = builder.totalOrderCost;
@@ -35,10 +37,6 @@ public class GeneralOrderDTO {
 
     public int getId() {
         return id;
-    }
-
-    public SubOrderDTO getOrderByStore(StoreDTO store) {
-        return storeToOrder.get(store);
     }
 
     public LocalDate getOrderDate() {
@@ -77,10 +75,6 @@ public class GeneralOrderDTO {
         return Collections.unmodifiableCollection(orderedItems);
     }
 
-    public Collection<StoreDTO> getStores() {
-        return Collections.unmodifiableCollection(storeToOrder.keySet());
-    }
-
     public static final class Builder {
 
         private int id;
@@ -88,7 +82,8 @@ public class GeneralOrderDTO {
         private Point orderDestination;
         private String customerUsername;
         private List<OrderItemDTO> orderedItems;
-        private Map<StoreDTO, SubOrderDTO> storeToOrder;
+        private List<SubOrderDTO> subOrders;
+        private List<StoreDTO> stores;
         private float totalItemsCost;
         private float deliveryCost;
         private float totalOrderCost;
@@ -120,8 +115,13 @@ public class GeneralOrderDTO {
             return this;
         }
 
-        public Builder storeToOrder(Map<StoreDTO, SubOrderDTO> storeToOrder) {
-            this.storeToOrder = storeToOrder;
+        public Builder subOrders(List<SubOrderDTO> subOrders) {
+            this.subOrders = subOrders;
+            return this;
+        }
+
+        public Builder stores(List<StoreDTO> stores) {
+            this.stores = stores;
             return this;
         }
 
@@ -174,8 +174,9 @@ public class GeneralOrderDTO {
                 "id=" + id +
                 ", orderDate=" + orderDate +
                 ", orderDestination=" + orderDestination +
-                ", customerUsername=" + customerUsername +
-                ", storeToOrder=" + storeToOrder +
+                ", customerUsername='" + customerUsername + '\'' +
+                ", subOrders=" + subOrders +
+                ", stores=" + stores +
                 ", orderedItems=" + orderedItems +
                 ", totalItemsCost=" + totalItemsCost +
                 ", deliveryCost=" + deliveryCost +

@@ -1,7 +1,7 @@
 package engine.enums;
 
 public enum DiscountOfferType {
-    IRRELEVANT("Irrelevant"), ONE_OF("One of"), ALL_OR_NOTHING("All or Nothing");
+    IRRELEVANT("IRRELEVANT"), ONE_OF("ONE OF"), ALL_OR_NOTHING("ALL OR NOTHING");
 
     private final String value;
 

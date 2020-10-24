@@ -38,25 +38,19 @@ $(function () {
 $(function () {
     $('#chooseItemsForm').submit(function () {
         const parameters = $(this).serialize();
-        const regex = /[0-9]/g;
-        const found = parameters.match(regex);
 
-        if (!found) {
-            $('.alert').addClass('alert-danger').text('Please select at least one item to purchase before continue to checkout.');
-        } else {
-            $.ajax({
-                data: parameters,
-                url: CREATE_PENDING_ORDER_URL,
-                method: 'POST',
-                timeout: 2000,
-                success: function (res) {
-                    window.location.assign(res);
-                },
-                error: function () {
-                    console.error('Error from create pending order URL');
-                }
-            });
-        }
+        $.ajax({
+            data: parameters,
+            url: CREATE_PENDING_ORDER_URL,
+            method: 'POST',
+            timeout: 2000,
+            success: function (res) {
+                window.location.assign(res);
+            },
+            error: function (res) {
+                $('.alert').addClass('alert-danger').text(res.responseText);
+            }
+        });
 
         return false;
     });
@@ -89,31 +83,31 @@ function getItemInStoreById(itemId) {
     const storeItems = chosenStore['items'];
     const filteredItems = storeItems.filter(item => item['id'] === itemId);
 
-    return filteredItems.length > 0 ? filteredItems[0] : undefined;
+    return filteredItems.length > 0 ? filteredItems[0] : null;
 }
 
 function getItemPriceInStoreTableData(itemId) {
     const item = getItemInStoreById(itemId);
-    const itemPrice = item === undefined ? undefined : item['price'];
+    const itemPrice = item === null ? null : item['price'];
 
-    return itemPrice === undefined ? 'Not Available' : '$' + parseFloat(itemPrice).toFixed(2);
+    return itemPrice === null ? 'Not Available' : '$' + parseFloat(itemPrice).toFixed(2);
 }
 
 function getQuantityTableData(itemPurchaseForm, itemId) {
     let quantityTableData = '';
 
-    if (orderType === 'dynamicOrder' || getItemInStoreById(itemId) !== undefined) {
+    if (orderType === 'dynamicOrder' || getItemInStoreById(itemId) !== null) {
         switch (itemPurchaseForm) {
             case 'Quantity':
-                quantityTableData = '<td><input id="quantity" name="quantity" type="number" min="1" max="1000" class="form-control" placeholder="Quantity"></td>';
+                quantityTableData = '<td><input id="idToQuantity" name="' + itemId + '" type="number" min="1" max="1000" class="form-control" placeholder="Quantity"></td>';
                 break;
 
             case 'Weight':
-                quantityTableData = '<td><input id="quantity" name="quantity" type="number" min="1" step="0.1" max="1000" class="form-control" placeholder="Quantity"></td>';
+                quantityTableData = '<td><input id="idToQuantity" name="' + itemId + '" type="number" min="0.1" step="0.1" max="1000" class="form-control" placeholder="Quantity"></td>';
                 break;
         }
     } else {
-        quantityTableData = '<td><input id="quantity" name="quantity" type="number" min="1" step="0.1" max="1000" class="text-hide"></td>';
+        quantityTableData = '<td>Not Available</td>';
     }
 
     return quantityTableData;

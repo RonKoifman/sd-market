@@ -32,6 +32,7 @@ public class SubOrder extends Order {
                 .distanceFromCustomer(distanceFromCustomer)
                 .customerUsername(customerUsername)
                 .orderDate(orderDate)
+                .store(store.toStoreDTO())
                 .orderDestination(orderDestination)
                 .totalItemsAmount(totalItemsAmount)
                 .totalItemsCost(totalItemsCost)

@@ -26,7 +26,7 @@ public class Store implements Locationable, Identifiable {
     private float totalIncomeFromDeliveries;
     private float totalIncomeFromItems;
     private final Map<Integer, StoreItem> itemIdToItem = new HashMap<>();
-    private final List<DiscountInformation> discountsInformation = new LinkedList<>();
+    private final Map<String, DiscountInformation> discountNameToDiscountInformation = new HashMap<>();
     private final Map<Integer, SubOrder> orderIdToOrder = new HashMap<>();
     private final List<Feedback> feedbacksReceived = new LinkedList<>();
 
@@ -109,7 +109,11 @@ public class Store implements Locationable, Identifiable {
     }
 
     public void addNewDiscount(DiscountInformation newDiscount) {
-        discountsInformation.add(newDiscount);
+        discountNameToDiscountInformation.put(newDiscount.getName(), newDiscount);
+    }
+
+    public DiscountInformation getDiscountInformationByDiscountName(String discountName) {
+        return discountNameToDiscountInformation.getOrDefault(discountName, null);
     }
 
     public void addNewItem(StoreItem newItem) {
@@ -139,7 +143,7 @@ public class Store implements Locationable, Identifiable {
     private Map<DiscountInformationDTO, Integer> findMatchingDiscountsByOrderedItem(OrderItem orderedItem) {
         Map<DiscountInformationDTO, Integer> matchingDiscountToDiscountAmount = new HashMap<>();
 
-        for (DiscountInformation discountInformation : discountsInformation) {
+        for (DiscountInformation discountInformation : discountNameToDiscountInformation.values()) {
             DiscountTrigger discountTrigger = discountInformation.getDiscountTrigger();
             if (discountTrigger.getItem().getId() == orderedItem.getItem().getId() && discountTrigger.getQuantity() <= orderedItem.getQuantity()) {
                 matchingDiscountToDiscountAmount.put(discountInformation.toDiscountInformationDTO(), (int)Math.floor((orderedItem.getQuantity() / discountTrigger.getQuantity())));
@@ -169,7 +173,7 @@ public class Store implements Locationable, Identifiable {
             discountsToDelete.forEach(discountInformation -> offersNames
                     .append(System.lineSeparator()).append("'")
                     .append(discountInformation.getName()).append("'"));
-            discountsToDelete.forEach(discountsInformation::remove);
+            discountsToDelete.stream().map(DiscountInformation::getName).forEach(discountNameToDiscountInformation::remove);
 
             throw new DiscountOffersRemovedException("Discount offers that have been removed after deleting the selected item:"
                     + offersNames);
@@ -177,7 +181,7 @@ public class Store implements Locationable, Identifiable {
     }
 
     private Collection<DiscountInformation> getDiscountsInformationByItemId(int itemIdToDelete) {
-        return discountsInformation
+        return discountNameToDiscountInformation.values()
                 .stream()
                 .filter(discountInformation -> discountInformation.getDiscountTrigger().getItem().getId() == itemIdToDelete || discountInformation.isItemPartOfAnOffer(itemIdToDelete))
                 .collect(Collectors.toList());
@@ -207,7 +211,7 @@ public class Store implements Locationable, Identifiable {
                 ", totalIncomeFromDeliveries=" + totalIncomeFromDeliveries +
                 ", totalIncomeFromItems=" + totalIncomeFromItems +
                 ", itemIdToItem=" + itemIdToItem +
-                ", discountsInformation=" + discountsInformation +
+                ", discountNameToDiscountInformation=" + discountNameToDiscountInformation +
                 ", orderIdToOrder=" + orderIdToOrder +
                 ", feedbacksReceived=" + feedbacksReceived +
                 '}';

@@ -11,6 +11,7 @@ public class SubOrderDTO {
     private final LocalDate orderDate;
     private final String customerUsername;
     private final Point orderDestination;
+    private final StoreDTO store;
     private final float distanceFromCustomer;
     private final int totalItemsAmount;
     private final int totalItemsTypes;
@@ -24,6 +25,7 @@ public class SubOrderDTO {
         this.orderDate = builder.orderDate;
         this.orderDestination = builder.orderDestination;
         this.customerUsername = builder.customerUsername;
+        this.store = builder.store;
         this.distanceFromCustomer = builder.distanceFromCustomer;
         this.totalItemsAmount = builder.totalItemsAmount;
         this.totalItemsCost = builder.totalItemsCost;
@@ -57,6 +59,10 @@ public class SubOrderDTO {
         return customerUsername;
     }
 
+    public StoreDTO getStore() {
+        return store;
+    }
+
     public int getTotalItemsAmount() {
         return totalItemsAmount;
     }
@@ -83,6 +89,7 @@ public class SubOrderDTO {
         private LocalDate orderDate;
         private Point orderDestination;
         private String customerUsername;
+        private StoreDTO store;
         private float distanceFromCustomer;
         private int totalItemsTypes;
         private int totalItemsAmount;
@@ -98,6 +105,11 @@ public class SubOrderDTO {
 
         public Builder orderDate(LocalDate orderDate) {
             this.orderDate = orderDate;
+            return this;
+        }
+
+        public Builder store(StoreDTO store) {
+            this.store = store;
             return this;
         }
 
@@ -169,9 +181,10 @@ public class SubOrderDTO {
         return "SubOrderDTO{" +
                 "id=" + id +
                 ", orderDate=" + orderDate +
+                ", customerUsername='" + customerUsername + '\'' +
                 ", orderDestination=" + orderDestination +
-                ", customerUsername=" + customerUsername +
-                ", distanceFromUser=" + distanceFromCustomer +
+                ", store=" + store +
+                ", distanceFromCustomer=" + distanceFromCustomer +
                 ", totalItemsAmount=" + totalItemsAmount +
                 ", totalItemsTypes=" + totalItemsTypes +
                 ", totalItemsCost=" + totalItemsCost +

@@ -92,8 +92,21 @@ class DataConverter {
         }
     }
 
+    private void checkForUniqueDiscountNames(SDMDiscounts discounts) {
+        int amountOfUniqueDiscounts = discounts.getSDMDiscount()
+                .stream()
+                .map(discount -> discount.getName().toLowerCase())
+                .collect(Collectors.toSet())
+                .size();
+
+        if (amountOfUniqueDiscounts != discounts.getSDMDiscount().size()) {
+            throw new IllegalStateException("There are two discounts or more, with the same name. Discount name should be unique.");
+        }
+    }
+
     private void setStoreDiscounts(Store store, SDMDiscounts sdmDiscounts) {
         if (sdmDiscounts != null) {
+            checkForUniqueDiscountNames(sdmDiscounts);
             for (SDMDiscount discount : sdmDiscounts.getSDMDiscount()) {
                 if (!store.isItemSold(discount.getIfYouBuy().getItemId())) {
                     throw new IllegalStateException("A discount offer '" + discount.getName() + "' contains an item with the id '" +
@@ -112,7 +125,7 @@ class DataConverter {
                         DiscountOfferType.valueOf(discount.getThenYouGet().getOperator().replace("-", "_")));
 
                 discount.getThenYouGet().getSDMOffer().forEach(sdmOffer -> newDiscount.addNewOffer(
-                        new DiscountOffer(store.getItemById(sdmOffer.getItemId()), (float)sdmOffer.getQuantity(), sdmOffer.getForAdditional())));
+                        new DiscountOffer(store.getItemById(sdmOffer.getItemId()), (float)sdmOffer.getQuantity(), sdmOffer.getForAdditional(), store.getId())));
 
                 store.addNewDiscount(newDiscount);
             }

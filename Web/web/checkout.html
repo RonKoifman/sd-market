@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>SDMarket · Choose Items</title>
+    <title>SDMarket · Checkout</title>
     <link rel="icon" href="common/images/app-icon.png">
     <link rel="stylesheet" href="common/assets/bootstrap.min.css">
-    <link rel="stylesheet" href="pages/region/customer/order/choose-items.css">
+    <link rel="stylesheet" href="pages/region/customer/order/checkout.css">
     <script src="common/assets/jquery-2.0.3.min.js"></script>
     <script src="common/assets/bootstrap.min.js"></script>
     <script src="common/assets/context-path-helper.js"></script>
-    <script src="pages/region/customer/order/choose-items.js"></script>
+    <script src="pages/region/customer/order/checkout.js"></script>
 </head>
 <body>
 <!-- Navbar -->
@@ -35,41 +35,45 @@
     </div>
 </nav>
 
-<!-- cart table -->
-<br> <div class="cart-table text-center">
-    <img src="common/images/cart.png" width="64" height="64" alt="">
-    <h3 class="h4">Choose Items to Purchase</h3> <br>
-    <form id="chooseItemsForm" class="form-new-order" method="POST" action="create-pending-order"><br>
-        <div class="form-group">
-            <div class="table-responsive">
-                <table id="cartTable" class="table table-striped table-sm">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>ID</th>
-                        <th>Purchase Form</th>
-                        <th>Price</th>
-                        <th>Purchase Quantity</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-            <!-- Alert  -->
-            <br> <div class="alert" role="alert">
-            </div> <br>
-            <button class="btn btn-lg btn-primary" type="submit">Checkout</button>
-        </div>
-    </form>
+<!-- Checkout table -->
+<br> <div id="mainDiv" class="checkout-table text-center">
+    <img src="common/images/checkout.png" width="64" height="64" alt="">
+    <h3 class="h4">Checkout</h3> <br>
+    <div class="table-responsive">
+        <table id="checkoutTable" class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>Ordered Store</th>
+                <th>ID</th>
+                <th>Location</th>
+                <th>Distance</th>
+                <th>Delivery PPK</th>
+                <th>Total Delivery Cost</th>
+                <th>Purchased Items Types</th>
+                <th>Total Items Cost</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div> <br><br>
+
+    <!-- Discounts div -->
+    <div id="discountsHeader" class="text-center">
+        <img src="common/images/discount.png" width="64" height="64" alt=""> <h3 class="h4 text-center">Available Discounts</h3> <br>
+    </div>
+    <div id="discountsDiv" class="row row-cols-1 row-cols-md-3">
+    </div>
+
+    <br><br> <button id="finishOrderButton" class="btn btn-lg btn-primary" type="submit">Finish Order</button>
 </div>
 
 </body>
-
 <!-- Footer -->
 <hr class="featurette-divider">
 <footer class="container">
     <p class="float-right"><a href="#">Scroll to top</a></p>
     <p class="text-center">Copyright © SDMarket 2020 · Ron Koifman</p>
 </footer>
+
 </html>
