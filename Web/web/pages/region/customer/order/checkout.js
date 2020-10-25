@@ -66,7 +66,7 @@ function onDiscountSubmitted(submittedDiscountIdentifier) {
     let selectedDiv = $(`#discountDiv${discountIndex}`);
     let button = selectedDiv.find('.btn');
     button.remove();
-    $(`<img src="https://i.ibb.co/wB5VVdL/green-check.png" alt="green-check" height="64" width="64"/>`).appendTo(selectedDiv);
+    $('<img src="common/images/green-check.png" height="64" width="64" alt="">').appendTo(selectedDiv);
     selectedDiv.addClass('disabledButton');
     addChosenOffers(selectedDiv, submittedDiscountName);
 }

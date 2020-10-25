@@ -61,7 +61,7 @@ function buildCartTable(regionItems) {
 
    cartTable.empty();
    $('<tr>' +
-       '<th>Name</th>' +
+       '<th>Item Name</th>' +
        '<th>ID</th>' +
        '<th>Purchase Form</th>' +
        (orderType === 'dynamicOrder' ? '' : '<th>Price</th>') +
@@ -99,11 +99,11 @@ function getQuantityTableData(itemPurchaseForm, itemId) {
     if (orderType === 'dynamicOrder' || getItemInStoreById(itemId) !== null) {
         switch (itemPurchaseForm) {
             case 'Quantity':
-                quantityTableData = '<td><input id="idToQuantity" name="' + itemId + '" type="number" min="1" max="1000" class="form-control" placeholder="Quantity"></td>';
+                quantityTableData = '<td><input id="idToQuantity" name="' + itemId + '" type="number" min="1" max="1000" class="form-control" placeholder="Units"></td>';
                 break;
 
             case 'Weight':
-                quantityTableData = '<td><input id="idToQuantity" name="' + itemId + '" type="number" min="0.1" step="0.1" max="1000" class="form-control" placeholder="Quantity"></td>';
+                quantityTableData = '<td><input id="idToQuantity" name="' + itemId + '" type="number" min="0.1" step="0.05" max="1000" class="form-control" placeholder="Kilograms"></td>';
                 break;
         }
     } else {

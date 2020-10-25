@@ -108,7 +108,7 @@ function buildStoreItemsTable(storeItems, storeIndex) {
         '<th>ID</th>' +
         '<th>Purchase Form</th>' +
         '<th>Price</th>' +
-        '<th>Total Purchase Amount</th>' +
+        '<th>Total Purchases</th>' +
         '</tr>').appendTo(storeItemsTable);
 
     $.each(storeItems || [], function (index, item) {
@@ -127,12 +127,12 @@ function refreshRegionItems(regionItems) {
 
     itemsTable.empty();
     $('<tr>' +
-        '<th>Name</th>' +
+        '<th>Item Name</th>' +
         '<th>ID</th>' +
         '<th>Purchase Form</th>' +
         '<th>Stores Selling</th>' +
         '<th>Average Price</th>' +
-        '<th>Total Purchase Amount</th>' +
+        '<th>Total Purchases</th>' +
         '</tr>').appendTo(itemsTable);
 
     $.each(regionItems || [], function (index, item) {

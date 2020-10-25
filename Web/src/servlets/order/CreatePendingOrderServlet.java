@@ -40,7 +40,7 @@ public class CreatePendingOrderServlet extends HttpServlet {
 
             if (itemToItemPurchaseAmount.isEmpty()) {
                 res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                out.print("Please select at least one item to purchase before continuing to checkout.");
+                out.print("Please purchase at least one item before continuing to checkout.");
             } else {
                 String customerUsername = SessionUtils.getUsername(req);
                 Point orderDestination = new Point(Integer.parseInt(req.getSession().getAttribute(Constants.X_COORDINATE).toString()), Integer.parseInt(req.getSession().getAttribute(Constants.Y_COORDINATE).toString()));

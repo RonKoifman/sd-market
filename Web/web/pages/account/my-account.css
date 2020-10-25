@@ -15,3 +15,11 @@ body {
 #headerDiv {
     background-color: #e9ecef;
 }
+
+.green {
+    -webkit-text-fill-color: #28a745;
+}
+
+.red {
+    -webkit-text-fill-color: #dc3545;
+}
