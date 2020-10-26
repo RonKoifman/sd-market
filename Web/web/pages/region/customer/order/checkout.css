@@ -7,3 +7,9 @@ body {
     pointer-events: none;
     opacity: 0.4;
 }
+
+#discountsDiv {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}

@@ -225,7 +225,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
 
     @Override
     public void addFeedbackToStoreAfterOrder(String username, int storeId, String userMessage, Rating rating) {
-        GeneralOrder userOrder = usernameToPendingOrder.get(userMessage);
+        GeneralOrder userOrder = usernameToPendingOrder.get(username);
         Store store = storeIdToStore.get(storeId);
         Feedback newFeedback = new Feedback(username, rating, userMessage, userOrder.getOrderDate(), store.getName(), storeId);
         store.addNewFeedback(newFeedback);

@@ -32,7 +32,7 @@ $(function () {
         document.getElementById('confirmOrderButton').disabled = true;
         setTimeout(function () {
             $('#feedbackModal').modal('show');
-        }, 2000);
+        }, 1300);
 
         return false;
     });
@@ -110,7 +110,7 @@ function buildOrderedItemsTable(orderedItems, storeIndex) {
         '<th>Price</th>' +
         '<th>Purchase Amount</th>' +
         '<th>Total Price</th>' +
-        '<th>From Discount</th>' +
+        '<th>From Discount Offer</th>' +
         '</tr>').appendTo(orderedItemsTable);
 
     $.each(orderedItems || [], function (index, item) {

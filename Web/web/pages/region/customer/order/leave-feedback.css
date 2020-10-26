@@ -13,3 +13,9 @@ body {
     pointer-events: none;
     opacity: 0.4;
 }
+
+#storesDiv {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}

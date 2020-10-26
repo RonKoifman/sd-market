@@ -1,6 +1,7 @@
 const PENDING_ORDER_URL = buildUrlWithContextPath('get-pending-order');
 const ADD_FEEDBACK_URL = buildUrlWithContextPath('add-feedback');
 let stores;
+let storeIdToRating = new Map();
 
 function ajaxPendingOrder() {
     return $.ajax({
@@ -18,7 +19,11 @@ function ajaxPendingOrder() {
 function setRateYoOptions() {
     $('.rateYoDiv').rateYo({
         rating: 0,
-        fullStar: true
+        fullStar: true,
+        onSet: function (rating) {
+            let storeId = this.id.charAt(this.id.length - 1);
+            storeIdToRating.set(storeId, rating);
+        }
     });
 }
 
@@ -27,23 +32,29 @@ $(function () {
 });
 
 function onFeedbackSubmitted(storeId) {
-    let rating;
-    let feedbackText;
-    let feedbackDiv = $(`card-body${storeId}`);
+    let feedbackDiv = $(`#card-body${storeId}`);
+    let rating = storeIdToRating.get(storeId);
+    let feedbackText = $(`#textarea${storeId}`).val();
 
-   $.ajax({
-       url: ADD_FEEDBACK_URL,
-       method: 'POST',
-       data: `rating=${rating}&feedback_text=${feedbackText}&store_id=${storeId}`,
-       success: function () {
-           $(`alert${storeId}`).addClass('alert-success').text('Thank you! Your feedback has been submitted successfully.')
-       },
-       error: function () {
-           console.error('Error from add feedback URL');
-       }
-   });
+    if (rating === 0 || rating === undefined) {
+        $(`#alert${storeId}`).addClass('alert-danger').text('Please rate the store to submit feedback.');
+    } else {
+        $.ajax({
+            url: ADD_FEEDBACK_URL,
+            method: 'POST',
+            data: `rating=${rating}&feedback_text=${feedbackText}&store_id=${storeId}`,
+            success: function () {
+                let alert = $(`#alert${storeId}`);
+                alert.removeClass('alert-danger').text('');
+                alert.addClass('alert-success').text('Thank you! Your feedback has been submitted successfully.');
+            },
+            error: function () {
+                console.error('Error from add feedback URL');
+            }
+        });
 
-   feedbackDiv.addClass('disabledButton');
+        feedbackDiv.addClass('disabledButton');
+    }
 }
 
 function renderStoresForFeedback() {
@@ -62,10 +73,10 @@ function renderStoresForFeedback() {
             ' <div id="' + 'rateYo' + store['id'] + '" class="rateYoDiv center">' +
             '</div>' +
             '<br><div>' +
-            '<textarea id="' + 'textarea' + store['id'] + '" name="text" rows="4" cols="50" placeholder="Write your opinion about the store..."></textarea>' +
+            '<textarea class="textarea-style" id="' + 'textarea' + store['id'] + '" name="text" rows="4" cols="50" placeholder="Write your opinion about the store..."></textarea>' +
             '</div>' +
             '<br> <div id="alert' + store['id'] + '" class="alert" role="alert"></div>' +
-            '<br>' + '' + '<button id="' + 'buttonSubmit' + store['id'] + '" class="btn btn-primary" type="submit" onclick="onFeedbackSubmitted(this.id)">Submit Feedback</button> <br>' +
+            '<br>' + '' + '<button id="' + store['id'] + '" class="btn btn-primary" type="submit" onclick="onFeedbackSubmitted(this.id)">Submit Feedback</button> <br>' +
             '</div></div></div>').appendTo(storesDiv);
     });
 }
