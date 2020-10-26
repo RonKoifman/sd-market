@@ -17,11 +17,11 @@ public interface SingleRegionManager {
 
     void updateItemPriceInStore(int storeId, int itemId, float newItemPrice);
 
-    void addNewStoreToRegion(String ownerUsername, int storeId, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Integer> itemIdToItemPriceInStore);
+    void addNewStoreToRegion(String ownerUsername, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Integer> itemIdToItemPriceInStore);
 
     void addNewItemToRegion(int itemId, String itemName, String itemPurchaseForm, Map<Integer, Integer> storeIdToItemPriceInStore);
 
-    void checkForValidOrderDestination(Point orderDestination);
+    void checkForFreeLocation(Point location);
 
     void createNewPendingOrder(boolean isDynamicOrder, LocalDate orderDate, Point orderDestination, String customerUsername, StoreDTO chosenStore, Map<RegionItemDTO, Float> itemToItemPurchaseAmount);
 
@@ -33,7 +33,7 @@ public interface SingleRegionManager {
 
     void confirmPendingOrderByUsername(String username);
 
-    void addFeedbackToStoreAfterOrder(String username, int storeId, String userMessage, Rating rating);
+    void addFeedbackToStoreAfterOrder(String username, int storeId, String feedbackText, Rating rating);
 
     StoreDTO getStoreById(int storeId);
 

@@ -152,20 +152,16 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     }
 
     @Override
-    public void addNewStoreToRegion(String ownerUsername, int storeId, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Integer> itemIdToItemPriceInStore) {
-        if (storeIdToStore.containsKey(storeId)) {
-            throw new IllegalStateException("The store id '" + storeId + "' is already taken.");
-        }
-
+    public void addNewStoreToRegion(String ownerUsername, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Integer> itemIdToItemPriceInStore) {
         if (isLocationOccupied(storeLocation)) {
-            throw new IdenticalLocationsException(String.format("The location (%d, %d) is already taken.", storeLocation.x, storeLocation.y));
+            throw new OccupiedLocationException(String.format("The location (%d, %d) is already taken.", storeLocation.x, storeLocation.y));
         }
 
-        Store newStore = new Store(storeId, storeName, storeDeliveryPPK, new Location(storeLocation.x, storeLocation.y));
-        itemIdToItemPriceInStore.forEach((itemId, itemPrice) -> addNewItemToStore(storeId, itemId, itemPrice));
+        int newStoreId = generateNewStoreId();
+        Store newStore = new Store(newStoreId, storeName, storeDeliveryPPK, new Location(storeLocation.x, storeLocation.y));
+        itemIdToItemPriceInStore.forEach((itemId, itemPrice) -> addNewItemToStore(newStoreId, itemId, itemPrice));
         storeIdToStore.put(newStore.getId(), newStore);
         SDMUsersManager.getInstance().addNewStoreToStoreOwner(ownerUsername, newStore, regionName);
-
         // TODO: send notification to the region owner (only if the new store owner is not himself)
     }
 
@@ -175,9 +171,9 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     }
 
     @Override
-    public void checkForValidOrderDestination(Point orderDestination) {
-        if (isLocationOccupied(orderDestination)) {
-            throw new IdenticalLocationsException("");
+    public void checkForFreeLocation(Point location) {
+        if (isLocationOccupied(location)) {
+            throw new OccupiedLocationException("");
         }
     }
 
@@ -212,7 +208,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     @Override
     public Collection<DiscountInformationDTO> getAvailableDiscountsFromPendingOrderByUsername(String username) {
         GeneralOrder pendingOrder = usernameToPendingOrder.get(username);
-       Collection<DiscountInformationDTO> availableDiscounts = new LinkedList<>();
+        Collection<DiscountInformationDTO> availableDiscounts = new LinkedList<>();
 
         for (Store store : pendingOrder.getStores()) {
             List<OrderItem> storeOrderedItems = pendingOrder.getOrderByStore(store).getOrderedItems();
@@ -224,12 +220,11 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     }
 
     @Override
-    public void addFeedbackToStoreAfterOrder(String username, int storeId, String userMessage, Rating rating) {
+    public void addFeedbackToStoreAfterOrder(String username, int storeId, String feedbackText, Rating rating) {
         GeneralOrder userOrder = usernameToPendingOrder.get(username);
         Store store = storeIdToStore.get(storeId);
-        Feedback newFeedback = new Feedback(username, rating, userMessage, userOrder.getOrderDate(), store.getName(), storeId);
+        Feedback newFeedback = new Feedback(username, rating, feedbackText, userOrder.getOrderDate(), store.getName(), storeId);
         store.addNewFeedback(newFeedback);
-
         // TODO: send notification to the store owner who got a feedback
     }
 
@@ -245,6 +240,10 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         }
 
         pendingOrder.addItemsFromDiscountOffers(storeToDiscountOfferItems);
+    }
+
+    private int generateNewStoreId() {
+        return storeIdToStore.keySet().stream().max(Integer::compareTo).get() + 1;
     }
 
     private Map<Store, List<DiscountOfferDTO>> getStoreToChosenOffersMapFromChosenOffers(List<DiscountOfferDTO> chosenOffers) {

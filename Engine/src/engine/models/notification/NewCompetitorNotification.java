@@ -5,13 +5,15 @@ import java.awt.*;
 public class NewCompetitorNotification extends Notification {
 
     private final String competitorUsername;
+    private final String regionName;
     private final String storeName;
     private final Point storeLocation;
     private final int amountOfItemsSoldByStore;
     private final int totalItemsInRegion;
 
-    public NewCompetitorNotification(String competitorUsername, String storeName, Point storeLocation, int amountOfItemsSoldByStore, int totalItemsInRegion) {
+    public NewCompetitorNotification(String regionName, String competitorUsername, String storeName, Point storeLocation, int amountOfItemsSoldByStore, int totalItemsInRegion) {
         super("New Competitor In Region");
+        this.regionName = regionName;
         this.competitorUsername = competitorUsername;
         this.storeName = storeName;
         this.storeLocation = storeLocation;
@@ -29,16 +31,17 @@ public class NewCompetitorNotification extends Notification {
     }
 
     private String buildMessage() {
-        return String.format("A new competitor arrived in the region!" + System.lineSeparator() +
-                "The store owner '%s' opened a store named '%s' that locates in coordinates (%d, %d)." + System.lineSeparator() +
+        return String.format("A new competitor arrived in your owned region '%s'!" + System.lineSeparator() +
+                "The user '%s' opened a store named '%s' that locates in coordinates (%d, %d)." + System.lineSeparator() +
                 "The store sells %d of the %d items available in the region.",
-                competitorUsername, storeName, storeLocation.x, storeLocation.y, amountOfItemsSoldByStore, totalItemsInRegion);
+                regionName, competitorUsername, storeName, storeLocation.x, storeLocation.y, amountOfItemsSoldByStore, totalItemsInRegion);
     }
 
     @Override
     public String toString() {
         return "NewCompetitorNotification{" +
                 "competitorUsername='" + competitorUsername + '\'' +
+                ", regionName='" + regionName + '\'' +
                 ", storeName='" + storeName + '\'' +
                 ", storeLocation=" + storeLocation +
                 ", amountOfItemsSoldByStore=" + amountOfItemsSoldByStore +

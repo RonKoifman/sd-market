@@ -2,7 +2,7 @@ package engine.file;
 
 import engine.enums.DiscountOfferType;
 import engine.enums.PurchaseForm;
-import engine.exceptions.IdenticalLocationsException;
+import engine.exceptions.OccupiedLocationException;
 import engine.exceptions.LocationOutOfRangeException;
 import engine.file.jaxb.schema.generated.*;
 import engine.models.location.Location;
@@ -72,7 +72,7 @@ class DataConverter {
 
         for (Store store : convertedStoreIdToStore.values()) {
             if (storeLocations.contains(store.getLocation())) {
-                throw new IdenticalLocationsException("The location (" + store.getLocation().x + ", " +
+                throw new OccupiedLocationException("The location (" + store.getLocation().x + ", " +
                         store.getLocation().y + ") exists more than once in the region.");
             }
 

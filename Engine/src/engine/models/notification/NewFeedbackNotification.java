@@ -21,8 +21,8 @@ public class NewFeedbackNotification extends Notification {
     }
 
     private String buildMessage() {
-       return String.format("You've just received a new feedback from the customer '%s'." + System.lineSeparator() +
-               "Your store '%s' got a rate of %d stars!",
+       return String.format("You've just received a new feedback from the user '%s'!" + System.lineSeparator() +
+               "Your store '%s' got a rate of %d stars.",
                username, storeName, rating.getOrdinal());
     }
 

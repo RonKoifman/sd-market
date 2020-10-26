@@ -9,15 +9,15 @@ public class Feedback {
 
     private final String username;
     private final Rating rating;
-    private final String message;
+    private final String feedbackText;
     private final LocalDate orderDate;
     private final String storeName;
     private final int storeId;
 
-    public Feedback(String username, Rating rating, String message, LocalDate orderDate, String storeName, int storeId) {
+    public Feedback(String username, Rating rating, String feedbackText, LocalDate orderDate, String storeName, int storeId) {
         this.username = username;
         this.rating = rating;
-        this.message = message;
+        this.feedbackText = feedbackText;
         this.orderDate = orderDate;
         this.storeName = storeName;
         this.storeId = storeId;
@@ -27,7 +27,7 @@ public class Feedback {
         return new FeedbackDTO.Builder()
                 .username(username)
                 .rating(rating.getOrdinal())
-                .message(message)
+                .feedbackText(feedbackText)
                 .orderDate(String.format("%d/%d/%d", orderDate.getDayOfMonth(), orderDate.getMonthValue(), orderDate.getYear()))
                 .storeName(storeName)
                 .build();
@@ -37,8 +37,8 @@ public class Feedback {
         return username;
     }
 
-    public String getMessage() {
-        return message;
+    public String getFeedbackText() {
+        return feedbackText;
     }
 
     public LocalDate getOrderDate() {
@@ -50,7 +50,7 @@ public class Feedback {
         return "Feedback{" +
                 "username='" + username + '\'' +
                 ", rating=" + rating +
-                ", message='" + message + '\'' +
+                ", feedbackText='" + feedbackText + '\'' +
                 ", orderDate=" + orderDate +
                 ", storeName='" + storeName + '\'' +
                 ", storeId=" + storeId +

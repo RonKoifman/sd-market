@@ -23,7 +23,7 @@ public class AddFeedbackToStoreServlet extends HttpServlet {
         String username = SessionUtils.getUsername(req);
         int rating = Integer.parseInt(req.getParameter(Constants.RATING));
         int storeId = Integer.parseInt(req.getParameter(Constants.STORE_ID));
-        String feedbackText = req.getParameter(Constants.FEEDBACK_TEXT);
+        String feedbackText = req.getParameter(Constants.FEEDBACK_TEXT).trim();
         singleRegionManager.addFeedbackToStoreAfterOrder(username, storeId, feedbackText, Rating.values()[rating - 1]);
     }
 }

@@ -4,14 +4,14 @@ public class FeedbackDTO {
 
     private final String username;
     private final int rating;
-    private final String message;
+    private final String feedbackText;
     private final String orderDate;
     private final String storeName;
 
     private FeedbackDTO(Builder builder) {
         this.username = builder.username;
         this.rating = builder.rating;
-        this.message = builder.message;
+        this.feedbackText = builder.feedbackText;
         this.orderDate = builder.orderDate;
         this.storeName = builder.storeName;
     }
@@ -28,8 +28,8 @@ public class FeedbackDTO {
         return orderDate;
     }
 
-    public String getMessage() {
-        return message;
+    public String getFeedbackText() {
+        return feedbackText;
     }
 
     public String getStoreName() {
@@ -40,7 +40,7 @@ public class FeedbackDTO {
 
         private String username;
         private int rating;
-        private String message;
+        private String feedbackText;
         private String orderDate;
         private String storeName;
 
@@ -54,8 +54,8 @@ public class FeedbackDTO {
             return this;
         }
 
-        public Builder message(String message) {
-            this.message = message;
+        public Builder feedbackText(String feedbackText) {
+            this.feedbackText = feedbackText;
             return this;
         }
 
@@ -79,7 +79,7 @@ public class FeedbackDTO {
         return "FeedbackDTO{" +
                 "username='" + username + '\'' +
                 ", rating=" + rating +
-                ", message='" + message + '\'' +
+                ", feedbackText='" + feedbackText + '\'' +
                 ", orderDate='" + orderDate + '\'' +
                 ", storeName='" + storeName + '\'' +
                 '}';

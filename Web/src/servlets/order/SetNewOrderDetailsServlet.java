@@ -1,6 +1,6 @@
 package servlets.order;
 
-import engine.exceptions.IdenticalLocationsException;
+import engine.exceptions.OccupiedLocationException;
 import engine.managers.SDMRegionsManager;
 import engine.managers.SingleRegionManager;
 import utils.Constants;
@@ -31,14 +31,14 @@ public class SetNewOrderDetailsServlet extends HttpServlet {
             try {
                 int xCoordinate = Integer.parseInt(req.getParameter(Constants.X_COORDINATE));
                 int yCoordinate = Integer.parseInt(req.getParameter(Constants.Y_COORDINATE));
-                singleRegionManager.checkForValidOrderDestination(new Point(xCoordinate, yCoordinate));
+                singleRegionManager.checkForFreeLocation(new Point(xCoordinate, yCoordinate));
                 req.getSession(true).setAttribute(Constants.X_COORDINATE, req.getParameter(Constants.X_COORDINATE));
                 req.getSession(true).setAttribute(Constants.Y_COORDINATE, req.getParameter(Constants.Y_COORDINATE));
                 req.getSession(true).setAttribute(Constants.ORDER_DATE, req.getParameter(Constants.ORDER_DATE));
                 req.getSession(true).setAttribute(Constants.ORDER_TYPE, req.getParameter(Constants.ORDER_TYPE));
                 req.getSession(true).setAttribute(Constants.CHOSEN_STORE_ID, req.getParameter(Constants.CHOSEN_STORE_ID));
                 out.print(Constants.CHOOSE_ITEMS_URL);
-            } catch (IdenticalLocationsException e) {
+            } catch (OccupiedLocationException e) {
                 res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 out.print("The entered location is occupied by a store. Please enter a valid location.");
             }
