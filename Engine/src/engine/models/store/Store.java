@@ -162,7 +162,7 @@ public class Store implements Locationable, Identifiable {
     }
 
     private void increaseItemsPurchaseAmountFromStore(List<OrderItem> orderedItems) {
-       orderedItems.forEach(orderedItem -> itemIdToItem.get(orderedItem.getItem().getId()).increasePurchaseAmount(orderedItem.getQuantity()));
+       orderedItems.forEach(orderedItem -> orderedItem.getItem().increasePurchaseAmount(orderedItem.getQuantity()));
     }
 
     private void removeDiscountOffersAfterDeletingItem(int itemIdToDelete) {

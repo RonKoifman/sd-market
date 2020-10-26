@@ -85,7 +85,7 @@ function refreshRegionStores(regionStores) {
                     '</p> <br>' +
             '<h5 class="font-italic">Items For Sale</h5><br>' +
             '<div class="table-responsive">' +
-            '<table id="' + 'storeItemsTable' + index + '" class="table table-striped table-sm">' +
+            '<table id="' + 'storeItemsTable' + index + '" class="text-center table table-striped table-sm">' +
             '<thead>' +
             '</thead>' +
             '<tbody>' +
@@ -108,7 +108,7 @@ function buildStoreItemsTable(storeItems, storeIndex) {
         '<th>ID</th>' +
         '<th>Purchase Form</th>' +
         '<th>Price</th>' +
-        '<th>Total Purchases</th>' +
+        '<th>Total Purchases Amount</th>' +
         '</tr>').appendTo(storeItemsTable);
 
     $.each(storeItems || [], function (index, item) {
@@ -117,7 +117,7 @@ function buildStoreItemsTable(storeItems, storeIndex) {
             '<td>' + item['id'] + '</td>' +
             '<td>' + item['purchaseForm'] + '</td>' +
             '<td>' + '$' + parseFloat(item['price']).toFixed(2) + '</td>' +
-            '<td>' + parseFloat(item['purchaseAmount']).toFixed(2) + '</td>' +
+            '<td>' + parseFloat(item['purchaseAmount']).toFixed(2) + (item['purchaseForm'] === 'Weight' ? ' kg' : ' units') + '</td>' +
             '</tr>').appendTo(storeItemsTable);
     });
 }
@@ -132,7 +132,7 @@ function refreshRegionItems(regionItems) {
         '<th>Purchase Form</th>' +
         '<th>Stores Selling</th>' +
         '<th>Average Price</th>' +
-        '<th>Total Purchases</th>' +
+        '<th>Total Purchases Amount</th>' +
         '</tr>').appendTo(itemsTable);
 
     $.each(regionItems || [], function (index, item) {
@@ -142,7 +142,7 @@ function refreshRegionItems(regionItems) {
             '<td>' + item['purchaseForm'] + '</td>' +
             '<td>' + item['amountOfStoresSelling'] + '</td>' +
             '<td>' + '$' + parseFloat(item['averagePrice']).toFixed(2) + '</td>' +
-            '<td>' + parseFloat(item['purchaseAmount']).toFixed(2) + '</td>' +
+            '<td>' + parseFloat(item['purchaseAmount']).toFixed(2) + (item['purchaseForm'] === 'Weight' ? ' kg' : ' units') + '</td>' +
             '</tr>').appendTo(itemsTable);
     });
 }
@@ -158,9 +158,7 @@ function renderStoreOwnerNavbar() {
     $('#navbarUl').append(
         '<li class="nav-item"><a class="nav-link" href="my-stores-orders-history.html">My Stores Orders History</a></li>' +
         '<li class="nav-item"><a class="nav-link" href="my-feedbacks.html">My Feedbacks</a></li>' +
-        '<li class="nav-item"><a class="nav-link" href="add-new-store.html">Add New Store</a></li>' +
-        // TODO: remove this!!
-        '<li class="nav-item"><a class="nav-link" href="place-new-order.html">Place New Order</a></li>');
+        '<li class="nav-item"><a class="nav-link" href="add-new-store.html">Add New Store</a></li>');
 
 }
 

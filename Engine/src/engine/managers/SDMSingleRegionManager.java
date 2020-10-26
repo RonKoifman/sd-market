@@ -199,7 +199,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         pendingOrder.generateOrderId();
         orderIdToOrder.put(pendingOrder.getId(), pendingOrder);
         usernameToPendingOrder.remove(username);
-        updateItemsPurchaseAmountAfterNewOrder(pendingOrder);
+        updateRegionItemsPurchaseAmountAfterNewOrder(pendingOrder);
         updateStoresOrdersAfterNewOrder(pendingOrder);
         updateAverageOrderItemsCost(pendingOrder);
         SDMUsersManager.getInstance().addNewOrderToCustomer(username, pendingOrder, regionName);
@@ -219,7 +219,6 @@ public class SDMSingleRegionManager implements SingleRegionManager {
             availableDiscounts.addAll(discountsInStore);
         }
 
-        // TODO: need to check in the UI for submitting one discount for the same trigger
         return Collections.unmodifiableCollection(availableDiscounts);
     }
 
@@ -253,14 +252,17 @@ public class SDMSingleRegionManager implements SingleRegionManager {
 
         for (DiscountOfferDTO chosenOffer : chosenOffers) {
             Store store = storeIdToStore.get(chosenOffer.getStoreId());
-            storeToChosenOffers.getOrDefault(store, new LinkedList<>()).add(chosenOffer);
+            List<DiscountOfferDTO> storeChosenOffers = storeToChosenOffers.getOrDefault(store, new LinkedList<>());
+            storeChosenOffers.add(chosenOffer);
+            storeToChosenOffers.put(store, storeChosenOffers);
         }
 
         return storeToChosenOffers;
     }
 
     private Map<String, Float> getOwnerUsernameToPaymentFromOrder(GeneralOrder newOrder) {
-        Map<String, Float> ownerUsernameToPayment = newOrder.getStores().stream().map(Store::getOwnerUsername).collect(Collectors.toMap(owner -> owner, owner -> 0.0f));
+        Set<String> storeOwnersUsernames = newOrder.getStores().stream().map(Store::getOwnerUsername).collect(Collectors.toSet());
+        Map<String, Float> ownerUsernameToPayment = storeOwnersUsernames.stream().collect(Collectors.toMap(username -> username, username -> 0.0f));
 
         for (Store store : newOrder.getStores()) {
             SubOrder storeOrder = newOrder.getOrderByStore(store);
@@ -277,7 +279,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     }
 
     private void updateAverageOrderItemsCost(GeneralOrder newOrder) {
-        averageOrderItemsCost = (averageOrderItemsCost * (orderIdToOrder.size() - 1) + newOrder.getTotalItemsCost()) / averageOrderItemsCost;
+        averageOrderItemsCost = (averageOrderItemsCost * (orderIdToOrder.size() - 1) + newOrder.getTotalItemsCost()) / orderIdToOrder.size();
     }
 
     private List<OrderItem> getItemsFromDiscountOffers(List<DiscountOfferDTO> discountOffers) {
@@ -290,7 +292,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         newOrder.getStores().forEach(store -> store.addNewOrder(newOrder.getOrderByStore(store)));
     }
 
-    private void updateItemsPurchaseAmountAfterNewOrder(GeneralOrder newOrder) {
+    private void updateRegionItemsPurchaseAmountAfterNewOrder(GeneralOrder newOrder) {
         newOrder.getOrderedItems().forEach(orderedItem -> itemIdToItem.get(orderedItem.getItem().getId()).increasePurchaseAmount(orderedItem.getQuantity()));
     }
 

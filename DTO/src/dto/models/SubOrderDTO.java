@@ -8,10 +8,10 @@ import java.util.List;
 public class SubOrderDTO {
 
     private final int id;
-    private final LocalDate orderDate;
+    private final String orderDate;
     private final String customerUsername;
     private final Point orderDestination;
-    private final StoreDTO store;
+    private final int storeId;
     private final float distanceFromCustomer;
     private final int totalItemsAmount;
     private final int totalItemsTypes;
@@ -25,7 +25,7 @@ public class SubOrderDTO {
         this.orderDate = builder.orderDate;
         this.orderDestination = builder.orderDestination;
         this.customerUsername = builder.customerUsername;
-        this.store = builder.store;
+        this.storeId = builder.storeId;
         this.distanceFromCustomer = builder.distanceFromCustomer;
         this.totalItemsAmount = builder.totalItemsAmount;
         this.totalItemsCost = builder.totalItemsCost;
@@ -43,7 +43,7 @@ public class SubOrderDTO {
         return Collections.unmodifiableCollection(orderedItems);
     }
 
-    public LocalDate getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
@@ -59,8 +59,8 @@ public class SubOrderDTO {
         return customerUsername;
     }
 
-    public StoreDTO getStore() {
-        return store;
+    public int getStoreId() {
+        return storeId;
     }
 
     public int getTotalItemsAmount() {
@@ -86,10 +86,10 @@ public class SubOrderDTO {
     public static final class Builder {
 
         private int id;
-        private LocalDate orderDate;
+        private String orderDate;
         private Point orderDestination;
         private String customerUsername;
-        private StoreDTO store;
+        private int storeId;
         private float distanceFromCustomer;
         private int totalItemsTypes;
         private int totalItemsAmount;
@@ -103,13 +103,13 @@ public class SubOrderDTO {
             return this;
         }
 
-        public Builder orderDate(LocalDate orderDate) {
+        public Builder orderDate(String orderDate) {
             this.orderDate = orderDate;
             return this;
         }
 
-        public Builder store(StoreDTO store) {
-            this.store = store;
+        public Builder storeId(int storeId) {
+            this.storeId = storeId;
             return this;
         }
 
@@ -180,10 +180,10 @@ public class SubOrderDTO {
     public String toString() {
         return "SubOrderDTO{" +
                 "id=" + id +
-                ", orderDate=" + orderDate +
+                ", orderDate='" + orderDate + '\'' +
                 ", customerUsername='" + customerUsername + '\'' +
                 ", orderDestination=" + orderDestination +
-                ", store=" + store +
+                ", storeId=" + storeId +
                 ", distanceFromCustomer=" + distanceFromCustomer +
                 ", totalItemsAmount=" + totalItemsAmount +
                 ", totalItemsTypes=" + totalItemsTypes +

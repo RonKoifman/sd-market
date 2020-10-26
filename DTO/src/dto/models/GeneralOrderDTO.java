@@ -8,7 +8,7 @@ import java.util.List;
 public class GeneralOrderDTO {
 
     private final int id;
-    private final LocalDate orderDate;
+    private final String orderDate;
     private final Point orderDestination;
     private final String customerUsername;
     private final List<SubOrderDTO> subOrders;
@@ -39,7 +39,7 @@ public class GeneralOrderDTO {
         return id;
     }
 
-    public LocalDate getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
@@ -78,7 +78,7 @@ public class GeneralOrderDTO {
     public static final class Builder {
 
         private int id;
-        private LocalDate orderDate;
+        private String orderDate;
         private Point orderDestination;
         private String customerUsername;
         private List<OrderItemDTO> orderedItems;
@@ -95,7 +95,7 @@ public class GeneralOrderDTO {
             return this;
         }
 
-        public Builder orderDate(LocalDate orderDate) {
+        public Builder orderDate(String orderDate) {
             this.orderDate = orderDate;
             return this;
         }

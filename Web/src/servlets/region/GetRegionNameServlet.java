@@ -1,8 +1,5 @@
 package servlets.region;
 
-import com.google.gson.Gson;
-import dto.models.UserDTO;
-import engine.managers.SDMUsersManager;
 import utils.SessionUtils;
 
 import javax.servlet.annotation.WebServlet;

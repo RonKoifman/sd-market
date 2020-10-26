@@ -14,5 +14,68 @@
 </head>
 <body>
 
+<!-- Navbar -->
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+    <a href="home.html" class="navbar-brand">
+        <img src="common/images/sdm-logo-navbar.png" alt="SDMarket" id="logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="home.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="region-info.html">Region Info</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="my-orders-history.html">My Orders History</a></li>
+            <li class="nav-item"><a class="nav-link" href="place-new-order.html">Place New Order</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Summary table -->
+<br> <div id="mainDiv" class="summary-table">
+    <img class="center" src="common/images/summary.png" width="54" height="54" alt="">
+    <h3 class="h4 text-center">Order Summary</h3> <br>
+    <div class="table-responsive">
+        <table id="summaryTable" class="text-center table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>Customer Username</th>
+                <th>Order Date</th>
+                <th>Order Destination</th>
+                <th>Total Items Cost</th>
+                <th>Total Delivery Cost</th>
+                <th>Total Order Cost</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div> <br><br>
+
+    <!-- Stores div -->
+    <div class="text-center">
+        <img src="common/images/ordered-store.png" width="84" height="64" alt=""> <h3 class="h4 text-center">Ordered Store(s) Details</h3> <br>
+    </div>
+    <div id="storesDiv" class="row row-cols-1 row-cols-md-1">
+    </div>
+
+    <!-- Alert  -->
+    <br> <div class="alert text-center" role="alert">
+        </div>
+    <br> <button class="center btn btn-lg btn-primary" type="submit" id="confirmOrderButton">Confirm Order</button> <br>
+</div>
+
 </body>
+
+<!-- Footer -->
+<hr class="featurette-divider">
+<footer class="container">
+    <p class="float-right"><a href="#">Scroll to top</a></p>
+    <p class="text-center">Copyright © SDMarket 2020 · Ron Koifman</p>
+</footer>
 </html>

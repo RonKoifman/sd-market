@@ -65,7 +65,7 @@ function buildCartTable(regionItems) {
        '<th>ID</th>' +
        '<th>Purchase Form</th>' +
        (orderType === 'dynamicOrder' ? '' : '<th>Price</th>') +
-       '<th>Purchase Quantity</th>' +
+       '<th>Purchase Amount</th>' +
        '</tr>').appendTo(cartTable);
 
    $.each(regionItems || [], function (index, item) {

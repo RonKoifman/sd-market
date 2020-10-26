@@ -65,7 +65,8 @@ function refreshUsersDiv(users) {
 
     const userInfoElements = document.getElementsByClassName('user-info');
     for (let i = 0; i < userInfoElements.length; i++) {
-        userInfoElements[i].innerHTML = users[i].username + '<br>' + users[i]['userRole'];
+        $('<div id="usernameFont">' + users[i]['username'] + '</>' +
+        '<div id="userRoleFont" class="font-italic">' + users[i]['userRole'] + '</div>').appendTo(userInfoElements[i]);
     }
 }
 

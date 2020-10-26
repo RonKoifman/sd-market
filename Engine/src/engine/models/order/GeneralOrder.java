@@ -26,7 +26,7 @@ public class GeneralOrder extends Order {
     public GeneralOrderDTO toGeneralOrderDTO() {
         return new GeneralOrderDTO.Builder()
                 .id(id)
-                .orderDate(orderDate)
+                .orderDate(String.format("%d/%d/%d", orderDate.getDayOfMonth(), orderDate.getMonthValue(), orderDate.getYear()))
                 .customerUsername(customerUsername)
                 .orderDestination(orderDestination)
                 .orderedItems(orderedItems.stream().map(OrderItem::toOrderItemDTO).collect(Collectors.toList()))

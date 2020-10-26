@@ -1,5 +1,6 @@
 body {
     background-color: #f5f5f5;
+    padding-top: 3.5rem;
 }
 
 #users {
@@ -21,7 +22,11 @@ body {
     width: 85px
 }
 
-.user-info {
+#usernameFont {
+    font-size: 18px;
+}
+
+#userRoleFont {
     font-size: 17px;
 }
 

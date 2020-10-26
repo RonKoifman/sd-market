@@ -16,15 +16,15 @@
 
 <body>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-sm navbar-light">
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
     <a href="home.html" class="navbar-brand">
         <img src="common/images/sdm-logo-navbar.png" alt="SDMarket" id="logo">
     </a>
-    <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarMenu">
-        <ul class="nav">
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="home.html">Home</a>
             </li>
@@ -40,10 +40,10 @@
         </ul>
     </div>
 </nav>
-
-<br><br>
+<br>
 
 <!-- My account form -->
+<img src="common/images/account.png" class="center mb-2" width="64" height="64" alt="">
 <form id="formAccount" class="card p-2 form-account" method="POST" action="new-deposit-transaction">
     <div id="headerDiv"><h5 class="card-title text-center">My Account</h5></div>
     <hr class="featurette-divider">
@@ -65,7 +65,7 @@
 <br><br>
 <!-- Transactions table -->
 <div class="transactions-table text-center">
-    <img src="common/images/account.png" width="64" height="64" alt=""> <h3 class="h4">Transactions History</h3> <br>
+    <img src="common/images/transactions.png" width="64" height="64" alt=""> <h3 class="h4">Transactions History</h3> <br>
     <div class="table-responsive">
         <table id="transactionsTable" class="table table-striped table-sm">
             <thead>
