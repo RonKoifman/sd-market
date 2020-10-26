@@ -1,7 +1,7 @@
 package engine.enums;
 
 public enum TransactionType {
-    DEPOSIT("Deposit"), RECEIVE("Receive"), PAYMENT("Payment");
+    DEPOSIT("Deposit"), RECEIVE("Receive"), CHARGE("Charge");
 
     private final String value;
 

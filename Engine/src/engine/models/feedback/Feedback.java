@@ -12,13 +12,15 @@ public class Feedback {
     private final String message;
     private final LocalDate orderDate;
     private final String storeName;
+    private final int storeId;
 
-    public Feedback(String username, Rating rating, String message, LocalDate orderDate, String storeName) {
+    public Feedback(String username, Rating rating, String message, LocalDate orderDate, String storeName, int storeId) {
         this.username = username;
         this.rating = rating;
         this.message = message;
         this.orderDate = orderDate;
         this.storeName = storeName;
+        this.storeId = storeId;
     }
 
     public FeedbackDTO toFeedbackDTO() {
@@ -51,6 +53,7 @@ public class Feedback {
                 ", message='" + message + '\'' +
                 ", orderDate=" + orderDate +
                 ", storeName='" + storeName + '\'' +
+                ", storeId=" + storeId +
                 '}';
     }
 }

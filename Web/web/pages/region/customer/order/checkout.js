@@ -130,7 +130,7 @@ function buildOfferDivs(discount) {
 }
 
 function buildOfferDiv(discount, offer, index) {
-   let discountName = discount['Name'];
+   let discountName = discount['name'];
    let discountType = discount['discountType'];
    let offerIdentifier = `${discountName}#${index}`;
    let offerDiv;
@@ -138,7 +138,7 @@ function buildOfferDiv(discount, offer, index) {
    if (discountType === 'ONE OF') {
        offerDiv = '<div class="form-check form-check-inline">' +
        '<input class="form-check-input" type="radio" id="' + offerIdentifier + '" value="' + offerIdentifier + '" name="' + offerIndex + '"' + (index === 0 ? 'checked' : '') + '>' +
-       '<label class="form-check-label" for="' + offerIdentifier + '">' +
+       '<label class="form-check-label disabled">' +
        parseFloat(offer['quantity']).toFixed(2) + (offer['item']['purchaseForm'] === 'Weight' ? ' kg of ' : ' units of ') + offer['item']['name'] + ' for ' + (parseFloat(offer['itemOfferPrice']) === 0 ? 'free' : '$' + parseFloat(offer['itemOfferPrice']).toFixed(2)) +
        '</label>' +
        '</div>';

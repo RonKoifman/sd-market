@@ -1,6 +1,7 @@
 package engine.managers;
 
 import dto.models.*;
+import engine.enums.Rating;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -32,7 +33,7 @@ public interface SingleRegionManager {
 
     void confirmPendingOrderByUsername(String username);
 
-    void addFeedbacksToStoresAfterOrder(Map<StoreDTO, FeedbackDTO> storeToFeedback);
+    void addFeedbackToStoreAfterOrder(String username, int storeId, String userMessage, Rating rating);
 
     StoreDTO getStoreById(int storeId);
 
