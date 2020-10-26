@@ -275,7 +275,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
 
     private void addNewTransactionsAfterOrder(GeneralOrder newOrder, Map<String, Float> ownerUsernameToPayment) {
         ownerUsernameToPayment.forEach((ownerUsername, payment) -> SDMAccountsManager.getInstance().addNewTransactionToUser(TransactionType.RECEIVE, ownerUsername, payment, newOrder.getOrderDate()));
-        SDMAccountsManager.getInstance().addNewTransactionToUser(TransactionType.CHARGE, newOrder.getCustomerUsername(), newOrder.getTotalOrderCost(), newOrder.getOrderDate());
+        SDMAccountsManager.getInstance().addNewTransactionToUser(TransactionType.PAYMENT, newOrder.getCustomerUsername(), newOrder.getTotalOrderCost(), newOrder.getOrderDate());
     }
 
     private void updateAverageOrderItemsCost(GeneralOrder newOrder) {

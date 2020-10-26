@@ -1,21 +1,8 @@
 const PENDING_ORDER_URL = buildUrlWithContextPath('get-pending-order');
 const CONFIRM_ORDER_URL = buildUrlWithContextPath('confirm-order');
-const REGION_STORES_URL = buildUrlWithContextPath('region-stores');
-const LEAVE_FEEDBACK_URL = 'leave-feedback.html';
 let pendingOrder;
-let regionStores;
 
 $(function () {
-    $.ajax({
-        url: REGION_STORES_URL,
-        success: function (regionStoresResponse) {
-            regionStores = regionStoresResponse;
-        },
-        error: function () {
-            console.error('Error from get region stores URL');
-        }
-    });
-
     $.ajax({
         url: PENDING_ORDER_URL,
         success: function (pendingOrderResponse) {
@@ -35,8 +22,7 @@ $(function () {
             url: CONFIRM_ORDER_URL,
             method: 'POST',
             success: function () {
-                $('.alert').addClass('alert-success').text('Order completed successfully!');
-                //window.location.assign(LEAVE_FEEDBACK_URL);
+                $('.alert').addClass('alert-success').text('Your order completed! Thank you for ordering from us! :)');
             },
             error: function () {
                 console.error('Error from confirm order URL');
@@ -44,6 +30,9 @@ $(function () {
         });
 
         document.getElementById('confirmOrderButton').disabled = true;
+        setTimeout(function () {
+            $('#feedbackModal').modal('show');
+        }, 2000);
 
         return false;
     });
@@ -73,7 +62,7 @@ function buildSummaryTable() {
 }
 
 function getStoreById(storeId) {
-    return regionStores.filter(store => store['id'] === storeId)[0];
+    return pendingOrder['stores'].filter(store => store['id'] === storeId)[0];
 }
 
 function renderOrderedStores() {
@@ -112,10 +101,6 @@ function renderOrderedStores() {
 
 function buildOrderedItemsTable(orderedItems, storeIndex) {
     const orderedItemsTable = $(`#orderedItemsTable${storeIndex}`);
-
-    orderedItems.sort(function (item1, item2) {
-        return item1['item']['id'] - item2['item']['id'];
-    });
 
     orderedItemsTable.empty();
     $('<tr>' +

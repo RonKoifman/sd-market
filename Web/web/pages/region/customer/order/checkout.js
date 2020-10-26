@@ -152,7 +152,7 @@ function buildOfferDiv(discount, offer, index) {
 }
 
 function getOrderByStoreId(storeId) {
-    let filtered = subOrders.filter(order => order['store']['id'] === storeId);
+    let filtered = subOrders.filter(order => order['storeId'] === storeId);
 
     return filtered === null ? null : filtered[0];
 }

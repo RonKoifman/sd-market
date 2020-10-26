@@ -80,7 +80,7 @@ function refreshTransactionsTable(transactions) {
         '</tr>').appendTo(transactionsTable);
 
     $.each(transactions || [], function (index, transaction) {
-        let classColor = transaction['transactionType'] === 'Charge' ? 'red' : 'green';
+        let classColor = transaction['transactionType'] === 'Payment' ? 'red' : 'green';
         $('<tr class="' + classColor + '">' +
             '<td>' + transaction['transactionType'] + '</td>' +
             '<td>' + transaction.date + '</td>' +

@@ -51,7 +51,7 @@ public class Transaction {
         float newBalance = 0;
 
         switch (transactionType) {
-            case CHARGE:
+            case PAYMENT:
                 newBalance = balanceBefore - amount;
                 break;
 
