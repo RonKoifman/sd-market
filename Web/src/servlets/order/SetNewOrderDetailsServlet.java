@@ -37,7 +37,7 @@ public class SetNewOrderDetailsServlet extends HttpServlet {
                 req.getSession(true).setAttribute(Constants.ORDER_DATE, req.getParameter(Constants.ORDER_DATE));
                 req.getSession(true).setAttribute(Constants.ORDER_TYPE, req.getParameter(Constants.ORDER_TYPE));
                 req.getSession(true).setAttribute(Constants.CHOSEN_STORE_ID, req.getParameter(Constants.CHOSEN_STORE_ID));
-                out.print(Constants.CHOOSE_ITEMS_URL);
+                out.print(Constants.CHOOSE_ORDER_ITEMS_URL);
             } catch (OccupiedLocationException e) {
                 res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 out.print("The entered location is occupied by a store. Please enter a valid location.");
