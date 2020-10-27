@@ -5,35 +5,6 @@ const REGION_NAME_URL = buildUrlWithContextPath('region-name');
 const refreshRate = 2000;
 
 $(function () {
-    setInterval(ajaxRegionStores, refreshRate);
-    setInterval(ajaxRegionItems, refreshRate);
-});
-
-$(function () {
-    $.ajax({
-        url: REGION_STORES_URL,
-        success: function (regionStores) {
-            refreshRegionStores(regionStores);
-        },
-        error: function () {
-            console.error('Error from region stores URL');
-        }
-    });
-});
-
-$(function () {
-    $.ajax({
-        url: REGION_ITEMS_URL,
-        success: function (regionItems) {
-            refreshRegionItems(regionItems);
-        },
-        error: function () {
-            console.error('Error from region items URL');
-        }
-    });
-});
-
-$(function () {
    $.ajax({
       url: REGION_NAME_URL,
        success: function (regionName) {
@@ -53,6 +24,7 @@ $(function () {
                 case 'Customer':
                     renderCustomerNavbar();
                     break;
+
                 case 'Store Owner':
                     renderStoreOwnerNavbar();
                     break;
@@ -62,6 +34,14 @@ $(function () {
             console.error('Error from user-info URL');
         }
     });
+});
+
+$(function () {
+    setInterval(ajaxRegionStores, refreshRate);
+    setInterval(ajaxRegionItems, refreshRate);
+    ajaxRegionStores();
+    ajaxRegionItems();
+    setTimeout(function () {}, 200);
 });
 
 function refreshRegionStores(regionStores) {
@@ -157,7 +137,7 @@ function renderCustomerNavbar() {
 function renderStoreOwnerNavbar() {
     $('#navbarUl').append(
         '<li class="nav-item"><a class="nav-link" href="my-stores-orders-history.html">My Stores Orders History</a></li>' +
-        '<li class="nav-item"><a class="nav-link" href="my-feedbacks.html">My Feedbacks</a></li>' +
+        '<li class="nav-item"><a class="nav-link" href="my-stores-feedbacks.html">My Stores Feedbacks</a></li>' +
         '<li class="nav-item"><a class="nav-link" href="add-new-store.html">Add New Store</a></li>');
 
 }

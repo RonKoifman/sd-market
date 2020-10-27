@@ -5,11 +5,6 @@ const SET_REGION_URL = buildUrlWithContextPath('set-region');
 const refreshRate = 2000;
 
 $(function () {
-    setInterval(ajaxUsersInfo, refreshRate);
-    setInterval(ajaxRegionsInfo, refreshRate);
-});
-
-$(function () {
     $.ajax({
         url: USER_INFO_URL,
         success: function (loggedInUser) {
@@ -23,31 +18,15 @@ $(function () {
         error: function () {
             console.error('Error from user-info URL');
         }
-    })
+    });
 });
 
 $(function () {
-    $.ajax({
-        url: USERS_URL,
-        success: function (users) {
-            refreshUsersDiv(users);
-        },
-        error: function () {
-            console.error('Error from users URL');
-        }
-    })
-});
-
-$(function () {
-    $.ajax({
-        url: REGIONS_URL,
-        success: function (regions) {
-            refreshRegionsTable(regions);
-        },
-        error: function () {
-            console.error('Error from regions URL');
-        }
-    })
+    setInterval(ajaxUsersInfo, refreshRate);
+    setInterval(ajaxRegionsInfo, refreshRate);
+    ajaxUsersInfo();
+    ajaxRegionsInfo();
+    setTimeout(function () {}, 200);
 });
 
 function refreshUsersDiv(users) {

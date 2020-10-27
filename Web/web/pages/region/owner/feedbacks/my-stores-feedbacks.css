@@ -3,34 +3,21 @@ body {
     padding-top: 3.5rem;
 }
 
-#users {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
-
-#users li {
-    float: left;
-    padding-right: 50px;
-}
-
-.user-avatar {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 85px
-}
-
-#usernameFont {
+.bigger-font {
     font-size: 18px;
 }
 
-#userRoleFont {
-    font-size: 17px;
+.disable-hover {
+    pointer-events:none;
 }
 
-#usersContainer {
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#storesDiv {
     display: flex;
     justify-content: center;
     margin: 0 auto;

@@ -22,7 +22,7 @@ public class Customer extends User {
     }
 
     public Collection<GeneralOrder> getOrdersByRegionName(String regionName) {
-        Collection<GeneralOrder> orders = regionNameToOrdersFromRegion.getOrDefault(regionName, new HashSet<>());
+        Collection<GeneralOrder> orders = regionNameToOrdersFromRegion.getOrDefault(regionName, Collections.emptySet());
 
         return Collections.unmodifiableCollection(orders);
     }

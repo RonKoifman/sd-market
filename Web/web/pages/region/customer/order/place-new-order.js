@@ -72,13 +72,18 @@ function toggleStaticOrderLabels() {
 }
 
 function renderDeliveryPrice() {
-    const storeId = $('#chosenStore option:selected').val();
-    const chosenStore = regionStores.filter(store => store['id'] === parseInt(storeId))[0];
     const x1 = $('#x').val();
     const y1 = $('#y').val();
-    const x2 = chosenStore['location']['x'];
-    const y2 = chosenStore['location']['y'];
-    const deliveryPPK = chosenStore['deliveryPPK'];
-    const deliveryPrice = (Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)) * deliveryPPK).toString();
-    $('#deliveryPrice').text('$' + parseFloat(deliveryPrice).toFixed(2));
+
+    if (!x1 || !y1) {
+        $('#deliveryPrice').text('$0.00');
+    } else {
+        const storeId = $('#chosenStore option:selected').val();
+        const chosenStore = regionStores.filter(store => store['id'] === parseInt(storeId))[0];
+        const x2 = chosenStore['location']['x'];
+        const y2 = chosenStore['location']['y'];
+        const deliveryPPK = chosenStore['deliveryPPK'];
+        const deliveryPrice = (Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)) * deliveryPPK).toString();
+        $('#deliveryPrice').text('$' + parseFloat(deliveryPrice).toFixed(2));
+    }
 }

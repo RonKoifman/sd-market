@@ -29,16 +29,22 @@ public class StoreOwner extends User {
     }
 
     public Map<StoreDTO, Collection<SubOrderDTO>> getStoreToOrdersByRegionName(String regionName) {
-        Map<StoreDTO, Collection<SubOrderDTO>> storeToOrders = new HashMap<>();
-        Collection<Store> ownedStores = regionNameToOwnedStoresInRegion.getOrDefault(regionName, new HashSet<>());
+        Map<StoreDTO, Collection<SubOrderDTO>> storeToOrders;
+        Collection<Store> ownedStores = regionNameToOwnedStoresInRegion.getOrDefault(regionName, Collections.emptySet());
 
-        ownedStores.forEach(store -> storeToOrders.put(store.toStoreDTO(), store.getOrdersMade().stream().map(SubOrder::toSubOrderDTO).collect(Collectors.toList())));
+        if (ownedStores.isEmpty()) {
+            storeToOrders = Collections.emptyMap();
+        } else {
+            storeToOrders = new HashMap<>();
+            ownedStores.forEach(store -> storeToOrders.put(store.toStoreDTO(), store.getOrdersMade().stream().map(SubOrder::toSubOrderDTO).collect(Collectors.toList())));
+        }
+
 
         return Collections.unmodifiableMap(storeToOrders);
     }
 
     public Collection<FeedbackDTO> getOwnedStoresFeedbacksByRegionName(String regionName) {
-        return Collections.unmodifiableCollection(regionNameToOwnedStoresInRegion.getOrDefault(regionName, new HashSet<>())
+        return Collections.unmodifiableCollection(regionNameToOwnedStoresInRegion.getOrDefault(regionName, Collections.emptySet())
                 .stream()
                 .map(Store::getFeedbacksReceived)
                 .flatMap(Collection::stream)

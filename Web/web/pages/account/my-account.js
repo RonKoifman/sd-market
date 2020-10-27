@@ -25,20 +25,11 @@ $(function () {
         error: function () {
             console.error('Error from user-info URL')
         }
-    })
+    });
 });
 
 $(function () {
-    $.ajax({
-        url: USER_ACCOUNT_URL,
-        success: function (account) {
-            refreshBalance(account['balance'])
-            refreshTransactionsTable(account['transactions']);
-        },
-        error: function () {
-            console.error('Error from user-account URL')
-        }
-    })
+    ajaxUserAccount();
 });
 
 $(function () {
@@ -56,6 +47,7 @@ $(function () {
                 if (!$('.alert')[0]) {
                     $('#formAccount').append('<br><div class="alert alert-success" role="alert"></div>');
                 }
+
                 $('.alert').text(res);
             },
             error: function () {
@@ -109,7 +101,7 @@ function ajaxUserAccount() {
             refreshBalance(account['balance']);
         },
         error: function () {
-            console.error('Error from user-account URL')
+            console.error('Error from user-account URL');
         }
     });
 }
