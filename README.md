@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.ibb.co/TgCqJ9P/sdm-full-logo.png" alt="sdm-full-logo">
+  <img src="https://i.ibb.co/ZdRCKjZ/sdm-full-logo.png" alt="sdm-full-logo">
 </p>
 
 # Intro
