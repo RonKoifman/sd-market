@@ -1,7 +1,6 @@
 package engine.models.user;
 
 import dto.models.FeedbackDTO;
-import dto.models.StoreDTO;
 import dto.models.SubOrderDTO;
 import engine.enums.UserRole;
 import engine.models.feedback.Feedback;
@@ -28,19 +27,18 @@ public class StoreOwner extends User {
         newStore.setOwnerUsername(username);
     }
 
-    public Map<StoreDTO, Collection<SubOrderDTO>> getStoreToOrdersByRegionName(String regionName) {
-        Map<StoreDTO, Collection<SubOrderDTO>> storeToOrders;
+    public Collection<SubOrderDTO> getOwnedStoreOrdersByRegionName(int storeId, String regionName) {
+        Collection<SubOrderDTO> storeOrders;
         Collection<Store> ownedStores = regionNameToOwnedStoresInRegion.getOrDefault(regionName, Collections.emptySet());
 
         if (ownedStores.isEmpty()) {
-            storeToOrders = Collections.emptyMap();
+            storeOrders = Collections.emptySet();
         } else {
-            storeToOrders = new HashMap<>();
-            ownedStores.forEach(store -> storeToOrders.put(store.toStoreDTO(), store.getOrdersMade().stream().map(SubOrder::toSubOrderDTO).collect(Collectors.toList())));
+            Store chosenStore = ownedStores.stream().filter(store -> store.getId() == storeId).findFirst().get();
+            storeOrders = chosenStore.getOrdersMade().stream().map(SubOrder::toSubOrderDTO).collect(Collectors.toSet());
         }
 
-
-        return Collections.unmodifiableMap(storeToOrders);
+        return Collections.unmodifiableCollection(storeOrders);
     }
 
     public Collection<FeedbackDTO> getOwnedStoresFeedbacksByRegionName(String regionName) {

@@ -51,8 +51,10 @@ function refreshUsersDiv(users) {
 
 function refreshRegionsTable(regions) {
     const regionsTable = $('#regionsTable');
-    regionsTable.empty();
+    const tableDiv = $('.table-responsive');
 
+    tableDiv.find('p').empty();
+    regionsTable.empty();
     $('<tr>' +
         '<th>Region Name</th>' +
         '<th>Owner</th>' +
@@ -80,9 +82,7 @@ function refreshRegionsTable(regions) {
     });
 
     if (regions.length === 0) {
-        $('<tr>' +
-        '<td>No regions uploaded yet.</td>' +
-        '</tr>').appendTo(regionsTable);
+        $('<p>No regions uploaded yet.</p>').appendTo(tableDiv);
     }
 }
 

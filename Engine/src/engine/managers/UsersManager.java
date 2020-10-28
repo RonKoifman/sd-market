@@ -23,7 +23,7 @@ public interface UsersManager {
 
     Collection<GeneralOrderDTO> getCustomerOrdersByRegionName(String customerUsername, String regionName);
 
-    Map<StoreDTO, Collection<SubOrderDTO>> getStoreOwnerStoreToOrdersByRegionName(String storeOwnerUsername, String regionName);
+    Collection<SubOrderDTO> getStoreOwnerOwnedStoreOrdersByRegionName(String storeOwnerUsername, String regionName, int storeId);
 
     Collection<FeedbackDTO> getStoreOwnerOwnedStoresFeedbacksByRegionName(String storeOwnerUsername, String regionName);
 }

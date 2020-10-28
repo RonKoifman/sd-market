@@ -1,9 +1,7 @@
 const CUSTOMER_ORDERS_URL = buildUrlWithContextPath('customer-orders-history');
-const refreshRate = 2000;
 let customerOrders;
 
 $(function () {
-    setInterval(ajaxCustomerOrders, refreshRate);
     ajaxCustomerOrders();
 });
 
@@ -53,7 +51,9 @@ function onOrderClicked(orderId) {
 
 function renderCustomerOrders() {
     const ordersTable = $('#ordersTable');
+    const tableDiv = $('.table-responsive');
 
+    tableDiv.find('p').empty();
     ordersTable.empty();
     $('<tr>' +
         '<th>Order ID</th>' +
@@ -82,9 +82,7 @@ function renderCustomerOrders() {
     });
 
     if (customerOrders.length === 0) {
-        const ordersDiv = $('.orders-div');
-        ordersDiv.empty();
-        $('<div><p class="bigger-font text-center">No orders have been placed yet.</p><div>').appendTo(ordersDiv);
+        $('<p>No orders have been placed yet.</p>').appendTo(tableDiv);
     }
 }
 

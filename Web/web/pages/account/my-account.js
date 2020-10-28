@@ -61,7 +61,9 @@ $(function () {
 
 function refreshTransactionsTable(transactions) {
     const transactionsTable = $('#transactionsTable');
+    const tableDiv = $('.table-responsive');
 
+    tableDiv.find('p').empty();
     transactionsTable.empty();
     $('<tr>' +
         '<th>Transaction Type</th>' +
@@ -83,9 +85,7 @@ function refreshTransactionsTable(transactions) {
     });
 
     if (transactions.length === 0) {
-        $('<tr>' +
-            '<td>No transactions were made yet.</td>' +
-            '</tr>').appendTo(transactionsTable);
+        $('<p>No transactions were made yet.</p>').appendTo(tableDiv);
     }
 }
 

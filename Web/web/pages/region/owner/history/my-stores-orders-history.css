@@ -3,6 +3,13 @@ body {
     padding-top: 3.5rem;
 }
 
+#chooseStoreForm {
+    width: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 html {
     position: relative;
     min-height: 100%;
