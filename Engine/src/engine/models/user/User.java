@@ -11,10 +11,10 @@ public abstract class User implements Identifiable {
     protected final int id;
     protected final String username;
     protected final UserRole userRole;
-    private static int idGenerator;
+    private static int idGenerator = 1000;
 
     public User(String username, UserRole userRole) {
-        this.id = ++idGenerator;
+        this.id = idGenerator++;
         this.username = username;
         this.userRole = userRole;
     }

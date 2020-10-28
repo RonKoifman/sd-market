@@ -23,7 +23,7 @@ public abstract class Order implements Identifiable, Locationable, Serializable 
     protected float totalOrderCost;
     protected int totalItemsTypes;
     protected int totalItemsAmount;
-    private static int idGenerator;
+    private static int idGenerator = 1000;
 
     public Order(String customerUsername, LocalDate orderDate, Location orderDestination, List<OrderItem> orderedItems) {
         this.customerUsername = customerUsername;
@@ -67,7 +67,7 @@ public abstract class Order implements Identifiable, Locationable, Serializable 
     }
 
     protected void generateOrderId() {
-        this.id = ++idGenerator;
+        this.id = idGenerator++;
     }
 
     protected void setOrderId(int id) {

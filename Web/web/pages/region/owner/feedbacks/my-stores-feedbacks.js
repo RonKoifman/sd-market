@@ -21,25 +21,21 @@ function setRateYoOptions() {
     $('.rateYo1').rateYo({
         rating: 1,
         readonly: true,
-        hover: false
     });
 
     $('.rateYo2').rateYo({
         rating: 2,
         readonly: true,
-        hover: false
     });
 
     $('.rateYo3').rateYo({
         rating: 3,
         readonly: true,
-        hover: false
     });
 
     $('.rateYo4').rateYo({
         rating: 4,
         readonly: true,
-        hover: false
     });
 
     $('.rateYo5').rateYo({
