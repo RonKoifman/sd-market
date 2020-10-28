@@ -1,11 +1,12 @@
 package engine.models.discount;
 
 import dto.models.DiscountOfferDTO;
+import engine.interfaces.Transferable;
 import engine.models.item.StoreItem;
 
 import java.util.Objects;
 
-public class DiscountOffer {
+public class DiscountOffer implements Transferable<DiscountOfferDTO> {
 
     private final StoreItem item;
     private final float quantity;
@@ -19,9 +20,10 @@ public class DiscountOffer {
         this.storeId = storeId;
     }
 
-    DiscountOfferDTO toDiscountOfferDTO() {
+    @Override
+    public DiscountOfferDTO toDTO() {
         return new DiscountOfferDTO.Builder()
-                .item(item.toStoreItemDTO())
+                .item(item.toDTO())
                 .quantity(quantity)
                 .itemOfferPrice(itemOfferPrice)
                 .storeId(storeId)

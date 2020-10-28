@@ -57,8 +57,8 @@ function renderCustomerOrders() {
     ordersTable.empty();
     $('<tr>' +
         '<th>Order ID</th>' +
-        '<th>Order Date</th>' +
-        '<th>Order Destination</th>' +
+        '<th>Date</th>' +
+        '<th>Destination</th>' +
         '<th>Stores Participated</th>' +
         '<th>Items Amount</th>' +
         '<th>Items Types</th>' +

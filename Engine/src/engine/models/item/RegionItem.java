@@ -2,8 +2,9 @@ package engine.models.item;
 
 import dto.models.RegionItemDTO;
 import engine.enums.PurchaseForm;
+import engine.interfaces.Transferable;
 
-public class RegionItem extends Item {
+public class RegionItem extends Item implements Transferable<RegionItemDTO> {
 
     private int amountOfStoresSelling;
     private float averagePrice;
@@ -12,7 +13,8 @@ public class RegionItem extends Item {
         super(id, name, purchaseForm);
     }
 
-    public RegionItemDTO toRegionItemDTO() {
+    @Override
+    public RegionItemDTO toDTO() {
         return new RegionItemDTO.Builder()
                 .id(id)
                 .name(name)

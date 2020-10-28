@@ -2,6 +2,7 @@ package engine.managers;
 
 import dto.models.*;
 import engine.enums.UserRole;
+import engine.models.feedback.Feedback;
 import engine.models.order.GeneralOrder;
 import engine.models.store.Store;
 import engine.models.user.Customer;
@@ -52,10 +53,10 @@ public class SDMUsersManager implements UsersManager {
     }
 
     @Override
-    public Set<UserDTO> getUsers() {
+    public Collection<UserDTO> getUsers() {
         return Collections.unmodifiableSet(usernameToUser.values()
                 .stream()
-                .map(User::toUserDTO)
+                .map(User::toDTO)
                 .collect(Collectors.toSet()));
     }
 
@@ -68,7 +69,7 @@ public class SDMUsersManager implements UsersManager {
 
     @Override
     public UserDTO getUserByUsername(String username) {
-       return usernameToUser.get(username).toUserDTO();
+       return usernameToUser.get(username).toDTO();
     }
 
     @Override
@@ -86,25 +87,31 @@ public class SDMUsersManager implements UsersManager {
     @Override
     public Collection<GeneralOrderDTO> getCustomerOrdersByRegionName(String customerUsername, String regionName) {
         Customer customer = (Customer)usernameToUser.get(customerUsername);
-        Set<GeneralOrderDTO> customerOrders = customer.getOrdersByRegionName(regionName).stream().map(GeneralOrder::toGeneralOrderDTO).collect(Collectors.toSet());
+        Collection<GeneralOrder> customerOrders = customer.getOrdersByRegionName(regionName);
 
-        return Collections.unmodifiableCollection(customerOrders);
+        return Collections.unmodifiableCollection(customerOrders.stream()
+                .map(GeneralOrder::toDTO)
+                .collect(Collectors.toSet()));
     }
 
     @Override
-    public Collection<SubOrderDTO> getStoreOwnerOwnedStoreOrdersByRegionName(String storeOwnerUsername, String regionName, int storeId) {
+    public Collection<StoreDTO> getStoreOwnerOwnedStoresByRegionName(String storeOwnerUsername, String regionName) {
         StoreOwner storeOwner = (StoreOwner)usernameToUser.get(storeOwnerUsername);
-        Collection<SubOrderDTO> storeOrders = storeOwner.getOwnedStoreOrdersByRegionName(storeId, regionName);
+        Collection<Store> ownedStores = storeOwner.getOwnedStoresByRegionName(regionName);
 
-        return Collections.unmodifiableCollection(storeOrders);
+        return Collections.unmodifiableCollection(ownedStores.stream()
+                .map(Store::toDTO)
+                .collect(Collectors.toSet()));
     }
 
     @Override
     public Collection<FeedbackDTO> getStoreOwnerOwnedStoresFeedbacksByRegionName(String storeOwnerUsername, String regionName) {
         StoreOwner storeOwner = (StoreOwner)usernameToUser.get(storeOwnerUsername);
-        Collection<FeedbackDTO> feedbacks = storeOwner.getOwnedStoresFeedbacksByRegionName(regionName);
+        Collection<Feedback> feedbacks = storeOwner.getOwnedStoresFeedbacksByRegionName(regionName);
 
-        return Collections.unmodifiableCollection(feedbacks);
+        return Collections.unmodifiableCollection(feedbacks.stream()
+                .map(Feedback::toDTO)
+                .collect(Collectors.toList()));
     }
 
     @Override

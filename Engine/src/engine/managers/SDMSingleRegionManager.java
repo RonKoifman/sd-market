@@ -40,7 +40,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     }
 
     @Override
-    public RegionDTO getRegionDetails() {
+    public RegionDTO toDTO() {
         return new RegionDTO.Builder()
                 .name(regionName)
                 .ownerUsername(regionOwnerUsername)
@@ -57,7 +57,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
             throw new IdNotExistsException();
         }
 
-        return storeIdToStore.get(storeId).toStoreDTO();
+        return storeIdToStore.get(storeId).toDTO();
     }
 
     @Override
@@ -66,14 +66,14 @@ public class SDMSingleRegionManager implements SingleRegionManager {
             throw new IdNotExistsException();
         }
 
-        return itemIdToItem.get(itemId).toRegionItemDTO();
+        return itemIdToItem.get(itemId).toDTO();
     }
 
     @Override
     public Collection<RegionItemDTO> getAllItemsInRegion() {
         return Collections.unmodifiableCollection(itemIdToItem.values()
                 .stream()
-                .map(RegionItem::toRegionItemDTO)
+                .map(RegionItem::toDTO)
                 .collect(Collectors.toSet()));
     }
 
@@ -81,7 +81,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     public Collection<StoreDTO> getAllStoresInRegion() {
         return Collections.unmodifiableCollection(storeIdToStore.values()
                 .stream()
-                .map(Store::toStoreDTO)
+                .map(Store::toDTO)
                 .collect(Collectors.toSet()));
     }
 
@@ -89,7 +89,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     public Collection<GeneralOrderDTO> getAllOrdersInRegion() {
        return Collections.unmodifiableCollection(orderIdToOrder.values()
                .stream()
-               .map(GeneralOrder::toGeneralOrderDTO)
+               .map(GeneralOrder::toDTO)
                .collect(Collectors.toSet()));
     }
 
@@ -141,7 +141,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     }
 
     @Override
-    public void addNewItemToRegion(int itemId, String itemName, String itemPurchaseForm, Map<Integer, Integer> storeIdToItemPriceInStore) {
+    public void addNewItemToRegion(int itemId, String itemName, String itemPurchaseForm, Map<Integer, Float> storeIdToItemPriceInStore) {
         if (itemIdToItem.containsKey(itemId)) {
             throw new IllegalStateException("The item id '" + itemId + "' is already taken.");
         }
@@ -152,7 +152,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     }
 
     @Override
-    public void addNewStoreToRegion(String ownerUsername, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Integer> itemIdToItemPriceInStore) {
+    public void addNewStoreToRegion(String ownerUsername, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Float> itemIdToItemPriceInStore) {
         if (isLocationOccupied(storeLocation)) {
             throw new OccupiedLocationException(String.format("The location (%d, %d) is already taken.", storeLocation.x, storeLocation.y));
         }
@@ -167,7 +167,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
 
     @Override
     public GeneralOrderDTO getPendingOrderByUsername(String username) {
-        return usernameToPendingOrder.get(username).toGeneralOrderDTO();
+        return usernameToPendingOrder.get(username).toDTO();
     }
 
     @Override

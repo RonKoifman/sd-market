@@ -2,11 +2,12 @@ package engine.models.discount;
 
 import dto.models.DiscountInformationDTO;
 import engine.enums.DiscountOfferType;
+import engine.interfaces.Transferable;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class DiscountInformation {
+public class DiscountInformation implements Transferable<DiscountInformationDTO> {
 
     private final String name;
     private final DiscountTrigger discountTrigger;
@@ -19,12 +20,13 @@ public class DiscountInformation {
         this.discountType = discountType;
     }
 
-    public DiscountInformationDTO toDiscountInformationDTO() {
+    @Override
+    public DiscountInformationDTO toDTO() {
         return new DiscountInformationDTO.Builder()
                 .name(name)
-                .discountTrigger(discountTrigger.toDiscountTriggerDTO())
+                .discountTrigger(discountTrigger.toDTO())
                 .discountType(discountType.getValue())
-                .discountOffers(discountOffers.stream().map(DiscountOffer::toDiscountOfferDTO).collect(Collectors.toList()))
+                .discountOffers(discountOffers.stream().map(DiscountOffer::toDTO).collect(Collectors.toList()))
                 .build();
     }
 

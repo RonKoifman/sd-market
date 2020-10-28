@@ -47,7 +47,7 @@ public class SDMAccountsManager implements AccountsManager {
 
     @Override
     public AccountDTO getAccountByUsername(String username) {
-        return usernameToUserAccount.get(username).toAccountDTO();
+        return usernameToUserAccount.get(username).toDTO();
     }
 
     @Override

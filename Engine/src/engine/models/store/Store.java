@@ -8,6 +8,7 @@ import dto.models.StoreDTO;
 import engine.exceptions.DiscountOffersRemovedException;
 import engine.interfaces.Locationable;
 import engine.interfaces.Identifiable;
+import engine.interfaces.Transferable;
 import engine.models.discount.DiscountInformation;
 import engine.models.discount.DiscountTrigger;
 import engine.models.feedback.Feedback;
@@ -16,7 +17,7 @@ import engine.models.item.StoreItem;
 import engine.models.location.Location;
 import engine.models.order.SubOrder;
 
-public class Store implements Locationable, Identifiable {
+public class Store implements Locationable, Identifiable, Transferable<StoreDTO> {
 
     private final int id;
     private final String name;
@@ -47,7 +48,8 @@ public class Store implements Locationable, Identifiable {
         return id;
     }
 
-    public StoreDTO toStoreDTO() {
+    @Override
+    public StoreDTO toDTO() {
         return new StoreDTO.Builder()
                 .id(id)
                 .name(name)
@@ -56,8 +58,8 @@ public class Store implements Locationable, Identifiable {
                 .ownerUsername(ownerUsername)
                 .totalIncomeFromDeliveries(totalIncomeFromDeliveries)
                 .totalIncomeFromItems(totalIncomeFromItems)
-                .items(itemIdToItem.values().stream().map(StoreItem::toStoreItemDTO).collect(Collectors.toSet()))
-                .ordersMade(orderIdToOrder.values().stream().map(SubOrder::toSubOrderDTO).collect(Collectors.toSet()))
+                .items(itemIdToItem.values().stream().map(StoreItem::toDTO).collect(Collectors.toSet()))
+                .ordersMade(orderIdToOrder.values().stream().map(SubOrder::toDTO).collect(Collectors.toSet()))
                 .build();
     }
 
@@ -146,7 +148,7 @@ public class Store implements Locationable, Identifiable {
         for (DiscountInformation discountInformation : discountNameToDiscountInformation.values()) {
             DiscountTrigger discountTrigger = discountInformation.getDiscountTrigger();
             if (discountTrigger.getItem().getId() == orderedItem.getItem().getId() && discountTrigger.getQuantity() <= orderedItem.getQuantity()) {
-                matchingDiscountToDiscountAmount.put(discountInformation.toDiscountInformationDTO(), (int)Math.floor((orderedItem.getQuantity() / discountTrigger.getQuantity())));
+                matchingDiscountToDiscountAmount.put(discountInformation.toDTO(), (int)Math.floor((orderedItem.getQuantity() / discountTrigger.getQuantity())));
             }
         }
 

@@ -41,34 +41,35 @@
 <br> <div id="mainDiv" class="text-center">
     <img src="common/images/history.png" width="64" height="64" alt=""> <h3 class="h4">My Stores Orders History</h3> <br>
 
-    <form id="chooseStoreForm">
-        <br> <label class="h6" for="chosenStore">Choose Store</label>
-        <select name="chosen_store_id" class="form-control" id="chosenStore">
-        </select> <br><br><br>
-    </form>
+    <div id="hasStoreDiv">
+        <!--  Choose store  -->
+        <form id="chooseStoreForm">
+            <br> <label class="h6" for="chosenStore">Choose Store</label>
+            <select name="chosen_store_id" class="form-control" id="chosenStore">
+            </select> <br><br><br>
+        </form>
 
-    <!--Orders table -->
-    <div class="orders-div text-center">
-        <div class="table-responsive">
-            <table id="ordersTable" class="table table-striped table-sm">
-                <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Date</th>
-                    <th>Customer Username</th>
-                    <th>Destination</th>
-                    <th>Items Amount</th>
-                    <th>Items Types</th>
-                    <th>Total Items Cost</th>
-                    <th>Total Delivery Cost</th>
-                    <th>Total Order Cost</th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-
-            <p>No orders have been placed yet.</p>
+        <!--Orders table -->
+        <div class="orders-div text-center">
+            <div class="table-responsive">
+                <table id="ordersTable" class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Customer Username</th>
+                        <th>Destination</th>
+                        <th>Items Amount</th>
+                        <th>Items Types</th>
+                        <th>Total Items Cost</th>
+                        <th>Total Delivery Cost</th>
+                        <th>Total Order Cost</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

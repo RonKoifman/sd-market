@@ -2,10 +2,11 @@ package engine.models.feedback;
 
 import dto.models.FeedbackDTO;
 import engine.enums.Rating;
+import engine.interfaces.Transferable;
 
 import java.time.LocalDate;
 
-public class Feedback {
+public class Feedback implements Transferable<FeedbackDTO> {
 
     private final String username;
     private final Rating rating;
@@ -23,7 +24,8 @@ public class Feedback {
         this.storeId = storeId;
     }
 
-    public FeedbackDTO toFeedbackDTO() {
+    @Override
+    public FeedbackDTO toDTO() {
         return new FeedbackDTO.Builder()
                 .username(username)
                 .rating(rating.getOrdinal())

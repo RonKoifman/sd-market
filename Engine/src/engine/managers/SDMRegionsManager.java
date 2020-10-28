@@ -38,14 +38,14 @@ public class SDMRegionsManager implements RegionsManager {
         fileManager.loadRegionDataFromFile(fileInputStream);
         checkForUniqueRegionName(fileManager.getLoadedRegionName());
         SDMSingleRegionManager newRegionManager = new SDMSingleRegionManager(fileManager.getLoadedRegionName(), ownerUsername, fileManager.getLoadedStoreIdToStore(), fileManager.getLoadedItemIdToItem());
-        regionNameToRegionManager.put(newRegionManager.getRegionDetails().getName(), newRegionManager);
+        regionNameToRegionManager.put(newRegionManager.toDTO().getName(), newRegionManager);
     }
 
     @Override
     public Collection<RegionDTO> getAllRegions() {
         return Collections.unmodifiableCollection(regionNameToRegionManager.values()
                 .stream()
-                .map(SingleRegionManager::getRegionDetails)
+                .map(SingleRegionManager::toDTO)
                 .collect(Collectors.toSet()));
     }
 

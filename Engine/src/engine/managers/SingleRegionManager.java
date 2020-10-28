@@ -2,6 +2,7 @@ package engine.managers;
 
 import dto.models.*;
 import engine.enums.Rating;
+import engine.interfaces.Transferable;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -9,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public interface SingleRegionManager {
+public interface SingleRegionManager extends Transferable<RegionDTO> {
 
     void deleteItemFromStore(int storeId, int itemId);
 
@@ -17,9 +18,9 @@ public interface SingleRegionManager {
 
     void updateItemPriceInStore(int storeId, int itemId, float newItemPrice);
 
-    void addNewStoreToRegion(String ownerUsername, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Integer> itemIdToItemPriceInStore);
+    void addNewStoreToRegion(String ownerUsername, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Float> itemIdToItemPriceInStore);
 
-    void addNewItemToRegion(int itemId, String itemName, String itemPurchaseForm, Map<Integer, Integer> storeIdToItemPriceInStore);
+    void addNewItemToRegion(int itemId, String itemName, String itemPurchaseForm, Map<Integer, Float> storeIdToItemPriceInStore);
 
     void checkForFreeLocation(Point location);
 
@@ -45,5 +46,5 @@ public interface SingleRegionManager {
 
     Collection<GeneralOrderDTO> getAllOrdersInRegion();
 
-    RegionDTO getRegionDetails();
+    RegionDTO toDTO();
 }

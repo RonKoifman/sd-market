@@ -1,11 +1,12 @@
 package engine.models.notification;
 
 import dto.models.NotificationDTO;
+import engine.interfaces.Transferable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public abstract class Notification {
+public abstract class Notification implements Transferable<NotificationDTO> {
 
     protected final String title;
     protected final Date date;
@@ -16,7 +17,8 @@ public abstract class Notification {
         this.date = new Date(System.currentTimeMillis());
     }
 
-    public NotificationDTO toNotificationDTO() {
+    @Override
+    public NotificationDTO toDTO() {
         return new NotificationDTO.Builder()
                 .title(title)
                 .message(message)

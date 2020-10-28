@@ -1,6 +1,7 @@
 package engine.models.order;
 
 import dto.models.*;
+import engine.interfaces.Transferable;
 import engine.models.item.OrderItem;
 import engine.models.location.Location;
 import engine.models.store.Store;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class SubOrder extends Order {
+public class SubOrder extends Order implements Transferable<SubOrderDTO> {
 
     private final Store store;
     private final float distanceFromCustomer;
@@ -25,7 +26,8 @@ public class SubOrder extends Order {
         this.totalItemsAmount = calculateTotalItemsAmount();
     }
 
-    public SubOrderDTO toSubOrderDTO() {
+    @Override
+    public SubOrderDTO toDTO() {
         return new SubOrderDTO.Builder()
                 .id(id)
                 .deliveryCost(deliveryCost)
@@ -38,7 +40,7 @@ public class SubOrder extends Order {
                 .totalItemsCost(totalItemsCost)
                 .totalOrderCost(totalOrderCost)
                 .totalItemsTypes(totalItemsTypes)
-                .orderedItems(orderedItems.stream().map(OrderItem::toOrderItemDTO).collect(Collectors.toList()))
+                .orderedItems(orderedItems.stream().map(OrderItem::toDTO).collect(Collectors.toList()))
                 .build();
     }
 

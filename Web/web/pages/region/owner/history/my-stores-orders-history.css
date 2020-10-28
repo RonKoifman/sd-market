@@ -10,6 +10,14 @@ body {
     margin-right: auto;
 }
 
+.bigger-font {
+    font-size: 18px;
+}
+
+.hover-pointer {
+    cursor: pointer;
+}
+
 html {
     position: relative;
     min-height: 100%;

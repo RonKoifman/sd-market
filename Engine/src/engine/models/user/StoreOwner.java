@@ -1,10 +1,7 @@
 package engine.models.user;
 
-import dto.models.FeedbackDTO;
-import dto.models.SubOrderDTO;
 import engine.enums.UserRole;
 import engine.models.feedback.Feedback;
-import engine.models.order.SubOrder;
 import engine.models.store.Store;
 
 import java.util.*;
@@ -27,26 +24,15 @@ public class StoreOwner extends User {
         newStore.setOwnerUsername(username);
     }
 
-    public Collection<SubOrderDTO> getOwnedStoreOrdersByRegionName(int storeId, String regionName) {
-        Collection<SubOrderDTO> storeOrders;
-        Collection<Store> ownedStores = regionNameToOwnedStoresInRegion.getOrDefault(regionName, Collections.emptySet());
-
-        if (ownedStores.isEmpty()) {
-            storeOrders = Collections.emptySet();
-        } else {
-            Store chosenStore = ownedStores.stream().filter(store -> store.getId() == storeId).findFirst().get();
-            storeOrders = chosenStore.getOrdersMade().stream().map(SubOrder::toSubOrderDTO).collect(Collectors.toSet());
-        }
-
-        return Collections.unmodifiableCollection(storeOrders);
+    public Collection<Store> getOwnedStoresByRegionName(String regionName) {
+       return Collections.unmodifiableCollection(regionNameToOwnedStoresInRegion.getOrDefault(regionName, Collections.emptySet()));
     }
 
-    public Collection<FeedbackDTO> getOwnedStoresFeedbacksByRegionName(String regionName) {
+    public Collection<Feedback> getOwnedStoresFeedbacksByRegionName(String regionName) {
         return Collections.unmodifiableCollection(regionNameToOwnedStoresInRegion.getOrDefault(regionName, Collections.emptySet())
                 .stream()
                 .map(Store::getFeedbacksReceived)
                 .flatMap(Collection::stream)
-                .map(Feedback::toFeedbackDTO)
                 .collect(Collectors.toList()));
     }
 

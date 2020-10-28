@@ -1,12 +1,9 @@
 package servlets.order;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import dto.models.GeneralOrderDTO;
-import dto.models.StoreDTO;
 import engine.managers.SDMRegionsManager;
 import engine.managers.SingleRegionManager;
-import utils.Constants;
 import utils.SessionUtils;
 
 import javax.servlet.annotation.WebServlet;

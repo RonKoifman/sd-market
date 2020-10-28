@@ -1,8 +1,9 @@
 package engine.models.item;
 
 import dto.models.OrderItemDTO;
+import engine.interfaces.Transferable;
 
-public class OrderItem {
+public class OrderItem implements Transferable<OrderItemDTO> {
 
     private final StoreItem item;
     private final float quantity;
@@ -16,9 +17,10 @@ public class OrderItem {
         this.isFromDiscount = isFromDiscount;
     }
 
-    public OrderItemDTO toOrderItemDTO() {
+    @Override
+    public OrderItemDTO toDTO() {
         return new OrderItemDTO.Builder()
-                .item(item.toStoreItemDTO())
+                .item(item.toDTO())
                 .isFromDiscount(isFromDiscount)
                 .quantity(quantity)
                 .itemOrderPrice(itemOrderPrice)

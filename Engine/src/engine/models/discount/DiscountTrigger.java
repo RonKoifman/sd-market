@@ -1,11 +1,12 @@
 package engine.models.discount;
 
 import dto.models.DiscountTriggerDTO;
+import engine.interfaces.Transferable;
 import engine.models.item.StoreItem;
 
 import java.util.Objects;
 
-public class DiscountTrigger {
+public class DiscountTrigger implements Transferable<DiscountTriggerDTO> {
 
     private final StoreItem item;
     private final float quantity;
@@ -15,9 +16,10 @@ public class DiscountTrigger {
         this.quantity = quantity;
     }
 
-    DiscountTriggerDTO toDiscountTriggerDTO() {
+    @Override
+    public DiscountTriggerDTO toDTO() {
         return new DiscountTriggerDTO.Builder()
-                .item(item.toStoreItemDTO())
+                .item(item.toDTO())
                 .quantity(quantity)
                 .build();
     }

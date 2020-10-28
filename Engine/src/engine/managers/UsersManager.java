@@ -11,7 +11,7 @@ public interface UsersManager {
 
     void addNewUser(String username, UserRole userRole);
 
-    Set<UserDTO> getUsers();
+    Collection<UserDTO> getUsers();
 
     boolean isUserExists(String username);
 
@@ -23,7 +23,7 @@ public interface UsersManager {
 
     Collection<GeneralOrderDTO> getCustomerOrdersByRegionName(String customerUsername, String regionName);
 
-    Collection<SubOrderDTO> getStoreOwnerOwnedStoreOrdersByRegionName(String storeOwnerUsername, String regionName, int storeId);
+    Collection<StoreDTO> getStoreOwnerOwnedStoresByRegionName(String storeOwnerUsername, String regionName);
 
     Collection<FeedbackDTO> getStoreOwnerOwnedStoresFeedbacksByRegionName(String storeOwnerUsername, String regionName);
 }

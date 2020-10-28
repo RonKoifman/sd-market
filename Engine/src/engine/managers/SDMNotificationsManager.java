@@ -40,7 +40,7 @@ public class SDMNotificationsManager implements NotificationsManager {
     public Collection<NotificationDTO> getNotificationsByUsername(String username) {
         return Collections.unmodifiableCollection(usernameToUserNotifications.get(username)
                 .stream()
-                .map(Notification::toNotificationDTO)
+                .map(Notification::toDTO)
                 .collect(Collectors.toList()));
     }
 }

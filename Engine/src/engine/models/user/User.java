@@ -3,10 +3,11 @@ package engine.models.user;
 import dto.models.UserDTO;
 import engine.enums.UserRole;
 import engine.interfaces.Identifiable;
+import engine.interfaces.Transferable;
 
 import java.util.Objects;
 
-public abstract class User implements Identifiable {
+public abstract class User implements Identifiable, Transferable<UserDTO> {
 
     protected final int id;
     protected final String username;
@@ -19,7 +20,8 @@ public abstract class User implements Identifiable {
         this.userRole = userRole;
     }
 
-    public UserDTO toUserDTO() {
+    @Override
+    public UserDTO toDTO() {
         return new UserDTO.Builder()
                 .username(username)
                 .id(id)

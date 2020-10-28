@@ -1,6 +1,7 @@
 package engine.models.order;
 
 import dto.models.*;
+import engine.interfaces.Transferable;
 import engine.models.item.OrderItem;
 import engine.models.location.Location;
 import engine.models.store.Store;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class GeneralOrder extends Order {
+public class GeneralOrder extends Order implements Transferable<GeneralOrderDTO> {
 
     private final Map<Store, SubOrder> storeToOrder = new HashMap<>();
 
@@ -23,15 +24,16 @@ public class GeneralOrder extends Order {
         this.totalItemsAmount = calculateTotalItemsAmount();
     }
 
-    public GeneralOrderDTO toGeneralOrderDTO() {
+    @Override
+    public GeneralOrderDTO toDTO() {
         return new GeneralOrderDTO.Builder()
                 .id(id)
                 .orderDate(String.format("%d/%d/%d", orderDate.getDayOfMonth(), orderDate.getMonthValue(), orderDate.getYear()))
                 .customerUsername(customerUsername)
                 .orderDestination(orderDestination)
-                .orderedItems(orderedItems.stream().map(OrderItem::toOrderItemDTO).collect(Collectors.toList()))
-                .subOrders(storeToOrder.values().stream().map(SubOrder::toSubOrderDTO).collect(Collectors.toList()))
-                .stores(storeToOrder.keySet().stream().map(Store::toStoreDTO).collect(Collectors.toList()))
+                .orderedItems(orderedItems.stream().map(OrderItem::toDTO).collect(Collectors.toList()))
+                .subOrders(storeToOrder.values().stream().map(SubOrder::toDTO).collect(Collectors.toList()))
+                .stores(storeToOrder.keySet().stream().map(Store::toDTO).collect(Collectors.toList()))
                 .totalItemsCost(totalItemsCost)
                 .deliveryCost(deliveryCost)
                 .totalOrderCost(totalOrderCost)

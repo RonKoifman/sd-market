@@ -2,10 +2,11 @@ package engine.models.item;
 
 import dto.models.StoreItemDTO;
 import engine.enums.PurchaseForm;
+import engine.interfaces.Transferable;
 
 import java.util.Objects;
 
-public class StoreItem extends Item {
+public class StoreItem extends Item implements Transferable<StoreItemDTO> {
 
     private final int sellingStoreId;
     private float price;
@@ -16,7 +17,8 @@ public class StoreItem extends Item {
         this.sellingStoreId = sellingStoreId;
     }
 
-    public StoreItemDTO toStoreItemDTO() {
+    @Override
+    public StoreItemDTO toDTO() {
         return new StoreItemDTO.Builder()
                 .id(id)
                 .name(name)

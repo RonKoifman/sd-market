@@ -2,10 +2,11 @@ package engine.models.account;
 
 import dto.models.TransactionDTO;
 import engine.enums.TransactionType;
+import engine.interfaces.Transferable;
 
 import java.time.LocalDate;
 
-public class Transaction {
+public class Transaction implements Transferable<TransactionDTO> {
 
     private final TransactionType transactionType;
     private final LocalDate date;
@@ -21,7 +22,8 @@ public class Transaction {
         this.balanceAfter = calculateBalanceAfterTransaction();
     }
 
-    public TransactionDTO toTransactionDTO() {
+    @Override
+    public TransactionDTO toDTO() {
         return new TransactionDTO.Builder()
                 .transactionType(transactionType.getValue())
                 .date(String.format("%d/%d/%d", date.getDayOfMonth(), date.getMonthValue(), date.getYear()))
