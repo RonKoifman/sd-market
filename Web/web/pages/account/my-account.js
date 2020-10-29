@@ -11,7 +11,7 @@ $(function () {
     $.ajax({
         url: USER_INFO_URL,
         success: function (loggedInUser) {
-            $('#username').text(loggedInUser.username);
+            $('#username').text(loggedInUser['username']);
             switch (loggedInUser['userRole']) {
                 case 'Customer':
                     $('#uploadNavLink').hide();
@@ -77,7 +77,7 @@ function refreshTransactionsTable(transactions) {
         let classColor = transaction['transactionType'] === 'Charge' ? 'red' : 'green';
         $('<tr class="' + classColor + '">' +
             '<td>' + transaction['transactionType'] + '</td>' +
-            '<td>' + transaction.date + '</td>' +
+            '<td>' + transaction['date'] + '</td>' +
             '<td>' + '$' + parseFloat(transaction['amount']).toFixed(2) + '</td>' +
             '<td>' + '$' + parseFloat(transaction['balanceBefore']).toFixed(2) + '</td>' +
             '<td>' + '$' + parseFloat(transaction['balanceAfter']).toFixed(2) + '</td>' +

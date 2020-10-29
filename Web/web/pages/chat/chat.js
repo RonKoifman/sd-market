@@ -4,7 +4,7 @@ $(function () {
     $.ajax({
         url: USER_INFO_URL,
         success: function (loggedInUser) {
-            $('#username').text(loggedInUser.username);
+            $('#username').text(loggedInUser['username']);
             switch (loggedInUser['userRole']) {
                 case 'Customer':
                     $('#uploadNavLink').hide();

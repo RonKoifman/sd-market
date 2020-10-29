@@ -43,8 +43,10 @@
     <h5 class="card-title text-center">Add New Store</h5>
     <form id="newStoreForm" class="form-new-store" method="POST" action="set-store-details"><br>
         <div class="form-group">
-            <label class="h6" for="storeName">Store Name</label>
-            <input id="storeName" name="store_name" type="text" class="form-control" placeholder="Store Name" required autofocus>
+            <label class="h6" for="storeId">Store ID</label>
+            <input id="storeId" name="store_id" type="number" min="1" class="form-control" placeholder="Store ID" required autofocus>
+            <br> <label class="h6" for="storeName">Store Name</label>
+            <input id="storeName" name="store_name" type="text" class="form-control" placeholder="Store Name" required>
             <br> <label class="h6" for="x">X Coordinate (Store Location)</label>
             <input id="x" name="x" type="number" min="1" max="50" class="form-control" placeholder="X Coordinate" required>
             <br> <label class="h6" for="y">Y Coordinate (Store Location)</label>

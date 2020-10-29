@@ -8,7 +8,7 @@ $(function () {
     $.ajax({
         url: USER_INFO_URL,
         success: function (loggedInUser) {
-            $('#username').text(loggedInUser.username);
+            $('#username').text(loggedInUser['username']);
             switch (loggedInUser['userRole']) {
                 case 'Customer':
                     $('#uploadNavLink').hide();
@@ -67,7 +67,7 @@ function refreshRegionsTable(regions) {
 
     $.each(regions || [], function (index, region) {
         $('<tr>' +
-            '<td>' + region.name + '</td>' +
+            '<td>' + region['regionName'] + '</td>' +
             '<td>' + region['ownerUsername'] + '</td>' +
             '<td>' + region['totalItems'] + '</td>' +
             '<td>' + region['totalStores'] + '</td>' +
