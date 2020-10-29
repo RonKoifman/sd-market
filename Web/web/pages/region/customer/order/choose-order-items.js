@@ -99,11 +99,11 @@ function getQuantityTableData(itemPurchaseForm, itemId) {
     if (orderType === 'dynamicOrder' || getItemInStoreById(itemId) !== null) {
         switch (itemPurchaseForm) {
             case 'Quantity':
-                quantityTableData = '<td><input id="idToQuantity" name="' + itemId + '" type="number" min="1" max="1000" class="form-control" placeholder="Units"></td>';
+                quantityTableData = '<td><input id="idToQuantity" name="' + itemId + '" type="number" min="1" max="100000" class="form-control" placeholder="Units"></td>';
                 break;
 
             case 'Weight':
-                quantityTableData = '<td><input id="idToQuantity" name="' + itemId + '" type="number" min="0.1" step="0.05" max="1000" class="form-control" placeholder="Kilograms"></td>';
+                quantityTableData = '<td><input id="idToQuantity" name="' + itemId + '" type="number" min="0.1" step="0.05" max="100000" class="form-control" placeholder="Kilograms"></td>';
                 break;
         }
     } else {

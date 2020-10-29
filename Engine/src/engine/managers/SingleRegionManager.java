@@ -19,7 +19,7 @@ public interface SingleRegionManager extends Transferable<RegionDTO> {
 
     void updateItemPriceInStore(int storeId, int itemId, float newItemPrice);
 
-    void addNewStoreToRegion(int storeId, String ownerUsername, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Float> itemIdToItemPriceInStore);
+    void addNewStoreToRegion(int storeId, String ownerUsername, String storeName, Point storeLocation, float storeDeliveryPPK, Map<Integer, Float> itemIdToItemPriceInStore);
 
     void addNewItemToRegion(int itemId, String itemName, String itemPurchaseForm, Map<Integer, Float> storeIdToItemPriceInStore);
 

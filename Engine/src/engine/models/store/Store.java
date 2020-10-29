@@ -23,7 +23,7 @@ public class Store implements Locationable, Identifiable, Transferable<StoreDTO>
     private final String name;
     private String ownerUsername;
     private final Location location;
-    private final int deliveryPPK;
+    private final float deliveryPPK;
     private float totalIncomeFromDeliveries;
     private float totalIncomeFromItems;
     private final Map<Integer, StoreItem> itemIdToItem = new HashMap<>();
@@ -31,7 +31,7 @@ public class Store implements Locationable, Identifiable, Transferable<StoreDTO>
     private final Map<Integer, SubOrder> orderIdToOrder = new HashMap<>();
     private final List<Feedback> feedbacksReceived = new LinkedList<>();
 
-    public Store(int id, String name, int deliveryPPK, Location location) {
+    public Store(int id, String name, float deliveryPPK, Location location) {
         this.id = id;
         this.name = name;
         this.deliveryPPK = deliveryPPK;
@@ -71,11 +71,11 @@ public class Store implements Locationable, Identifiable, Transferable<StoreDTO>
         return ownerUsername;
     }
 
-    public int getAmountOfItemsForSell() {
+    public int getAmountOfItemsForSale() {
         return itemIdToItem.size();
     }
 
-    public int getDeliveryPPK() {
+    public float getDeliveryPPK() {
         return deliveryPPK;
     }
 
