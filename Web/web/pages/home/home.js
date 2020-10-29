@@ -87,7 +87,7 @@ function refreshRegionsTable(regions) {
 }
 
 function onRegionChosen(region) {
-    setRegionNameOnSession(region.name);
+    setRegionNameOnSession(region['regionName']);
     window.location.assign('region-info.html');
 }
 
