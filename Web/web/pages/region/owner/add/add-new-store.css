@@ -9,6 +9,11 @@ body {
     height: 100%;
 }
 
+.disabled-button {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
 html {
     position: relative;
     min-height: 100%;

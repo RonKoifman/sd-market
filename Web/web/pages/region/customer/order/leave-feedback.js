@@ -53,7 +53,7 @@ function onFeedbackSubmitted(storeId) {
             }
         });
 
-        feedbackDiv.addClass('disabledButton');
+        feedbackDiv.addClass('disabled-button');
     }
 }
 

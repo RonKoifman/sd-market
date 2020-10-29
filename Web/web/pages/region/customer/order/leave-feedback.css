@@ -9,7 +9,7 @@ body {
     margin-right: auto;
 }
 
-.disabledButton {
+.disabled-button {
     pointer-events: none;
     opacity: 0.4;
 }

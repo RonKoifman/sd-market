@@ -1,5 +1,7 @@
 package servlets.add;
 
+import engine.exceptions.OccupiedLocationException;
+import engine.exceptions.TakenIdException;
 import engine.managers.SDMRegionsManager;
 import engine.managers.SingleRegionManager;
 import utils.Constants;
@@ -27,28 +29,53 @@ public class AddNewStoreServlet extends HttpServlet {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("text/html");
             SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
-            Map<Integer, Float> itemIdToItemPriceInStore = new HashMap<>();
-            Map<String, String[]> parameterMap = req.getParameterMap();
-            parameterMap.forEach((itemId, itemPrice) -> {
-                if (!itemPrice[0].isEmpty()) {
-                    itemIdToItemPriceInStore.put(Integer.parseInt(itemId), Float.parseFloat(itemPrice[0]));
-                }
-            });
+            String ownerUsername = SessionUtils.getUsername(req);
 
-            if (itemIdToItemPriceInStore.isEmpty()) {
+            Map<Integer, Float> itemIdToItemPriceInStore = getItemIdToItemPriceFromParameters(req.getParameterMap());
+            int storeId = Integer.parseInt(req.getParameter(Constants.STORE_ID));
+            String storeName = req.getParameter(Constants.STORE_NAME).trim();
+            int xCoordinate = Integer.parseInt(req.getParameter(Constants.X_COORDINATE));
+            int yCoordinate = Integer.parseInt(req.getParameter(Constants.Y_COORDINATE));
+            float deliveryPPK = Float.parseFloat(req.getParameter(Constants.PPK));
+
+            try {
+                singleRegionManager.checkForFreeLocation(new Point(xCoordinate, yCoordinate));
+                singleRegionManager.checkForAvailableId(storeId, "Store");
+                if (itemIdToItemPriceInStore.isEmpty()) {
+                    res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    out.print("Please choose at least one item for sale before adding a new store.");
+                } else if (storeName.isEmpty()) {
+                    res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    out.print("Please enter at least one character for the store's name.");
+                } else if (!storeName.matches("[a-zA-Z0-9 ]+")) {
+                    res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    out.print("Please enter only English letters and digits for the store's name.");
+                } else {
+                    singleRegionManager.addNewStoreToRegion(storeId, ownerUsername, storeName, new Point(xCoordinate, yCoordinate), deliveryPPK, itemIdToItemPriceInStore);
+                }
+            } catch (OccupiedLocationException e) {
                 res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                out.print("Please choose at least one item for sale before adding a new store.");
-            } else {
-                String ownerUsername = SessionUtils.getUsername(req);
-                int storeId = Integer.parseInt(req.getSession().getAttribute(Constants.STORE_ID).toString());
-                String storeName = req.getSession().getAttribute(Constants.STORE_NAME).toString().trim();
-                int xCoordinate = Integer.parseInt(req.getSession().getAttribute(Constants.X_COORDINATE).toString());
-                int yCoordinate = Integer.parseInt(req.getSession().getAttribute(Constants.Y_COORDINATE).toString());
-                float deliveryPPK = Float.parseFloat(req.getSession().getAttribute(Constants.PPK).toString());
-                singleRegionManager.addNewStoreToRegion(storeId, ownerUsername, storeName, new Point(xCoordinate, yCoordinate), deliveryPPK, itemIdToItemPriceInStore);
+                out.print("The entered location is already occupied by a store.");
+            } catch (TakenIdException e) {
+                res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                out.print("The entered store ID is already taken.");
             }
 
             out.flush();
         }
+    }
+
+    private Map<Integer, Float> getItemIdToItemPriceFromParameters(Map<String, String[]> parameterMap) {
+        Map<Integer, Float> itemIdToItemPriceInStore = new HashMap<>();
+
+        parameterMap.forEach((key, value) -> {
+            if (key.contains(Constants.ITEM_ID) && !value[0].isEmpty()) {
+                int itemId = Integer.parseInt(key.replace(Constants.ITEM_ID, "").trim());
+                float itemPrice = Float.parseFloat(value[0]);
+                itemIdToItemPriceInStore.put(itemId, itemPrice);
+            }
+        });
+
+        return itemIdToItemPriceInStore;
     }
 }

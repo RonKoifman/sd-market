@@ -41,7 +41,7 @@
 <!-- New store form -->
 <div id="newStoreDiv" class="card shadow p-3 mb-5 bg rounded">
     <h5 class="card-title text-center">Add New Store</h5>
-    <form id="newStoreForm" class="form-new-store" method="POST" action="set-store-details"><br>
+    <form id="newStoreForm" class="form-new-store" method="POST" action="add-new-store"><br>
         <div class="form-group">
             <label class="h6" for="storeId">Store ID</label>
             <input id="storeId" name="store_id" type="number" min="1" class="form-control" placeholder="Store ID" required autofocus>
@@ -53,10 +53,35 @@
             <input id="y" name="y" type="number" min="1" max="50" class="form-control" placeholder="Y Coordinate" required>
             <br> <label class="h6" for="ppk">Delivery PPK</label>
             <input id="ppk" name="ppk" type="number" min="0" step="0.01" class="form-control" placeholder="Delivery PPK" required>
-            <!-- Alert  -->
-            <br> <div class="alert" role="alert">
+
+            <!-- Items table -->
+            <br> <div class="items-table text-center">
+            <img src="common/images/item.png" width="64" height="64" alt="">
+            <h5 class="card-title text-center">Choose Items For Sale</h5> <br>
+            <form id="chooseStoreItemsForm" class="form-new-store"><br>
+                <div class="form-group">
+                    <div class="table-responsive">
+                        <table id="itemsTable" class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>ID</th>
+                                <th>Purchase Form</th>
+                                <th>Price in Store</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
         </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Continue</button>
+
+            <!-- Alert  -->
+            <div class="alert text-center mb-4" role="alert">
+        </div>
+            <button id="submitButton" class="btn btn-lg btn-primary btn-block" type="submit">Add New Store</button>
         </div>
     </form>
 </div>
