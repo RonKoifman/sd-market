@@ -17,9 +17,12 @@ public final class Constants {
     public static final String RATING = "rating";
     public static final String FEEDBACK_TEXT = "feedback_text";
     public static final String STORE_ID = "store_id";
+    public static final String STORE_NAME = "store_name";
+    public static final String PPK = "ppk";
 
     public static final String SIGNUP_URL = "signup.html";
     public static final String HOME_URL = "home.html";
     public static final String CHOOSE_ORDER_ITEMS_URL = "choose-order-items.html";
     public static final String CHECKOUT_URL = "checkout.html";
+    public static final String CHOOSE_STORE_ITEMS_URL = "choose-store-items.html";
 }

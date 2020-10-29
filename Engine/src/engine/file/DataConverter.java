@@ -51,7 +51,7 @@ class DataConverter {
 
         for (RegionItem item : convertedItemIdToItem.values()) {
             if (!storesItemsId.contains(item.getId())) {
-                throw new IllegalStateException("An item with the id '" + item.getId() + "' is not sold by any store in the region.");
+                throw new IllegalStateException("An item with the ID '" + item.getId() + "' is not sold by any store in the region.");
             }
         }
     }
@@ -60,7 +60,7 @@ class DataConverter {
         for (SDMStore store : stores) {
             for (SDMSell sell : store.getSDMPrices().getSDMSell()) {
                 if (!convertedItemIdToItem.containsKey(sell.getItemId())) {
-                    throw new IllegalStateException("An item with the id '" + sell.getItemId() + "', which sold by '" +
+                    throw new IllegalStateException("An item with the ID '" + sell.getItemId() + "', which sold by '" +
                             store.getName() + "' store, does not exist in region's items.");
                 }
             }
@@ -83,7 +83,7 @@ class DataConverter {
     private void setStoreItemsPrices(Store store, Collection<SDMSell> itemsPrices) {
         for (SDMSell sell : itemsPrices) {
             if (store.isItemSold(sell.getItemId())) {
-                throw new IllegalStateException("An item with the id '" + sell.getItemId() + "' exists more than once in '" +
+                throw new IllegalStateException("An item with the ID '" + sell.getItemId() + "' exists more than once in '" +
                         store.getName() + "' store.");
             }
 
@@ -109,13 +109,13 @@ class DataConverter {
             checkForUniqueDiscountNames(sdmDiscounts);
             for (SDMDiscount discount : sdmDiscounts.getSDMDiscount()) {
                 if (!store.isItemSold(discount.getIfYouBuy().getItemId())) {
-                    throw new IllegalStateException("A discount offer '" + discount.getName() + "' contains an item with the id '" +
+                    throw new IllegalStateException("A discount offer '" + discount.getName() + "' contains an item with the ID '" +
                             discount.getIfYouBuy().getItemId() + "' which is not sold by '" + store.getName() + "' store.");
                 }
 
                 for (SDMOffer offer : discount.getThenYouGet().getSDMOffer()) {
                     if (!store.isItemSold(offer.getItemId())) {
-                        throw new IllegalStateException("A discount offer '" + discount.getName() + "' contains an item with the id '" +
+                        throw new IllegalStateException("A discount offer '" + discount.getName() + "' contains an item with the ID '" +
                                 offer.getItemId() + "', which is not sold by '" + store.getName() + "' store.");
                     }
                 }
@@ -143,7 +143,7 @@ class DataConverter {
         checkEachItemSoldByAtLeastOneStore(generatedStores);
         for (SDMStore sdmStore : generatedStores) {
             if (convertedStoreIdToStore.containsKey(sdmStore.getId())) {
-                throw new IllegalStateException("A store with the id '" + sdmStore.getId() + "' exists more than once in the region.");
+                throw new IllegalStateException("A store with the ID '" + sdmStore.getId() + "' exists more than once in the region.");
             }
 
             try {
@@ -165,7 +165,7 @@ class DataConverter {
 
         for (SDMItem sdmItem : generatedItems) {
             if (convertedItemIdToItem.containsKey(sdmItem.getId())) {
-                throw new IllegalStateException("An item with the id '" + sdmItem.getId() + "' exists more than once in the region.");
+                throw new IllegalStateException("An item with the ID '" + sdmItem.getId() + "' exists more than once in the region.");
             }
 
             convertedItemIdToItem.put(sdmItem.getId(), new RegionItem(sdmItem.getId(), sdmItem.getName().trim(), PurchaseForm.valueOf(sdmItem.getPurchaseCategory().toUpperCase())));

@@ -148,7 +148,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     @Override
     public void addNewItemToRegion(int itemId, String itemName, String itemPurchaseForm, Map<Integer, Float> storeIdToItemPriceInStore) {
         if (itemIdToItem.containsKey(itemId)) {
-            throw new TakenIdException("The item id '" + itemId + "' is already taken.");
+            throw new TakenIdException("The item ID '" + itemId + "' is already taken.");
         }
 
         RegionItem newItem = new RegionItem(itemId, itemName, PurchaseForm.valueOf(itemPurchaseForm.trim().toUpperCase()));
@@ -159,7 +159,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     @Override
     public void addNewStoreToRegion(int storeId, String ownerUsername, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Float> itemIdToItemPriceInStore) {
         if (storeIdToStore.containsKey(storeId)) {
-            throw new TakenIdException("The store id '" + storeId + "' is already taken.");
+            throw new TakenIdException("The store ID '" + storeId + "' is already taken.");
         }
 
         Store newStore = new Store(storeId, storeName, storeDeliveryPPK, new Location(storeLocation.x, storeLocation.y));
@@ -177,14 +177,14 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         switch (objectType) {
             case STORE: {
                 if (storeIdToStore.containsKey(id)) {
-                    throw new TakenIdException("The store id '" + id + "' is already taken.");
+                    throw new TakenIdException("The store ID '" + id + "' is already taken.");
                 }
                 break;
             }
 
             case REGION_ITEM: {
                 if (itemIdToItem.containsKey(id)) {
-                    throw new TakenIdException("The item id '" + id + "' is already taken.");
+                    throw new TakenIdException("The item ID '" + id + "' is already taken.");
                 }
                 break;
             }
