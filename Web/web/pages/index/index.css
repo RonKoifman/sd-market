@@ -1,10 +1,13 @@
-.about {
-    padding: 3rem 1.5rem;
+body {
+    background-color: #f5f5f5;
+}
+
+.align-center {
     text-align: center;
 }
 
-body {
-    background-color: #f5f5f5;
+#upper {
+    background-color: #e9ecef;
 }
 
 html {
