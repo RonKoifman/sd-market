@@ -2,6 +2,7 @@ package engine.managers;
 
 import dto.models.*;
 import engine.enums.Rating;
+import engine.interfaces.Identifiable;
 import engine.interfaces.Transferable;
 
 import java.awt.*;
@@ -18,11 +19,13 @@ public interface SingleRegionManager extends Transferable<RegionDTO> {
 
     void updateItemPriceInStore(int storeId, int itemId, float newItemPrice);
 
-    void addNewStoreToRegion(String ownerUsername, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Float> itemIdToItemPriceInStore);
+    void addNewStoreToRegion(int storeId, String ownerUsername, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Float> itemIdToItemPriceInStore);
 
     void addNewItemToRegion(int itemId, String itemName, String itemPurchaseForm, Map<Integer, Float> storeIdToItemPriceInStore);
 
     void checkForFreeLocation(Point location);
+
+    void checkForAvailableId(int id, String objectType);
 
     void createNewPendingOrder(boolean isDynamicOrder, LocalDate orderDate, Point orderDestination, String customerUsername, StoreDTO chosenStore, Map<RegionItemDTO, Float> itemToItemPurchaseAmount);
 
@@ -45,6 +48,8 @@ public interface SingleRegionManager extends Transferable<RegionDTO> {
     Collection<StoreDTO> getAllStoresInRegion();
 
     Collection<GeneralOrderDTO> getAllOrdersInRegion();
+
+    String getRegionName();
 
     RegionDTO toDTO();
 }

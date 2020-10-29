@@ -41,7 +41,7 @@ public class SignupServlet extends HttpServlet {
                     out.print("Please enter at least one character.");
                 } else if (!usernameFromParameter.trim().matches("[a-zA-Z0-9 ]+")) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    out.print("Please enter only english letters and digits.");
+                    out.print("Please enter only English letters and digits.");
                 } else {
                     usernameFromParameter = usernameFromParameter.trim();
                     if (SDMUsersManager.getInstance().isUserExists(usernameFromParameter)) {

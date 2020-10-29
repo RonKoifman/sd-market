@@ -3,6 +3,12 @@ body {
     padding-top: 3.5rem;
 }
 
+#newStoreDiv {
+    margin: auto;
+    width: 510px;
+    height: 100%;
+}
+
 html {
     position: relative;
     min-height: 100%;

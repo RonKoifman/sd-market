@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class RegionDTO {
 
-    private final String name;
+    private final String regionName;
     private final String ownerUsername;
     private final int totalItems;
     private final int totalStores;
@@ -12,7 +12,7 @@ public class RegionDTO {
     private final float averageOrderItemsCost;
 
     private RegionDTO(Builder builder) {
-        this.name = builder.name;
+        this.regionName = builder.regionName;
         this.ownerUsername = builder.ownerUsername;
         this.totalItems = builder.totalItems;
         this.totalStores = builder.totalStores;
@@ -20,8 +20,8 @@ public class RegionDTO {
         this.averageOrderItemsCost = builder.averageOrderItemsCost;
     }
 
-    public String getName() {
-        return name;
+    public String getRegionName() {
+        return regionName;
     }
 
     public String getOwnerUsername() {
@@ -46,15 +46,15 @@ public class RegionDTO {
 
     public static final class Builder {
 
-        private String name;
+        private String regionName;
         private String ownerUsername;
         private int totalItems;
         private int totalStores;
         private int totalOrdersMade;
         private float averageOrderItemsCost;
 
-        public Builder name(String name) {
-            this.name = name;
+        public Builder regionName(String regionName) {
+            this.regionName = regionName;
             return this;
         }
 
@@ -93,18 +93,18 @@ public class RegionDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RegionDTO regionDTO = (RegionDTO) o;
-        return Objects.equals(name, regionDTO.name);
+        return Objects.equals(regionName, regionDTO.regionName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(regionName);
     }
 
     @Override
     public String toString() {
         return "RegionDTO{" +
-                "name='" + name + '\'' +
+                "regionName='" + regionName + '\'' +
                 ", ownerUsername='" + ownerUsername + '\'' +
                 ", totalItems=" + totalItems +
                 ", totalStores=" + totalStores +

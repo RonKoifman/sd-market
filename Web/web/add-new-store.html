@@ -37,6 +37,28 @@
     </div>
 </nav>
 
+<br><br>
+<!-- New store form -->
+<div id="newStoreDiv" class="card shadow p-3 mb-5 bg rounded">
+    <h5 class="card-title text-center">Add New Store</h5>
+    <form id="newStoreForm" class="form-new-store" method="POST" action="set-store-details"><br>
+        <div class="form-group">
+            <label class="h6" for="storeName">Store Name</label>
+            <input id="storeName" name="store_name" type="text" class="form-control" placeholder="Store Name" required autofocus>
+            <br> <label class="h6" for="x">X Coordinate (Store Location)</label>
+            <input id="x" name="x" type="number" min="1" max="50" class="form-control" placeholder="X Coordinate" required>
+            <br> <label class="h6" for="y">Y Coordinate (Store Location)</label>
+            <input id="y" name="y" type="number" min="1" max="50" class="form-control" placeholder="Y Coordinate" required>
+            <br> <label class="h6" for="ppk">Delivery PPK</label>
+            <input id="ppk" name="ppk" type="number" min="0" step="0.01" class="form-control" placeholder="Delivery PPK" required>
+            <!-- Alert  -->
+            <br> <div class="alert" role="alert">
+        </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Continue</button>
+        </div>
+    </form>
+</div>
+
 <!-- Footer -->
 <footer class="footer">
     <hr class="featurette-divider">

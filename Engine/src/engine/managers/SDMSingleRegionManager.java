@@ -42,13 +42,18 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     @Override
     public RegionDTO toDTO() {
         return new RegionDTO.Builder()
-                .name(regionName)
+                .regionName(regionName)
                 .ownerUsername(regionOwnerUsername)
                 .totalItems(itemIdToItem.size())
                 .averageOrdersCost(averageOrderItemsCost)
                 .totalStores(storeIdToStore.size())
                 .totalOrdersMade(orderIdToOrder.size())
                 .build();
+    }
+
+    @Override
+    public String getRegionName() {
+        return regionName;
     }
 
     @Override
@@ -143,7 +148,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     @Override
     public void addNewItemToRegion(int itemId, String itemName, String itemPurchaseForm, Map<Integer, Float> storeIdToItemPriceInStore) {
         if (itemIdToItem.containsKey(itemId)) {
-            throw new IllegalStateException("The item id '" + itemId + "' is already taken.");
+            throw new TakenIdException("The item id '" + itemId + "' is already taken.");
         }
 
         RegionItem newItem = new RegionItem(itemId, itemName, PurchaseForm.valueOf(itemPurchaseForm.trim().toUpperCase()));
@@ -152,17 +157,42 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     }
 
     @Override
-    public void addNewStoreToRegion(String ownerUsername, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Float> itemIdToItemPriceInStore) {
-        if (isLocationOccupied(storeLocation)) {
-            throw new OccupiedLocationException(String.format("The location (%d, %d) is already taken.", storeLocation.x, storeLocation.y));
+    public void addNewStoreToRegion(int storeId, String ownerUsername, String storeName, Point storeLocation, int storeDeliveryPPK, Map<Integer, Float> itemIdToItemPriceInStore) {
+        if (storeIdToStore.containsKey(storeId)) {
+            throw new TakenIdException("The store id '" + storeId + "' is already taken.");
         }
 
-        int newStoreId = generateNewStoreId();
-        Store newStore = new Store(newStoreId, storeName, storeDeliveryPPK, new Location(storeLocation.x, storeLocation.y));
-        itemIdToItemPriceInStore.forEach((itemId, itemPrice) -> addNewItemToStore(newStoreId, itemId, itemPrice));
+        Store newStore = new Store(storeId, storeName, storeDeliveryPPK, new Location(storeLocation.x, storeLocation.y));
+        itemIdToItemPriceInStore.forEach((itemId, itemPrice) -> addNewItemToStore(storeId, itemId, itemPrice));
         storeIdToStore.put(newStore.getId(), newStore);
         SDMUsersManager.getInstance().addNewStoreToStoreOwner(ownerUsername, newStore, regionName);
         // TODO: send notification to the region owner (only if the new store owner is not himself)
+    }
+
+    @Override
+    public void checkForAvailableId(int id, String objectType) {
+        final String STORE =  "Store";
+        final String REGION_ITEM = "RegionItem";
+
+        switch (objectType) {
+            case STORE: {
+                if (storeIdToStore.containsKey(id)) {
+                    throw new TakenIdException("The store id '" + id + "' is already taken.");
+                }
+                break;
+            }
+
+            case REGION_ITEM: {
+                if (itemIdToItem.containsKey(id)) {
+                    throw new TakenIdException("The item id '" + id + "' is already taken.");
+                }
+                break;
+            }
+
+            default: {
+                throw new IllegalArgumentException();
+            }
+        }
     }
 
     @Override
@@ -173,7 +203,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     @Override
     public void checkForFreeLocation(Point location) {
         if (isLocationOccupied(location)) {
-            throw new OccupiedLocationException("");
+            throw new OccupiedLocationException(String.format("The location (%d, %d) is already occupied.", location.x, location.y));
         }
     }
 
@@ -240,10 +270,6 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         }
 
         pendingOrder.addItemsFromDiscountOffers(storeToDiscountOfferItems);
-    }
-
-    private int generateNewStoreId() {
-        return storeIdToStore.keySet().stream().max(Integer::compareTo).get() + 1;
     }
 
     private Map<Store, List<DiscountOfferDTO>> getStoreToChosenOffersMapFromChosenOffers(List<DiscountOfferDTO> chosenOffers) {

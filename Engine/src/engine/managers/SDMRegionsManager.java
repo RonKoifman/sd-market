@@ -38,7 +38,7 @@ public class SDMRegionsManager implements RegionsManager {
         fileManager.loadRegionDataFromFile(fileInputStream);
         checkForUniqueRegionName(fileManager.getLoadedRegionName());
         SDMSingleRegionManager newRegionManager = new SDMSingleRegionManager(fileManager.getLoadedRegionName(), ownerUsername, fileManager.getLoadedStoreIdToStore(), fileManager.getLoadedItemIdToItem());
-        regionNameToRegionManager.put(newRegionManager.toDTO().getName(), newRegionManager);
+        regionNameToRegionManager.put(newRegionManager.getRegionName(), newRegionManager);
     }
 
     @Override
