@@ -41,7 +41,6 @@ $(function () {
     setInterval(ajaxRegionItems, refreshRate);
     ajaxRegionStores();
     ajaxRegionItems();
-    setTimeout(function () {}, 500);
 });
 
 function refreshRegionStores(regionStores) {

@@ -30,17 +30,30 @@ public class SDMNotificationsManager implements NotificationsManager {
     @Override
     public void addNewNotificationToUser(String username, Notification newNotification) {
         if (!usernameToUserNotifications.containsKey(username)) {
-            usernameToUserNotifications.put(username, new LinkedList<>());
+            usernameToUserNotifications.put(username, new ArrayList<>());
         }
 
         usernameToUserNotifications.get(username).add(newNotification);
     }
 
     @Override
-    public Collection<NotificationDTO> getNotificationsByUsername(String username) {
+    public Collection<NotificationDTO> getNotificationsFromIndexByUsername(String username, int fromIndex) {
         return Collections.unmodifiableCollection(usernameToUserNotifications.get(username)
                 .stream()
                 .map(Notification::toDTO)
+                .skip(fromIndex)
                 .collect(Collectors.toList()));
+    }
+
+    @Override
+    public int getNotificationsVersionByUsername(String username) {
+        return usernameToUserNotifications.get(username).size();
+    }
+
+    @Override
+    public String toString() {
+        return "SDMNotificationsManager{" +
+                "usernameToUserNotifications=" + usernameToUserNotifications +
+                '}';
     }
 }

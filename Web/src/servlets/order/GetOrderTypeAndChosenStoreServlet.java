@@ -19,18 +19,23 @@ import java.io.PrintWriter;
 public class GetOrderTypeAndChosenStoreServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
             Gson gson = new Gson();
             String orderType = req.getSession().getAttribute(Constants.ORDER_TYPE).toString();
             int chosenStoreId = Integer.parseInt(req.getSession().getAttribute(Constants.CHOSEN_STORE_ID).toString());
-            StoreDTO chosenStore = singleRegionManager.getStoreById(chosenStoreId);
+            StoreDTO chosenStore;
+
+            synchronized (getServletContext()) {
+                SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
+                chosenStore = singleRegionManager.getStoreById(chosenStoreId);
+            }
+
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("orderType", orderType);
             jsonObject.add("chosenStore", gson.toJsonTree(chosenStore));

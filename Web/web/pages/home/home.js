@@ -26,7 +26,6 @@ $(function () {
     setInterval(ajaxRegionsInfo, refreshRate);
     ajaxUsersInfo();
     ajaxRegionsInfo();
-    setTimeout(function () {}, 500);
 });
 
 function refreshUsersDiv(users) {

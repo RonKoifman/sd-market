@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 public class GetPendingOrderServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
@@ -25,8 +25,13 @@ public class GetPendingOrderServlet extends HttpServlet {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
             Gson gson = new Gson();
-            SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
-            GeneralOrderDTO pendingOrder = singleRegionManager.getPendingOrderByUsername(SessionUtils.getUsername(req));
+            GeneralOrderDTO pendingOrder;
+
+            synchronized (getServletContext()) {
+                SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
+                pendingOrder = singleRegionManager.getPendingOrderByUsername(SessionUtils.getUsername(req));
+            }
+
             String json = gson.toJson(pendingOrder);
             out.print(json);
             out.flush();

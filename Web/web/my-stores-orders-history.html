@@ -38,16 +38,23 @@
 </nav>
 
 <!-- Main div -->
-<br> <div id="mainDiv" class="text-center">
-    <img src="common/images/history.png" width="64" height="64" alt=""> <h3 class="h4">My Stores Orders History</h3> <br>
+<br> <div id="mainDiv">
+    <div class="text-center">
+        <img src="common/images/history.png" width="64" height="64" alt=""> <h3 class="h4">My Stores Orders History</h3> <br>
+    </div>
 
     <div id="hasStoreDiv">
         <!--  Choose store  -->
         <form id="chooseStoreForm">
-            <br> <label class="h6" for="chosenStore">Choose Store</label>
-            <select name="chosen_store_id" class="form-control" id="chosenStore">
-            </select> <br><br><br>
+            <div class="d-inline">
+                <br> <label class="h6" for="chosenStore">Filter By Store</label>
+                <select name="chosen_store_id" class="form-control" id="chosenStore">
+                </select>
+            </div>
+            <br><br>
         </form>
+
+        <h6 class="h5 ml-3"><span id="currentStoreName"></span></h6> <br>
 
         <!--Orders table -->
         <div class="orders-div text-center">

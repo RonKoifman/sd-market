@@ -17,7 +17,7 @@ import java.util.Collection;
 public class GetStoreOwnerStoresFeedbacksServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
@@ -27,7 +27,12 @@ public class GetStoreOwnerStoresFeedbacksServlet extends HttpServlet {
             Gson gson = new Gson();
             String username = SessionUtils.getUsername(req);
             String regionName = SessionUtils.getRegionName(req);
-            Collection<FeedbackDTO> storesFeedbacks = SDMUsersManager.getInstance().getStoreOwnerOwnedStoresFeedbacksByRegionName(username, regionName);
+            Collection<FeedbackDTO> storesFeedbacks;
+
+            synchronized (getServletContext()) {
+                storesFeedbacks = SDMUsersManager.getInstance().getStoreOwnerOwnedStoresFeedbacksByRegionName(username, regionName);
+            }
+
             String json = gson.toJson(storesFeedbacks);
             out.print(json);
             out.flush();

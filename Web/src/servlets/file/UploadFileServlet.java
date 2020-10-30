@@ -20,7 +20,7 @@ import java.io.PrintWriter;
 public class UploadFileServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         processRequest(req, res);
     }
 
@@ -39,8 +39,10 @@ public class UploadFileServlet extends HttpServlet {
                 out.print("Invalid file. Please choose only XML file type.");
             } else {
                 try {
-                    SDMRegionsManager.getInstance().loadNewRegionDataFromFile(username, fileInputStream);
-                    out.print("File uploaded successfully!");
+                    synchronized (getServletContext()) {
+                        SDMRegionsManager.getInstance().loadNewRegionDataFromFile(username, fileInputStream);
+                        out.print("File uploaded successfully!");
+                    }
                 } catch (JAXBException e) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     out.print("Invalid file. " + GENERAL_ERROR_MESSAGE);

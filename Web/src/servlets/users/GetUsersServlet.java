@@ -16,7 +16,7 @@ import java.util.Collection;
 public class GetUsersServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
@@ -24,7 +24,12 @@ public class GetUsersServlet extends HttpServlet {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
             Gson gson = new Gson();
-            Collection<UserDTO> users = SDMUsersManager.getInstance().getUsers();
+            Collection<UserDTO> users;
+
+            synchronized (getServletContext()) {
+                users = SDMUsersManager.getInstance().getUsers();
+            }
+
             String json = gson.toJson(users);
             out.print(json);
             out.flush();

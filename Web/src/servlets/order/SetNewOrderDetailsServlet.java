@@ -18,7 +18,7 @@ import java.io.PrintWriter;
 public class SetNewOrderDetailsServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
@@ -26,12 +26,15 @@ public class SetNewOrderDetailsServlet extends HttpServlet {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("text/html");
             String regionName = SessionUtils.getRegionName(req);
-            SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(regionName);
+            int xCoordinate = Integer.parseInt(req.getParameter(Constants.X_COORDINATE));
+            int yCoordinate = Integer.parseInt(req.getParameter(Constants.Y_COORDINATE));
 
             try {
-                int xCoordinate = Integer.parseInt(req.getParameter(Constants.X_COORDINATE));
-                int yCoordinate = Integer.parseInt(req.getParameter(Constants.Y_COORDINATE));
-                singleRegionManager.checkForFreeLocation(new Point(xCoordinate, yCoordinate));
+                synchronized (getServletContext()) {
+                    SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(regionName);
+                    singleRegionManager.checkForFreeLocation(new Point(xCoordinate, yCoordinate));
+                }
+
                 req.getSession(true).setAttribute(Constants.X_COORDINATE, req.getParameter(Constants.X_COORDINATE));
                 req.getSession(true).setAttribute(Constants.Y_COORDINATE, req.getParameter(Constants.Y_COORDINATE));
                 req.getSession(true).setAttribute(Constants.ORDER_DATE, req.getParameter(Constants.ORDER_DATE));

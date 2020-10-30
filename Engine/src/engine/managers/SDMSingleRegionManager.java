@@ -10,6 +10,10 @@ import engine.models.item.OrderItem;
 import engine.models.item.RegionItem;
 import engine.models.item.StoreItem;
 import engine.models.location.Location;
+import engine.models.notification.NewCompetitorNotification;
+import engine.models.notification.NewFeedbackNotification;
+import engine.models.notification.NewOrderNotification;
+import engine.models.notification.Notification;
 import engine.models.order.GeneralOrder;
 import engine.models.order.SubOrder;
 import engine.models.store.Store;
@@ -166,7 +170,11 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         storeIdToStore.put(newStore.getId(), newStore);
         itemIdToItemPriceInStore.forEach((itemId, itemPrice) -> addNewItemToStore(storeId, itemId, itemPrice));
         SDMUsersManager.getInstance().addNewStoreToStoreOwner(ownerUsername, newStore, regionName);
-        // TODO: send notification to the region owner (only if the new store owner is not himself)
+
+        if (!ownerUsername.equals(regionOwnerUsername)) {
+            Notification newNotification = new NewCompetitorNotification(regionName, ownerUsername, storeName, storeLocation, itemIdToItemPriceInStore.size(), itemIdToItem.size());
+            SDMNotificationsManager.getInstance().addNewNotificationToUser(regionOwnerUsername, newNotification);
+        }
     }
 
     @Override
@@ -221,18 +229,18 @@ public class SDMSingleRegionManager implements SingleRegionManager {
 
     @Override
     public void confirmPendingOrderByUsername(String username) {
-        GeneralOrder pendingOrder = usernameToPendingOrder.get(username);
+        GeneralOrder newOrder = usernameToPendingOrder.get(username);
 
-        pendingOrder.generateOrderId();
-        orderIdToOrder.put(pendingOrder.getId(), pendingOrder);
-        updateRegionItemsPurchaseAmountAfterNewOrder(pendingOrder);
-        updateStoresOrdersAfterNewOrder(pendingOrder);
-        updateAverageOrderItemsCost(pendingOrder);
+        newOrder.generateOrderId();
+        orderIdToOrder.put(newOrder.getId(), newOrder);
+        updateRegionItemsPurchaseAmountAfterNewOrder(newOrder);
+        updateStoresOrdersAfterNewOrder(newOrder);
+        updateAverageOrderItemsCost(newOrder);
 
-        SDMUsersManager.getInstance().addNewOrderToCustomer(username, pendingOrder, regionName);
-        Map<String, Float> ownerUsernameToPayment = getOwnerUsernameToPaymentFromOrder(pendingOrder);
-        addNewTransactionsAfterOrder(pendingOrder, ownerUsernameToPayment);
-        // TODO: send notifications about new order to all the store owners of the stores participated in the order
+        SDMUsersManager.getInstance().addNewOrderToCustomer(username, newOrder, regionName);
+        Map<String, Float> ownerUsernameToPayment = getOwnerUsernameToPaymentFromOrder(newOrder);
+        addNewTransactionsAfterOrder(newOrder, ownerUsernameToPayment);
+        addNewNotificationsAfterOrder(newOrder);
     }
 
     @Override
@@ -255,7 +263,9 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         Store store = storeIdToStore.get(storeId);
         Feedback newFeedback = new Feedback(username, rating, feedbackText, userOrder.getOrderDate(), store.getName(), storeId);
         store.addNewFeedback(newFeedback);
-        // TODO: send notification to the store owner who got a feedback
+
+        Notification newNotification = new NewFeedbackNotification(username, store.getName(), rating);
+        SDMNotificationsManager.getInstance().addNewNotificationToUser(store.getOwnerUsername(), newNotification);
     }
 
     @Override
@@ -270,6 +280,16 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         }
 
         pendingOrder.addItemsFromDiscountOffers(storeToDiscountOfferItems);
+    }
+
+    private void addNewNotificationsAfterOrder(GeneralOrder newOrder) {
+        Collection<Store> stores = newOrder.getStores();
+
+        for (Store store : stores) {
+            SubOrder storeOrder = newOrder.getOrderByStore(store);
+            Notification newNotification = new NewOrderNotification(store.getName(), storeOrder.getId(), storeOrder.getCustomerUsername(), storeOrder.getTotalItemsTypes(), storeOrder.getTotalItemsCost(), storeOrder.getDeliveryCost());
+            SDMNotificationsManager.getInstance().addNewNotificationToUser(store.getOwnerUsername(), newNotification);
+        }
     }
 
     private Map<Store, List<DiscountOfferDTO>> getStoreToChosenOffersMapFromChosenOffers(List<DiscountOfferDTO> chosenOffers) {

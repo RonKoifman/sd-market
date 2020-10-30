@@ -66,6 +66,18 @@ public abstract class Order implements Identifiable, Locationable, Serializable 
         return totalItemsCost;
     }
 
+    public Location getOrderDestination() {
+        return orderDestination;
+    }
+
+    public int getTotalItemsTypes() {
+        return totalItemsTypes;
+    }
+
+    public int getTotalItemsAmount() {
+        return totalItemsAmount;
+    }
+
     protected void generateOrderId() {
         this.id = idGenerator++;
     }

@@ -17,7 +17,7 @@ import java.time.LocalDate;
 public class NewDepositTransactionServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
@@ -31,7 +31,11 @@ public class NewDepositTransactionServlet extends HttpServlet {
             try {
                 float transactionAmount = Float.parseFloat(transactionAmountFromParameter);
                 LocalDate transactionDate = LocalDate.parse(transactionDateFromParameter);
-                SDMAccountsManager.getInstance().addNewTransactionToUser(TransactionType.DEPOSIT, username, transactionAmount, transactionDate);
+
+                synchronized (getServletContext()) {
+                    SDMAccountsManager.getInstance().addNewTransactionToUser(TransactionType.DEPOSIT, username, transactionAmount, transactionDate);
+                }
+
                 out.print("A deposit of $" + String.format("%.2f", transactionAmount) + " was made successfully.");
             } catch (Exception e) {
                 res.setStatus(HttpServletResponse.SC_BAD_REQUEST);

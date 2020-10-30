@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SetRegionServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) {
         processRequest(req, res);
     }
 

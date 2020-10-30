@@ -12,7 +12,7 @@ public class NewCompetitorNotification extends Notification {
     private final int totalItemsInRegion;
 
     public NewCompetitorNotification(String regionName, String competitorUsername, String storeName, Point storeLocation, int amountOfItemsSoldByStore, int totalItemsInRegion) {
-        super("New Competitor In Region");
+        super("New Competitor in Region");
         this.regionName = regionName;
         this.competitorUsername = competitorUsername;
         this.storeName = storeName;

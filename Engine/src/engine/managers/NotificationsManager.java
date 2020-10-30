@@ -9,5 +9,7 @@ public interface NotificationsManager {
 
     void addNewNotificationToUser(String username, Notification newNotification);
 
-    Collection<NotificationDTO> getNotificationsByUsername(String username);
+    Collection<NotificationDTO> getNotificationsFromIndexByUsername(String username, int fromIndex);
+
+    int getNotificationsVersionByUsername(String username);
 }

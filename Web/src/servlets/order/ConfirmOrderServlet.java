@@ -13,12 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 public class ConfirmOrderServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doPost(HttpServletRequest req, HttpServletResponse res) {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) {
         processRequest(req, res);
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) {
-        SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
-        singleRegionManager.confirmPendingOrderByUsername(SessionUtils.getUsername(req));
+        synchronized (getServletContext()) {
+            SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
+            singleRegionManager.confirmPendingOrderByUsername(SessionUtils.getUsername(req));
+        }
     }
 }

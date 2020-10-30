@@ -19,16 +19,19 @@ import java.util.List;
 public class AddChosenOffersServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doPost(HttpServletRequest req, HttpServletResponse res) {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) {
         processRequest(req, res);
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) {
-        String offersJsonString = req.getParameter(Constants.CHOSEN_OFFERS);
         Gson gson = new Gson();
+        String offersJsonString = req.getParameter(Constants.CHOSEN_OFFERS);
         Type type = new TypeToken<List<DiscountOfferDTO>>(){}.getType();
         List<DiscountOfferDTO> chosenOffers = gson.fromJson(offersJsonString, type);
-        SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
-        singleRegionManager.addChosenDiscountOffersToPendingOrderByUsername(SessionUtils.getUsername(req), chosenOffers);
+
+        synchronized (getServletContext()){
+            SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
+            singleRegionManager.addChosenDiscountOffersToPendingOrderByUsername(SessionUtils.getUsername(req), chosenOffers);
+        }
     }
 }

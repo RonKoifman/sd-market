@@ -18,7 +18,7 @@ import java.util.Collection;
 public class GetRegionItemsServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
@@ -26,8 +26,13 @@ public class GetRegionItemsServlet extends HttpServlet {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
             Gson gson = new Gson();
-            SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
-            Collection<RegionItemDTO> items = singleRegionManager.getAllItemsInRegion();
+            Collection<RegionItemDTO> items;
+
+            synchronized (getServletContext()) {
+                SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
+                items = singleRegionManager.getAllItemsInRegion();
+            }
+
             String json = gson.toJson(items);
             out.print(json);
             out.flush();

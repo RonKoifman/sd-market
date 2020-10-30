@@ -17,7 +17,7 @@ import java.util.Collection;
 public class GetCustomerOrdersHistoryServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
@@ -27,7 +27,12 @@ public class GetCustomerOrdersHistoryServlet extends HttpServlet {
             Gson gson = new Gson();
             String username = SessionUtils.getUsername(req);
             String regionName = SessionUtils.getRegionName(req);
-            Collection<GeneralOrderDTO> orders = SDMUsersManager.getInstance().getCustomerOrdersByRegionName(username, regionName);
+            Collection<GeneralOrderDTO> orders;
+
+            synchronized (getServletContext()) {
+                orders = SDMUsersManager.getInstance().getCustomerOrdersByRegionName(username, regionName);
+            }
+
             String json = gson.toJson(orders);
             out.print(json);
             out.flush();

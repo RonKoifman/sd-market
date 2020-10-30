@@ -16,12 +16,12 @@ import java.io.PrintWriter;
 public class SignupServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
     @Override
-    protected synchronized void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
@@ -44,14 +44,17 @@ public class SignupServlet extends HttpServlet {
                     out.print("Please enter only English letters and digits.");
                 } else {
                     usernameFromParameter = usernameFromParameter.trim();
-                    if (SDMUsersManager.getInstance().isUserExists(usernameFromParameter)) {
-                        res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                        out.print("This username is already taken.");
-                    } else {
-                        SDMUsersManager.getInstance().addNewUser(usernameFromParameter, UserRole.valueOf(userRoleFromParameter.toUpperCase()));
-                        SessionUtils.setUsername(req, usernameFromParameter);
-                        SessionUtils.setUserRole(req, userRoleFromParameter);
-                        out.print(Constants.HOME_URL);
+
+                    synchronized (getServletContext()) {
+                        if (SDMUsersManager.getInstance().isUserExists(usernameFromParameter)) {
+                            res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                            out.print("This username is already taken.");
+                        } else {
+                            SDMUsersManager.getInstance().addNewUser(usernameFromParameter, UserRole.valueOf(userRoleFromParameter.toUpperCase()));
+                            SessionUtils.setUsername(req, usernameFromParameter);
+                            SessionUtils.setUserRole(req, userRoleFromParameter);
+                            out.print(Constants.HOME_URL);
+                        }
                     }
                 }
             } else {

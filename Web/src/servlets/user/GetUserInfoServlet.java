@@ -16,7 +16,7 @@ import java.io.PrintWriter;
 public class GetUserInfoServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
@@ -24,7 +24,12 @@ public class GetUserInfoServlet extends HttpServlet {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
             Gson gson = new Gson();
-            UserDTO user = SDMUsersManager.getInstance().getUserByUsername(SessionUtils.getUsername(req));
+            UserDTO user;
+
+            synchronized (getServletContext()) {
+                user = SDMUsersManager.getInstance().getUserByUsername(SessionUtils.getUsername(req));
+            }
+
             String json = gson.toJson(user);
             out.print(json);
             out.flush();

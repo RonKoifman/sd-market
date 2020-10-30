@@ -21,44 +21,47 @@ import java.util.Map;
 public class AddNewStoreServlet extends HttpServlet {
 
     @Override
-    protected synchronized void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
         processRequest(req, res);
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("text/html");
-            SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
             String ownerUsername = SessionUtils.getUsername(req);
 
-            Map<Integer, Float> itemIdToItemPriceInStore = getItemIdToItemPriceFromParameters(req.getParameterMap());
             int storeId = Integer.parseInt(req.getParameter(Constants.STORE_ID));
             String storeName = req.getParameter(Constants.STORE_NAME).trim();
             int xCoordinate = Integer.parseInt(req.getParameter(Constants.X_COORDINATE));
             int yCoordinate = Integer.parseInt(req.getParameter(Constants.Y_COORDINATE));
             float deliveryPPK = Float.parseFloat(req.getParameter(Constants.PPK));
 
-            try {
-                singleRegionManager.checkForFreeLocation(new Point(xCoordinate, yCoordinate));
-                singleRegionManager.checkForAvailableId(storeId, "Store");
-                if (itemIdToItemPriceInStore.isEmpty()) {
+            synchronized (getServletContext()) {
+                SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
+                Map<Integer, Float> itemIdToItemPriceInStore = getItemIdToItemPriceFromParameters(req.getParameterMap());
+
+                try {
+                    singleRegionManager.checkForFreeLocation(new Point(xCoordinate, yCoordinate));
+                    singleRegionManager.checkForAvailableId(storeId, "Store");
+                    if (itemIdToItemPriceInStore.isEmpty()) {
+                        res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                        out.print("Please choose at least one item for sale before adding a new store.");
+                    } else if (storeName.isEmpty()) {
+                        res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                        out.print("Please enter at least one character for the store's name.");
+                    } else if (!storeName.matches("[a-zA-Z0-9 ]+")) {
+                        res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                        out.print("Please enter only English letters and digits for the store's name.");
+                    } else {
+                        singleRegionManager.addNewStoreToRegion(storeId, ownerUsername, storeName, new Point(xCoordinate, yCoordinate), deliveryPPK, itemIdToItemPriceInStore);
+                    }
+                } catch (OccupiedLocationException e) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    out.print("Please choose at least one item for sale before adding a new store.");
-                } else if (storeName.isEmpty()) {
+                    out.print("The entered location is already occupied by a store.");
+                } catch (TakenIdException e) {
                     res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    out.print("Please enter at least one character for the store's name.");
-                } else if (!storeName.matches("[a-zA-Z0-9 ]+")) {
-                    res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    out.print("Please enter only English letters and digits for the store's name.");
-                } else {
-                    singleRegionManager.addNewStoreToRegion(storeId, ownerUsername, storeName, new Point(xCoordinate, yCoordinate), deliveryPPK, itemIdToItemPriceInStore);
+                    out.print("The entered store ID is already taken.");
                 }
-            } catch (OccupiedLocationException e) {
-                res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                out.print("The entered location is already occupied by a store.");
-            } catch (TakenIdException e) {
-                res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                out.print("The entered store ID is already taken.");
             }
 
             out.flush();

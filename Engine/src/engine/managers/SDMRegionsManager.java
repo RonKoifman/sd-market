@@ -63,4 +63,12 @@ public class SDMRegionsManager implements RegionsManager {
             throw new IllegalStateException("The region '" + newRegionName + "' is already exists.");
         }
     }
+
+    @Override
+    public String toString() {
+        return "SDMRegionsManager{" +
+                "fileManager=" + fileManager +
+                ", regionNameToRegionManager=" + regionNameToRegionManager +
+                '}';
+    }
 }

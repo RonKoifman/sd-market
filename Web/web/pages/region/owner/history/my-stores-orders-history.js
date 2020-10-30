@@ -8,6 +8,7 @@ $(function () {
     $('#chosenStore').change(function () {
         renderStoreOrders();
     });
+
     setInterval(ajaxOwnerStores, refreshRate);
     ajaxOwnerStores();
 });
@@ -52,6 +53,7 @@ function renderStoreOrders() {
     const ordersTable = $('#ordersTable');
     const tableDiv = $('.table-responsive');
 
+    $('#currentStoreName').text = chosenStore['name'];
     chosenStoreOrdersMade = chosenStore['ordersMade'];
     tableDiv.find('p').empty();
     ordersTable.empty();
@@ -90,7 +92,7 @@ function renderOwnerStores() {
     if (ownedStores.length === 0) {
         const hasStoreDiv = $('#hasStoreDiv');
         hasStoreDiv.empty();
-        $('<br> <p class="bigger-font">No owned stores have been added yet.</p>').appendTo(hasStoreDiv);
+        $('<br> <p class="bigger-font text-center">No owned stores have been added yet.</p>').appendTo(hasStoreDiv);
     } else {
         if (!areStoresDetailsRendered) {
             const chosenStoreSelect = $('#chosenStore');
@@ -114,6 +116,7 @@ function ajaxOwnerStores() {
         success: function (ownedStoresResponse) {
             ownedStores = ownedStoresResponse;
             renderOwnerStores();
+            $('#currentStoreName').text(getStoreById(parseInt($('#chosenStore option:selected').val()))['name']);
         },
         error: function () {
             console.error('Error from get owner owned stores URL');
