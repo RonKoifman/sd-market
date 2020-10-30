@@ -11,6 +11,7 @@
     <script src="common/assets/bootstrap.min.js"></script>
     <script src="common/assets/context-path-helper.js"></script>
     <script src="pages/region/owner/history/my-stores-orders-history.js"></script>
+    <script src="common/assets/notifications.js"></script>
 </head>
 
 <body>
@@ -47,14 +48,14 @@
         <!--  Choose store  -->
         <form id="chooseStoreForm">
             <div class="d-inline">
-                <br> <label class="h6" for="chosenStore">Filter By Store</label>
+                <label class="h6 mt-3" for="chosenStore">Filter By Store</label>
                 <select name="chosen_store_id" class="form-control" id="chosenStore">
                 </select>
             </div>
             <br><br>
         </form>
 
-        <h6 class="h5 ml-3"><span id="currentStoreName"></span></h6> <br>
+        <h5 class="h5 ml-3"><span id="currentStoreName"></span>'s Orders</h5> <br>
 
         <!--Orders table -->
         <div class="orders-div text-center">

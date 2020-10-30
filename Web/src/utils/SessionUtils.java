@@ -27,13 +27,6 @@ public final class SessionUtils {
         return sessionAttribute != null ? sessionAttribute.toString() : null;
     }
 
-    public static String getRegionName(HttpServletRequest req) {
-        HttpSession session = req.getSession(false);
-        Object sessionAttribute = session != null ? session.getAttribute(Constants.REGION_NAME) : null;
-
-        return sessionAttribute != null ? sessionAttribute.toString() : null;
-    }
-
     public static void setUserRole(HttpServletRequest req, String userRole) {
         HttpSession session = req.getSession(true);
 
@@ -42,11 +35,33 @@ public final class SessionUtils {
         }
     }
 
+    public static String getRegionName(HttpServletRequest req) {
+        HttpSession session = req.getSession(false);
+        Object sessionAttribute = session != null ? session.getAttribute(Constants.REGION_NAME) : null;
+
+        return sessionAttribute != null ? sessionAttribute.toString() : null;
+    }
+
     public static void setRegionName(HttpServletRequest req, String regionName) {
         HttpSession session = req.getSession(true);
 
         if (session != null) {
             session.setAttribute(Constants.REGION_NAME, regionName);
+        }
+    }
+
+    public static int getNotificationsVersion(HttpServletRequest req) {
+        HttpSession session = req.getSession(false);
+        Object sessionAttribute = session != null ? session.getAttribute(Constants.NOTIFICATIONS_VERSION) : null;
+
+        return sessionAttribute != null ? Integer.parseInt(sessionAttribute.toString()) : 0;
+    }
+
+    public static void setNotificationsVersion(HttpServletRequest req, int notificationsVersion) {
+        HttpSession session = req.getSession(true);
+
+        if (session != null) {
+            session.setAttribute(Constants.NOTIFICATIONS_VERSION, notificationsVersion);
         }
     }
 }

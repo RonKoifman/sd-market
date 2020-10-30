@@ -1,6 +1,7 @@
 const PENDING_ORDER_URL = buildUrlWithContextPath('get-pending-order');
 const CONFIRM_ORDER_URL = buildUrlWithContextPath('confirm-order');
 let pendingOrder;
+const feedbackModalDelay = 1300;
 
 $(function () {
     $.ajax({
@@ -32,7 +33,7 @@ $(function () {
         document.getElementById('confirmOrderButton').disabled = true;
         setTimeout(function () {
             $('#feedbackModal').modal('show');
-        }, 1300);
+        }, feedbackModalDelay);
 
         return false;
     });

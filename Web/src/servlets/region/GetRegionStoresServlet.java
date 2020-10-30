@@ -25,7 +25,6 @@ public class GetRegionStoresServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            Gson gson = new Gson();
             Collection<StoreDTO> stores;
 
             synchronized (getServletContext()) {
@@ -33,6 +32,7 @@ public class GetRegionStoresServlet extends HttpServlet {
                 stores = singleRegionManager.getAllStoresInRegion();
             }
 
+            Gson gson = new Gson();
             String json = gson.toJson(stores);
             out.print(json);
             out.flush();

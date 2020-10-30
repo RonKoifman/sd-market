@@ -24,7 +24,6 @@ public class GetStoreOwnerOwnedStoresServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            Gson gson = new Gson();
             String username = SessionUtils.getUsername(req);
             String regionName = SessionUtils.getRegionName(req);
             Collection<StoreDTO> ownedStores;
@@ -33,6 +32,7 @@ public class GetStoreOwnerOwnedStoresServlet extends HttpServlet {
                 ownedStores = SDMUsersManager.getInstance().getStoreOwnerOwnedStoresByRegionName(username, regionName);
             }
 
+            Gson gson = new Gson();
             String json = gson.toJson(ownedStores);
             out.print(json);
             out.flush();

@@ -23,13 +23,13 @@ public class GetUsersServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            Gson gson = new Gson();
             Collection<UserDTO> users;
 
             synchronized (getServletContext()) {
                 users = SDMUsersManager.getInstance().getUsers();
             }
 
+            Gson gson = new Gson();
             String json = gson.toJson(users);
             out.print(json);
             out.flush();

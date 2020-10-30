@@ -21,9 +21,8 @@ public class NewFeedbackNotification extends Notification {
     }
 
     private String buildMessage() {
-       return String.format("You've just received a new feedback from the user '%s'!" + System.lineSeparator() +
-               "Your store '%s' got a rating of %d stars.",
-               username, storeName, rating.getOrdinal());
+       return String.format("Your store '%s' has just received new feedback from the user '%s' with a rating of %d stars.",
+               storeName, username, rating.getOrdinal());
     }
 
     @Override

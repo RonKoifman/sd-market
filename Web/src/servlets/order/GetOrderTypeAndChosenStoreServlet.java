@@ -26,7 +26,6 @@ public class GetOrderTypeAndChosenStoreServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            Gson gson = new Gson();
             String orderType = req.getSession().getAttribute(Constants.ORDER_TYPE).toString();
             int chosenStoreId = Integer.parseInt(req.getSession().getAttribute(Constants.CHOSEN_STORE_ID).toString());
             StoreDTO chosenStore;
@@ -36,6 +35,7 @@ public class GetOrderTypeAndChosenStoreServlet extends HttpServlet {
                 chosenStore = singleRegionManager.getStoreById(chosenStoreId);
             }
 
+            Gson gson = new Gson();
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("orderType", orderType);
             jsonObject.add("chosenStore", gson.toJsonTree(chosenStore));

@@ -24,9 +24,9 @@ public class AddChosenOffersServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) {
-        Gson gson = new Gson();
         String offersJsonString = req.getParameter(Constants.CHOSEN_OFFERS);
         Type type = new TypeToken<List<DiscountOfferDTO>>(){}.getType();
+        Gson gson = new Gson();
         List<DiscountOfferDTO> chosenOffers = gson.fromJson(offersJsonString, type);
 
         synchronized (getServletContext()){

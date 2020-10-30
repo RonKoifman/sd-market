@@ -23,13 +23,13 @@ public class GetUserAccountServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            Gson gson = new Gson();
             AccountDTO account;
 
             synchronized (getServletContext()) {
                 account = SDMAccountsManager.getInstance().getAccountByUsername(SessionUtils.getUsername(req));
             }
 
+            Gson gson = new Gson();
             String json = gson.toJson(account);
             out.print(json);
             out.flush();

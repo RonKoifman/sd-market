@@ -22,7 +22,15 @@ $(function () {
     });
 });
 
+function getLocalDate() {
+    let today = new Date().toLocaleDateString();
+    let todayStrings = today.split('/');
+    return todayStrings[2] + '-' + todayStrings[0] + '-' + todayStrings[1];
+}
+
 $(function () {
+    document.getElementById('orderDate').setAttribute('min', getLocalDate())
+
    $('#x').change(function () {
       renderDeliveryPrice();
    });

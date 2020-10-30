@@ -5,7 +5,14 @@ const refreshRate = 2000;
 
 $(function () {
     setInterval(ajaxUserAccount, refreshRate);
+    document.getElementById('date').setAttribute('min', getLocalDate())
 });
+
+function getLocalDate() {
+    let today = new Date().toLocaleDateString();
+    let todayStrings = today.split('/');
+    return todayStrings[2] + '-' + todayStrings[0] + '-' + todayStrings[1];
+}
 
 $(function () {
     $.ajax({

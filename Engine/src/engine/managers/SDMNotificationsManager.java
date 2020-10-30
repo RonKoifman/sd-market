@@ -37,17 +37,17 @@ public class SDMNotificationsManager implements NotificationsManager {
     }
 
     @Override
-    public Collection<NotificationDTO> getNotificationsFromIndexByUsername(String username, int fromIndex) {
-        return Collections.unmodifiableCollection(usernameToUserNotifications.get(username)
+    public Collection<NotificationDTO> getUserNotificationsByVersion(String username, int version) {
+        return Collections.unmodifiableCollection(usernameToUserNotifications.getOrDefault(username, Collections.emptyList())
                 .stream()
                 .map(Notification::toDTO)
-                .skip(fromIndex)
+                .skip(version)
                 .collect(Collectors.toList()));
     }
 
     @Override
     public int getNotificationsVersionByUsername(String username) {
-        return usernameToUserNotifications.get(username).size();
+        return usernameToUserNotifications.getOrDefault(username, Collections.emptyList()).size();
     }
 
     @Override

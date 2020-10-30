@@ -29,8 +29,8 @@ public class NewOrderNotification extends Notification {
     }
 
     private String buildMessage() {
-        return String.format("A new order (id: '%d') has been placed from your store '%s'!" + System.lineSeparator() +
-                "The user '%s' has ordered from you %d items types with a total cost of $%.2f and a delivery cost of $%.2f.",
+        return String.format("A new order (ID: %d) placed from your store '%s'!" + System.lineSeparator() +
+                "The user '%s' ordered %d item types with a cost of $%.2f and a delivery cost of $%.2f.",
                 orderId, storeName, username, totalItemsTypes, totalItemsCost, deliveryCost);
     }
 

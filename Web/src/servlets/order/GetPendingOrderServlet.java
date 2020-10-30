@@ -24,7 +24,6 @@ public class GetPendingOrderServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            Gson gson = new Gson();
             GeneralOrderDTO pendingOrder;
 
             synchronized (getServletContext()) {
@@ -32,6 +31,7 @@ public class GetPendingOrderServlet extends HttpServlet {
                 pendingOrder = singleRegionManager.getPendingOrderByUsername(SessionUtils.getUsername(req));
             }
 
+            Gson gson = new Gson();
             String json = gson.toJson(pendingOrder);
             out.print(json);
             out.flush();

@@ -23,13 +23,13 @@ public class GetRegionsServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            Gson gson = new Gson();
             Collection<RegionDTO> regions;
 
             synchronized (getServletContext()) {
                 regions = SDMRegionsManager.getInstance().getAllRegions();
             }
 
+            Gson gson = new Gson();
             String json = gson.toJson(regions);
             out.print(json);
             out.flush();

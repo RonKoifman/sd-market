@@ -24,7 +24,6 @@ public class GetCustomerOrdersHistoryServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            Gson gson = new Gson();
             String username = SessionUtils.getUsername(req);
             String regionName = SessionUtils.getRegionName(req);
             Collection<GeneralOrderDTO> orders;
@@ -33,6 +32,7 @@ public class GetCustomerOrdersHistoryServlet extends HttpServlet {
                 orders = SDMUsersManager.getInstance().getCustomerOrdersByRegionName(username, regionName);
             }
 
+            Gson gson = new Gson();
             String json = gson.toJson(orders);
             out.print(json);
             out.flush();

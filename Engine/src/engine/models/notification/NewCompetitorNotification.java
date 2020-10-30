@@ -33,7 +33,7 @@ public class NewCompetitorNotification extends Notification {
     private String buildMessage() {
         return String.format("A new competitor arrived in your owned region '%s'!" + System.lineSeparator() +
                 "The user '%s' opened a store named '%s' that locates in coordinates (%d, %d)." + System.lineSeparator() +
-                "The store sells %d of the %d items available in the region.",
+                "The store sells %d out of %d items available in the region.",
                 regionName, competitorUsername, storeName, storeLocation.x, storeLocation.y, amountOfItemsSoldByStore, totalItemsInRegion);
     }
 

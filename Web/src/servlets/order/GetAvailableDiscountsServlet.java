@@ -25,7 +25,6 @@ public class GetAvailableDiscountsServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("application/json");
-            Gson gson = new Gson();
             Collection<DiscountInformationDTO> availableDiscounts;
 
             synchronized (getServletContext()) {
@@ -33,6 +32,7 @@ public class GetAvailableDiscountsServlet extends HttpServlet {
                 availableDiscounts = singleRegionManager.getAvailableDiscountsFromPendingOrderByUsername(SessionUtils.getUsername(req));
             }
 
+            Gson gson = new Gson();
             String json = gson.toJson(availableDiscounts);
             out.print(json);
             out.flush();
