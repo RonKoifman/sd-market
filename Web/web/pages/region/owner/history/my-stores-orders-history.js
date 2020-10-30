@@ -53,7 +53,7 @@ function renderStoreOrders() {
     const ordersTable = $('#ordersTable');
     const tableDiv = $('.table-responsive');
 
-    $('#currentStoreName').text = chosenStore['name'];
+    $('#currentStoreName').text(chosenStore['name']);
     chosenStoreOrdersMade = chosenStore['ordersMade'];
     tableDiv.find('p').empty();
     ordersTable.empty();
@@ -116,7 +116,6 @@ function ajaxOwnerStores() {
         success: function (ownedStoresResponse) {
             ownedStores = ownedStoresResponse;
             renderOwnerStores();
-            $('#currentStoreName').text(getStoreById(parseInt($('#chosenStore option:selected').val()))['name']);
         },
         error: function () {
             console.error('Error from get owner owned stores URL');
