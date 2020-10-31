@@ -38,6 +38,51 @@
     </div>
 </nav>
 
+<br><br>
+<!-- New item form -->
+<div id="newItemDiv" class="card shadow p-3 mb-5 bg rounded">
+    <h5 class="card-title text-center">Add New Item</h5>
+    <form id="newItemForm" class="form-new-item" method="POST" action="add-new-item"><br>
+        <div class="form-group">
+            <label class="h6" for="itemId">Item ID</label>
+            <input id="itemId" name="item_id" type="number" min="1" class="form-control" placeholder="Item ID" required autofocus>
+            <br> <label class="h6" for="itemName">Item Name</label>
+            <input id="itemName" name="item_name" type="text" class="form-control" placeholder="Item Name" required>
+            <br> <label class="h6" for="purchaseForm">Purchase Form</label>
+            <select name="purchase_form" class="form-control" id="purchaseForm" required>
+                <option value="Weight">Weight</option>
+                <option value="Quantity">Quantity</option>
+            </select>
+            <!-- Stores table -->
+            <br> <div class="stores-table text-center">
+            <img src="common/images/store.png" width="64" height="64" alt="">
+            <h5 class="card-title text-center">Choose Stores to Sell</h5> <br>
+            <form id="chooseStoresForm" class="form-new-Item"><br>
+                <div class="form-group">
+                    <div class="table-responsive">
+                        <table id="storesTable" class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th>Store Name</th>
+                                <th>ID</th>
+                                <th>Price in Store</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+            <!-- Alert  -->
+            <div class="alert text-center mb-4" role="alert">
+            </div>
+            <button id="submitButton" class="btn btn-lg btn-primary btn-block" type="submit">Add New Item</button>
+        </div>
+    </form>
+</div>
 
 <!-- Footer -->
 <footer class="footer">

@@ -43,8 +43,6 @@ $(function () {
                     renderStoreOwnerNavbar();
                     break;
             }
-
-            hideAddItemNavbarLink();
         },
         error: function () {
             console.error('Error from user-info URL');
@@ -59,9 +57,26 @@ $(function () {
     ajaxRegionItems();
 });
 
-function hideAddItemNavbarLink() {
-    if (!isUserRegionOwner) {
-        $('#addNewItemNav').hide();
+function renderCustomerNavbar() {
+    $('#navbarUl').append(
+        '<li class="nav-item"><a class="nav-link" href="my-orders-history.html">My Orders History</a></li>' +
+        '<li class="nav-item"><a class="nav-link" href="place-new-order.html">Place New Order</a></li>'
+    );
+}
+
+function renderStoreOwnerNavbar() {
+    $('#navbarUl').append(
+        '<li class="nav-item"><a class="nav-link" href="my-stores-orders-history.html">My Stores Orders History</a></li>' +
+        '<li class="nav-item"><a class="nav-link" href="my-stores-feedbacks.html">My Stores Feedbacks</a></li>' +
+        '<li class="nav-item"><a class="nav-link" href="add-new-store.html">Add New Store</a></li>' +
+        '<li id="addNewItemNav" class="nav-item" hidden><a class="nav-link" href="add-new-item.html">Add New Item</a></li>');
+
+    toggleAddItemNavbarLink();
+}
+
+function toggleAddItemNavbarLink() {
+    if (isUserRegionOwner) {
+        $('#addNewItemNav').removeAttr('hidden');
     }
 }
 
@@ -146,21 +161,6 @@ function refreshRegionItems(regionItems) {
             '<td>' + parseFloat(item['purchaseAmount']).toFixed(2) + (item['purchaseForm'] === 'Weight' ? ' kg' : ' units') + '</td>' +
             '</tr>').appendTo(itemsTable);
     });
-}
-
-function renderCustomerNavbar() {
-    $('#navbarUl').append(
-        '<li class="nav-item"><a class="nav-link" href="my-orders-history.html">My Orders History</a></li>' +
-        '<li class="nav-item"><a class="nav-link" href="place-new-order.html">Place New Order</a></li>'
-    );
-}
-
-function renderStoreOwnerNavbar() {
-    $('#navbarUl').append(
-        '<li class="nav-item"><a class="nav-link" href="my-stores-orders-history.html">My Stores Orders History</a></li>' +
-        '<li class="nav-item"><a class="nav-link" href="my-stores-feedbacks.html">My Stores Feedbacks</a></li>' +
-        '<li class="nav-item"><a class="nav-link" href="add-new-store.html">Add New Store</a></li>' +
-        '<li id="addNewItemNav" class="nav-item"><a class="nav-link" href="add-new-item.html">Add New Item</a></li>');
 }
 
 function ajaxRegionStores() {

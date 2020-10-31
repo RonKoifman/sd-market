@@ -39,7 +39,7 @@ public class AddNewItemServlet extends HttpServlet {
                     singleRegionManager.checkForAvailableId(itemId, "RegionItem");
                     if (storeIdToItemPriceInStore.isEmpty()) {
                         res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                        out.print("Please choose at least one store to sell the item before adding a new item to the region.");
+                        out.print("Please choose at least one store to sell the item before adding a new item.");
                     } else if (itemName.isEmpty()) {
                         res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                         out.print("Please enter at least one character for the item's name.");

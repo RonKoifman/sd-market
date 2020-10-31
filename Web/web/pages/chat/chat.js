@@ -10,8 +10,8 @@ $(function () {
         url: USER_INFO_URL,
         success: function (loggedInUser) {
             switch (loggedInUser['userRole']) {
-                case 'Customer':
-                    $('#uploadNavLink').hide();
+                case 'Store Owner':
+                    $('#uploadNavLink').removeAttr('hidden');
                     break;
             }
         },

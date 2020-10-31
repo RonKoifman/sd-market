@@ -10,8 +10,8 @@ $(function () {
     $.ajax({
         url: IS_REGION_OWNER_URL,
         success: function (isUserRegionOwnerResponse) {
-            if (isUserRegionOwnerResponse === 'false') {
-                $('#addNewItemNav').hide();
+            if (isUserRegionOwnerResponse === 'true') {
+                $('#addNewItemNav').removeAttr('hidden');
             }
         },
         error: function () {

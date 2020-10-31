@@ -20,12 +20,12 @@ $(function () {
         success: function (loggedInUser) {
             $('#username').text(loggedInUser['username']);
             switch (loggedInUser['userRole']) {
-                case 'Customer':
-                    $('#uploadNavLink').hide();
+                case 'Store Owner':
+                    $('#uploadNavLink').removeAttr('hidden');
                     break;
 
-                case 'Store Owner':
-                    $('#depositLabels').hide();
+                case 'Customer':
+                    $('#depositLabels').removeAttr('hidden');
                     break;
             }
         },

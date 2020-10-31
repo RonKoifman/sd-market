@@ -35,7 +35,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="chat.html">Chat</a>
             </li>
-            <li id="uploadNavLink" class="nav-item">
+            <li id="uploadNavLink" class="nav-item" hidden>
                 <a class="nav-link" href="upload-file.html">Upload File</a>
             </li>
         </ul>
@@ -54,7 +54,7 @@
     </h5>
 
     <!--  Customer additional labels  -->
-    <div id="depositLabels" class="input-group">
+    <div id="depositLabels" class="input-group" hidden>
         <label for="amount"></label><input name="amount" type="number" min="1" max="100000" class="form-control" placeholder="Deposit Amount" id="amount" required>
         <label for="date"></label>
         <input name="date" id="date" type="date" class="form-control" placeholder="Deposit Date" required/>
