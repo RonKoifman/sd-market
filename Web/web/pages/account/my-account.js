@@ -11,7 +11,11 @@ $(function () {
 function getLocalDate() {
     let today = new Date().toLocaleDateString();
     let todayStrings = today.split('/');
-    return todayStrings[2] + '-' + todayStrings[0] + '-' + todayStrings[1];
+    let month = todayStrings[0].length === 1 ? '0' + todayStrings[0] : todayStrings[0];
+    let day = todayStrings[1].length === 1 ? '0' + todayStrings[1] : todayStrings[1];
+    let year = todayStrings[2];
+
+    return year + '-' + month + '-' + day;
 }
 
 $(function () {
