@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
 
-@WebServlet(name = "GetChatEntriesServlet", urlPatterns = {"/chat"})
-public class GetChatEntriesServlet extends HttpServlet {
+@WebServlet(name = "GetUnseenChatEntriesServlet", urlPatterns = {"/chat"})
+public class GetUnseenChatEntriesServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {

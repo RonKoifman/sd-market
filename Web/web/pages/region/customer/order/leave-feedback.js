@@ -21,7 +21,7 @@ function setRateYoOptions() {
         rating: 0,
         fullStar: true,
         onSet: function (rating) {
-            let storeId = this.id.charAt(this.id.length - 1);
+            let storeId = this.id.split('rateYo')[1];
             storeIdToRating.set(storeId, rating);
         }
     });

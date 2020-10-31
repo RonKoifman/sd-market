@@ -10,12 +10,12 @@ public class ChatEntry implements Transferable<ChatEntryDTO> {
     
     private final String username;
     private final String message;
-    private final String time;
+    private final Date time;
 
     public ChatEntry(String username, String message) {
         this.username = username;
         this.message = message;
-        this.time = new SimpleDateFormat("HH:mm").format(new Date(System.currentTimeMillis()));
+        this.time = new Date(System.currentTimeMillis());
     }
 
     @Override
@@ -23,7 +23,7 @@ public class ChatEntry implements Transferable<ChatEntryDTO> {
         return new ChatEntryDTO.Builder()
                 .username(username)
                 .message(message)
-                .time(time)
+                .time(new SimpleDateFormat("HH:mm dd/MM/yyyy").format(time))
                 .build();
     }
 
@@ -35,7 +35,7 @@ public class ChatEntry implements Transferable<ChatEntryDTO> {
         return message;
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 
