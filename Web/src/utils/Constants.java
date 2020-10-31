@@ -21,6 +21,8 @@ public final class Constants {
     public static final String STORE_NAME = "store_name";
     public static final String PPK = "ppk";
     public static final String NOTIFICATIONS_VERSION = "notifications_version";
+    public static final String CHAT_VERSION = "chat_version";
+    public static final String USER_MESSAGE = "user_message";
 
     public static final String SIGNUP_URL = "signup.html";
     public static final String HOME_URL = "home.html";

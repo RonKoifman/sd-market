@@ -64,4 +64,19 @@ public final class SessionUtils {
             session.setAttribute(Constants.NOTIFICATIONS_VERSION, notificationsVersion);
         }
     }
+
+    public static int getChatVersion(HttpServletRequest req) {
+        HttpSession session = req.getSession(false);
+        Object sessionAttribute = session != null ? session.getAttribute(Constants.CHAT_VERSION) : null;
+
+        return sessionAttribute != null ? Integer.parseInt(sessionAttribute.toString()) : 0;
+    }
+
+    public static void setChatVersion(HttpServletRequest req, int chatVersion) {
+        HttpSession session = req.getSession(true);
+
+        if (session != null) {
+            session.setAttribute(Constants.CHAT_VERSION, chatVersion);
+        }
+    }
 }

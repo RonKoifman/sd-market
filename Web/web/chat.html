@@ -41,30 +41,46 @@
     </div>
 </nav>
 
-<div class="row main-body">
-    <!-- Online users   -->
-    <div class="col-md-3 online-users">
-        <div class="card h-100 mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Online Users</h5>
-                <ul class="online-users-list">
-                </ul>
-            </div>
-        </div>
+<div id="chatEntries">
+    <div class="text-center">
+        <img src="common/images/chat.png" width="64" height="64" alt="">
+        <h3 class="h4">Chat</h3> <br>
     </div>
-    <!-- Chat messages   -->
-    <div class="col-md-9 chat">
-        <div class="row-md-10 chat-messages">
-            <div id="chatArea" class="span6"></div>
-        </div>
-        <div class="row-md-2 user-messages">
-            <div class="input-group input-group-lg">
-                <label for="feedbackText"></label><input type="text" class="form-control input-lg" id="feedbackText" required>
-                <span class="input-group-btn ml-2">
-                    <button class="btn btn-primary" type="submit">Send</button>
-                </span>
-            </div>
-        </div>
+
+    <div class="chat-container">
+        <img src="common/images/chat-person.png" alt="">
+        <span class="name-left">Ron</span><br>
+        <p>Hello. How are you today?</p>
+        <span class="time-right">11:00</span>
+    </div>
+
+    <div class="chat-container darker">
+        <img src="common/images/chat-person.png" alt="">
+        <span class="name-left">Ron</span><br>
+        <p>Hey! I'm fine. Thanks for asking!</p>
+        <span class="time-right">11:01</span>
+    </div>
+
+    <div class="chat-container">
+        <img src="common/images/chat-person.png" alt="">
+        <span class="name-left">Ron</span><br>
+        <p>Sweet! So, what do you wanna do today?</p>
+        <span class="time-right">11:02</span>
+    </div>
+
+    <div class="chat-container darker">
+        <img src="common/images/chat-person.png" alt="">
+        <span class="name-left">Ron</span><br>
+        <p>Nah, I dunno. Play soccer.. or learn more coding perhaps? I don't know it's just so hard to decide what to do over and over and over again.... and again and again and again and again..........................................................</p>
+        <span class="time-right">11:05</span>
+    </div>
+</div>
+
+<div class="row-md-2 user-messages ml-4 mr-4">
+    <div class="input-group input-group-lg">
+        <label for="userMessage"></label>
+        <textarea id="userMessage" class="form-control mr-3"></textarea>
+        <span class="input-group-btn"><button id="sendButton" class="btn btn-primary btn-lg" type="submit">Send</button></span>
     </div>
 </div>
 

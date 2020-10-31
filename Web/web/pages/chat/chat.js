@@ -4,7 +4,6 @@ $(function () {
     $.ajax({
         url: USER_INFO_URL,
         success: function (loggedInUser) {
-            $('#username').text(loggedInUser['username']);
             switch (loggedInUser['userRole']) {
                 case 'Customer':
                     $('#uploadNavLink').hide();
@@ -12,7 +11,17 @@ $(function () {
             }
         },
         error: function () {
-            console.error('Error from user-info URL')
+            console.error('Error from user-info URL');
         }
-    })
+    });
+});
+
+function onSendClicked(userMessage) {
+    $('#userMessage').val('');
+}
+
+$(function () {
+    $('#sendButton').on('click', function () {
+       onSendClicked($('#userMessage').val());
+    });
 });
