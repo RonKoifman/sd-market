@@ -1,5 +1,5 @@
 const USER_INFO_URL = buildUrlWithContextPath('user-info');
-const SEND_MESSAGE_URL = buildUrlWithContextPath('send');
+const SEND_MESSAGE_URL = buildUrlWithContextPath('send-message');
 const GET_CHAT_URL = buildUrlWithContextPath('chat');
 const RESET_CHAT_VERSION_URL = buildUrlWithContextPath('reset-chat-version');
 let isDarker = true;

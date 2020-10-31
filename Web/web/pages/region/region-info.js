@@ -4,7 +4,6 @@ const USER_INFO_URL = buildUrlWithContextPath('user-info');
 const REGION_NAME_URL = buildUrlWithContextPath('region-name');
 const IS_REGION_OWNER_URL = buildUrlWithContextPath('is-region-owner');
 const refreshRate = 2000;
-let isUserRegionOwner;
 
 $(function () {
    $.ajax({
@@ -16,18 +15,6 @@ $(function () {
            console.error('Error from region-name URL');
        }
    });
-});
-
-$(function () {
-    $.ajax({
-        url: IS_REGION_OWNER_URL,
-        success: function (isUserRegionOwnerResponse) {
-            isUserRegionOwner = isUserRegionOwnerResponse === 'true';
-        },
-        error: function () {
-            console.error('Error from is user region owner URL');
-        }
-    });
 });
 
 $(function () {
@@ -57,6 +44,20 @@ $(function () {
     ajaxRegionItems();
 });
 
+function ajaxIsUserRegionOwner () {
+    $.ajax({
+        url: IS_REGION_OWNER_URL,
+        success: function (isUserRegionOwnerResponse) {
+            if (isUserRegionOwnerResponse === 'true') {
+                $('#addNewItemNav').removeAttr('hidden');
+            }
+        },
+        error: function () {
+            console.error('Error from is user region owner URL');
+        }
+    });
+}
+
 function renderCustomerNavbar() {
     $('#navbarUl').append(
         '<li class="nav-item"><a class="nav-link" href="my-orders-history.html">My Orders History</a></li>' +
@@ -71,13 +72,7 @@ function renderStoreOwnerNavbar() {
         '<li class="nav-item"><a class="nav-link" href="add-new-store.html">Add New Store</a></li>' +
         '<li id="addNewItemNav" class="nav-item" hidden><a class="nav-link" href="add-new-item.html">Add New Item</a></li>');
 
-    toggleAddItemNavbarLink();
-}
-
-function toggleAddItemNavbarLink() {
-    if (isUserRegionOwner) {
-        $('#addNewItemNav').removeAttr('hidden');
-    }
+    ajaxIsUserRegionOwner();
 }
 
 function refreshRegionStores(regionStores) {
