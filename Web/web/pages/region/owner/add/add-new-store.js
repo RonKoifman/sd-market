@@ -1,6 +1,21 @@
 const ADD_NEW_STORE_URL = buildUrlWithContextPath('add-new-store');
 const REGION_ITEMS_URL = buildUrlWithContextPath('region-items');
+const IS_REGION_OWNER_URL = buildUrlWithContextPath('is-region-owner');
 let regionItems;
+
+$(function () {
+    $.ajax({
+        url: IS_REGION_OWNER_URL,
+        success: function (isUserRegionOwnerResponse) {
+            if (isUserRegionOwnerResponse === 'false') {
+                $('#addNewItemNav').hide();
+            }
+        },
+        error: function () {
+            console.error('Error from is user region owner URL');
+        }
+    });
+});
 
 $(function () {
     $.ajax({

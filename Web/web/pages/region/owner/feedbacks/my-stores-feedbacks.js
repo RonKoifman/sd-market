@@ -1,8 +1,23 @@
 const OWNER_STORES_FEEDBACKS_URL = buildUrlWithContextPath('owner-stores-feedbacks');
+const IS_REGION_OWNER_URL = buildUrlWithContextPath('is-region-owner');
 const refreshRate = 2000;
 
 $(function () {
     setInterval(ajaxOwnerStoresFeedbacks, refreshRate);
+});
+
+$(function () {
+    $.ajax({
+        url: IS_REGION_OWNER_URL,
+        success: function (isUserRegionOwnerResponse) {
+            if (isUserRegionOwnerResponse === 'false') {
+                $('#addNewItemNav').hide();
+            }
+        },
+        error: function () {
+            console.error('Error from is user region owner URL');
+        }
+    });
 });
 
 function getOwnerStoresFeedbacks() {

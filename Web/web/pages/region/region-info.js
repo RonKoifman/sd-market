@@ -2,7 +2,9 @@ const REGION_STORES_URL = buildUrlWithContextPath('region-stores');
 const REGION_ITEMS_URL = buildUrlWithContextPath('region-items');
 const USER_INFO_URL = buildUrlWithContextPath('user-info');
 const REGION_NAME_URL = buildUrlWithContextPath('region-name');
+const IS_REGION_OWNER_URL = buildUrlWithContextPath('is-region-owner');
 const refreshRate = 2000;
+let isUserRegionOwner;
 
 $(function () {
    $.ajax({
@@ -18,6 +20,18 @@ $(function () {
 
 $(function () {
     $.ajax({
+        url: IS_REGION_OWNER_URL,
+        success: function (isUserRegionOwnerResponse) {
+            isUserRegionOwner = isUserRegionOwnerResponse === 'true';
+        },
+        error: function () {
+            console.error('Error from is user region owner URL');
+        }
+    });
+});
+
+$(function () {
+    $.ajax({
         url: USER_INFO_URL,
         success: function (loggedInUser) {
             switch (loggedInUser['userRole']) {
@@ -29,6 +43,8 @@ $(function () {
                     renderStoreOwnerNavbar();
                     break;
             }
+
+            hideAddItemNavbarLink();
         },
         error: function () {
             console.error('Error from user-info URL');
@@ -42,6 +58,12 @@ $(function () {
     ajaxRegionStores();
     ajaxRegionItems();
 });
+
+function hideAddItemNavbarLink() {
+    if (!isUserRegionOwner) {
+        $('#addNewItemNav').hide();
+    }
+}
 
 function refreshRegionStores(regionStores) {
     const storesDiv = $('#storesDiv');
@@ -137,8 +159,8 @@ function renderStoreOwnerNavbar() {
     $('#navbarUl').append(
         '<li class="nav-item"><a class="nav-link" href="my-stores-orders-history.html">My Stores Orders History</a></li>' +
         '<li class="nav-item"><a class="nav-link" href="my-stores-feedbacks.html">My Stores Feedbacks</a></li>' +
-        '<li class="nav-item"><a class="nav-link" href="add-new-store.html">Add New Store</a></li>');
-
+        '<li class="nav-item"><a class="nav-link" href="add-new-store.html">Add New Store</a></li>' +
+        '<li id="addNewItemNav" class="nav-item"><a class="nav-link" href="add-new-item.html">Add New Item</a></li>');
 }
 
 function ajaxRegionStores() {
