@@ -1,11 +1,9 @@
 package engine.models.user;
 
 import engine.enums.UserRole;
-import engine.models.feedback.Feedback;
 import engine.models.store.Store;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class StoreOwner extends User {
 
@@ -26,14 +24,6 @@ public class StoreOwner extends User {
 
     public Collection<Store> getOwnedStoresByRegionName(String regionName) {
        return Collections.unmodifiableCollection(regionNameToOwnedStoresInRegion.getOrDefault(regionName, Collections.emptySet()));
-    }
-
-    public Collection<Feedback> getOwnedStoresFeedbacksByRegionName(String regionName) {
-        return Collections.unmodifiableCollection(regionNameToOwnedStoresInRegion.getOrDefault(regionName, Collections.emptySet())
-                .stream()
-                .map(Store::getFeedbacksReceived)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList()));
     }
 
     @Override

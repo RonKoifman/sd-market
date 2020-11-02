@@ -24,6 +24,4 @@ public interface UsersManager {
     Collection<GeneralOrderDTO> getCustomerOrdersByRegionName(String customerUsername, String regionName);
 
     Collection<StoreDTO> getStoreOwnerOwnedStoresByRegionName(String storeOwnerUsername, String regionName);
-
-    Collection<FeedbackDTO> getStoreOwnerOwnedStoresFeedbacksByRegionName(String storeOwnerUsername, String regionName);
 }

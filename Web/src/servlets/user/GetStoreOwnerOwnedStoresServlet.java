@@ -1,7 +1,7 @@
-package servlets.feedbacks;
+package servlets.user;
 
 import com.google.gson.Gson;
-import dto.models.FeedbackDTO;
+import dto.models.StoreDTO;
 import engine.managers.SDMUsersManager;
 import utils.SessionUtils;
 
@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
 
-@WebServlet(name = "GetStoreOwnerStoresFeedbacksServlet", urlPatterns = {"/owner-stores-feedbacks"})
-public class GetStoreOwnerStoresFeedbacksServlet extends HttpServlet {
+@WebServlet(name = "GetStoreOwnerOwnedStoresServlet", urlPatterns = {"/owner-owned-stores"})
+public class GetStoreOwnerOwnedStoresServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -26,14 +26,14 @@ public class GetStoreOwnerStoresFeedbacksServlet extends HttpServlet {
             res.setContentType("application/json");
             String username = SessionUtils.getUsername(req);
             String regionName = SessionUtils.getRegionName(req);
-            Collection<FeedbackDTO> storesFeedbacks;
+            Collection<StoreDTO> ownedStores;
 
             synchronized (getServletContext()) {
-                storesFeedbacks = SDMUsersManager.getInstance().getStoreOwnerOwnedStoresFeedbacksByRegionName(username, regionName);
+                ownedStores = SDMUsersManager.getInstance().getStoreOwnerOwnedStoresByRegionName(username, regionName);
             }
 
             Gson gson = new Gson();
-            String json = gson.toJson(storesFeedbacks);
+            String json = gson.toJson(ownedStores);
             out.print(json);
             out.flush();
         }

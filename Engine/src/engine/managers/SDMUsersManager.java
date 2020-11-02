@@ -2,7 +2,6 @@ package engine.managers;
 
 import dto.models.*;
 import engine.enums.UserRole;
-import engine.models.feedback.Feedback;
 import engine.models.order.GeneralOrder;
 import engine.models.store.Store;
 import engine.models.user.Customer;
@@ -102,16 +101,6 @@ public class SDMUsersManager implements UsersManager {
         return Collections.unmodifiableCollection(ownedStores.stream()
                 .map(Store::toDTO)
                 .collect(Collectors.toSet()));
-    }
-
-    @Override
-    public Collection<FeedbackDTO> getStoreOwnerOwnedStoresFeedbacksByRegionName(String storeOwnerUsername, String regionName) {
-        StoreOwner storeOwner = (StoreOwner)usernameToUser.get(storeOwnerUsername);
-        Collection<Feedback> feedbacks = storeOwner.getOwnedStoresFeedbacksByRegionName(regionName);
-
-        return Collections.unmodifiableCollection(feedbacks.stream()
-                .map(Feedback::toDTO)
-                .collect(Collectors.toList()));
     }
 
     @Override

@@ -1,9 +1,9 @@
-const OWNER_STORES_FEEDBACKS_URL = buildUrlWithContextPath('owner-stores-feedbacks');
+const OWNER_OWNED_STORES_URL = buildUrlWithContextPath('owner-owned-stores');
 const IS_REGION_OWNER_URL = buildUrlWithContextPath('is-region-owner');
 const refreshRate = 2000;
 
 $(function () {
-    setInterval(ajaxOwnerStoresFeedbacks, refreshRate);
+    setInterval(ajaxOwnerOwnedStores, refreshRate);
 });
 
 $(function () {
@@ -20,14 +20,26 @@ $(function () {
     });
 });
 
-function getOwnerStoresFeedbacks() {
+function collectStoresFeedbacks(stores) {
+    let feedbacks = [];
+
+    for (let store of stores) {
+        for (let feedback of store['feedbacksReceived']) {
+            feedbacks.push(feedback);
+        }
+    }
+
+    return feedbacks;
+}
+
+function getOwnerOwnedStores() {
     return $.ajax({
-        url: OWNER_STORES_FEEDBACKS_URL,
-        success: function (storesFeedbacks) {
-            renderStoresFeedbacks(storesFeedbacks);
+        url: OWNER_OWNED_STORES_URL,
+        success: function (ownerStores) {
+            renderStoresFeedbacks(ownerStores);
         },
         error: function () {
-            console.error('Error from owner stores feedbacks URL');
+            console.error('Error from owner owned stores URL');
         }
     });
 }
@@ -60,11 +72,12 @@ function setRateYoOptions() {
 }
 
 $(function () {
-    getOwnerStoresFeedbacks().then(() => setRateYoOptions());
+    getOwnerOwnedStores().then(() => setRateYoOptions());
 });
 
-function renderStoresFeedbacks(storesFeedbacks) {
+function renderStoresFeedbacks(stores) {
     const storesDiv = $('#storesDiv');
+    const storesFeedbacks = collectStoresFeedbacks(stores);
 
     storesDiv.empty();
     if (storesFeedbacks.length === 0) {
@@ -93,15 +106,15 @@ function renderStoresFeedbacks(storesFeedbacks) {
     }
 }
 
-function ajaxOwnerStoresFeedbacks() {
+function ajaxOwnerOwnedStores() {
     $.ajax({
-        url: OWNER_STORES_FEEDBACKS_URL,
-        success: function (storesFeedbacks) {
-            renderStoresFeedbacks(storesFeedbacks);
+        url: OWNER_OWNED_STORES_URL,
+        success: function (ownerStores) {
+            renderStoresFeedbacks(ownerStores);
             setRateYoOptions();
         },
         error: function () {
-            console.error('Error from owner stores feedbacks URL');
+            console.error('Error from owner owned stores URL');
         }
     });
 }

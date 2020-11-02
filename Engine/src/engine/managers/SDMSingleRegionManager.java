@@ -56,8 +56,8 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     }
 
     @Override
-    public boolean isUserRegionOwner(String username) {
-        return username.equals(regionOwnerUsername);
+    public String getRegionOwnerUsername() {
+        return regionOwnerUsername;
     }
 
     @Override

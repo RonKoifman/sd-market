@@ -11,6 +11,7 @@ public class StoreDTO {
     private final Point location;
     private final Collection<StoreItemDTO> items;
     private final Collection<SubOrderDTO> ordersMade;
+    private final Collection<FeedbackDTO> feedbacksReceived;
     private final float totalIncomeFromItems;
     private final float deliveryPPK;
     private final float totalIncomeFromDeliveries;
@@ -25,6 +26,7 @@ public class StoreDTO {
         this.totalIncomeFromItems = builder.totalIncomeFromItems;
         this.items = builder.items;
         this.ordersMade = builder.ordersMade;
+        this.feedbacksReceived = builder.feedbacksReceived;
     }
 
     public int getId() {
@@ -45,6 +47,10 @@ public class StoreDTO {
 
     public Collection<SubOrderDTO> getOrdersMade() {
         return Collections.unmodifiableCollection(ordersMade);
+    }
+
+    public Collection<FeedbackDTO> getFeedbacksReceived() {
+        return Collections.unmodifiableCollection(feedbacksReceived);
     }
 
     public float getDeliveryPPK() {
@@ -68,6 +74,7 @@ public class StoreDTO {
         private Point location;
         private Collection<StoreItemDTO> items;
         private Collection<SubOrderDTO> ordersMade;
+        private Collection<FeedbackDTO> feedbacksReceived;
         private float totalIncomeFromDeliveries;
         private float totalIncomeFromItems;
 
@@ -103,6 +110,11 @@ public class StoreDTO {
 
         public Builder ordersMade(Collection<SubOrderDTO> ordersMade) {
             this.ordersMade = ordersMade;
+            return this;
+        }
+
+        public Builder feedbacksReceived(Collection<FeedbackDTO> feedbacksReceived) {
+            this.feedbacksReceived = feedbacksReceived;
             return this;
         }
 
@@ -143,6 +155,7 @@ public class StoreDTO {
                 ", location=" + location +
                 ", items=" + items +
                 ", ordersMade=" + ordersMade +
+                ", feedbacksReceived=" + feedbacksReceived +
                 ", totalIncomeFromItems=" + totalIncomeFromItems +
                 ", deliveryPPK=" + deliveryPPK +
                 ", totalIncomeFromDeliveries=" + totalIncomeFromDeliveries +

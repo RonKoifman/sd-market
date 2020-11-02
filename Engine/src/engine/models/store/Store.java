@@ -60,6 +60,7 @@ public class Store implements Locationable, Identifiable, Transferable<StoreDTO>
                 .totalIncomeFromItems(totalIncomeFromItems)
                 .items(itemIdToItem.values().stream().map(StoreItem::toDTO).collect(Collectors.toSet()))
                 .ordersMade(orderIdToOrder.values().stream().map(SubOrder::toDTO).collect(Collectors.toSet()))
+                .feedbacksReceived(feedbacksReceived.stream().map(Feedback::toDTO).collect(Collectors.toList()))
                 .build();
     }
 

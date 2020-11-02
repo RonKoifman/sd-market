@@ -22,13 +22,10 @@ public class CheckIsUserRegionOwnerServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try (PrintWriter out = res.getWriter()) {
             res.setContentType("text/html");
-            boolean isUserRegionOwner;
             String username = SessionUtils.getUsername(req);
-
-            synchronized (getServletContext()) {
-                SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
-                isUserRegionOwner = singleRegionManager.isUserRegionOwner(username);
-            }
+            SingleRegionManager singleRegionManager = SDMRegionsManager.getInstance().getSingleRegionManagerByRegionName(SessionUtils.getRegionName(req));
+            String regionOwnerUsername = singleRegionManager.getRegionOwnerUsername();
+            boolean isUserRegionOwner = regionOwnerUsername.equals(username);
 
             out.print(isUserRegionOwner);
             out.flush();

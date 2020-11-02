@@ -51,7 +51,7 @@ public interface SingleRegionManager extends Transferable<RegionDTO> {
 
     String getRegionName();
 
-    boolean isUserRegionOwner(String username);
+    String getRegionOwnerUsername();
 
     RegionDTO toDTO();
 }

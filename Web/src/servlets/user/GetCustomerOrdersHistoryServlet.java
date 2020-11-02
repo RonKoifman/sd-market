@@ -1,4 +1,4 @@
-package servlets.orders;
+package servlets.user;
 
 import com.google.gson.Gson;
 import dto.models.GeneralOrderDTO;
