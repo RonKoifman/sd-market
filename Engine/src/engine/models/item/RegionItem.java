@@ -8,9 +8,11 @@ public class RegionItem extends Item implements Transferable<RegionItemDTO> {
 
     private int amountOfStoresSelling;
     private float averagePrice;
+    private final String belongedRegionName;
 
-    public RegionItem(int id, String name, PurchaseForm purchaseForm) {
+    public RegionItem(int id, String name, PurchaseForm purchaseForm, String belongedRegionName) {
         super(id, name, purchaseForm);
+        this.belongedRegionName = belongedRegionName;
     }
 
     @Override
@@ -23,6 +25,10 @@ public class RegionItem extends Item implements Transferable<RegionItemDTO> {
                 .averagePrice(averagePrice)
                 .amountOfStoresSelling(amountOfStoresSelling)
                 .build();
+    }
+
+    public String getBelongedRegionName() {
+        return belongedRegionName;
     }
 
     public int getAmountOfStoresSelling() {
@@ -52,6 +58,7 @@ public class RegionItem extends Item implements Transferable<RegionItemDTO> {
         return "RegionItem{" +
                 "amountOfStoresSelling=" + amountOfStoresSelling +
                 ", averagePrice=" + averagePrice +
+                ", belongedRegionName='" + belongedRegionName + '\'' +
                 ", id=" + id +
                 ", name='" + name + '\'' +
                 ", purchaseForm=" + purchaseForm +

@@ -36,9 +36,9 @@ class DataConverter {
     }
 
     public void convertJaxbObjectsToSystemModels(SuperDuperMarketDescriptor sdmDescriptor) {
+        convertRegionName(sdmDescriptor.getSDMZone().getName());
         convertItems(sdmDescriptor.getSDMItems().getSDMItem());
         convertStores(sdmDescriptor.getSDMStores().getSDMStore());
-        convertRegionName(sdmDescriptor.getSDMZone().getName());
     }
 
     private void checkEachItemSoldByAtLeastOneStore(Collection<SDMStore> generatedStores) {
@@ -133,7 +133,7 @@ class DataConverter {
     }
 
     private void convertRegionName(String regionName) {
-        this.convertedRegionName = regionName.trim();
+        convertedRegionName = regionName.trim();
     }
 
     private void convertStores(Collection<SDMStore> generatedStores) {
@@ -147,7 +147,7 @@ class DataConverter {
             }
 
             try {
-                Store newStore = new Store(sdmStore.getId(), sdmStore.getName().trim(), sdmStore.getDeliveryPpk(), new Location(sdmStore.getLocation().getX(), sdmStore.getLocation().getY()));
+                Store newStore = new Store(sdmStore.getId(), sdmStore.getName().trim(), sdmStore.getDeliveryPpk(), new Location(sdmStore.getLocation().getX(), sdmStore.getLocation().getY()), convertedRegionName);
                 convertedStoreIdToStore.put(sdmStore.getId(), newStore);
                 setStoreItemsPrices(newStore, sdmStore.getSDMPrices().getSDMSell());
                 setStoreDiscounts(newStore, sdmStore.getSDMDiscounts());
@@ -168,7 +168,7 @@ class DataConverter {
                 throw new IllegalStateException("An item with the ID '" + sdmItem.getId() + "' exists more than once in the region.");
             }
 
-            convertedItemIdToItem.put(sdmItem.getId(), new RegionItem(sdmItem.getId(), sdmItem.getName().trim(), PurchaseForm.valueOf(sdmItem.getPurchaseCategory().toUpperCase())));
+            convertedItemIdToItem.put(sdmItem.getId(), new RegionItem(sdmItem.getId(), sdmItem.getName().trim(), PurchaseForm.valueOf(sdmItem.getPurchaseCategory().toUpperCase()), convertedRegionName));
         }
     }
 

@@ -22,6 +22,7 @@ public class Store implements Locationable, Identifiable, Transferable<StoreDTO>
     private final int id;
     private final String name;
     private String ownerUsername;
+    private final String belongedRegionName;
     private final Location location;
     private final float deliveryPPK;
     private float totalIncomeFromDeliveries;
@@ -31,11 +32,12 @@ public class Store implements Locationable, Identifiable, Transferable<StoreDTO>
     private final Map<Integer, SubOrder> orderIdToOrder = new HashMap<>();
     private final List<Feedback> feedbacksReceived = new LinkedList<>();
 
-    public Store(int id, String name, float deliveryPPK, Location location) {
+    public Store(int id, String name, float deliveryPPK, Location location, String belongedRegionName) {
         this.id = id;
         this.name = name;
         this.deliveryPPK = deliveryPPK;
         this.location = location;
+        this.belongedRegionName = belongedRegionName;
     }
 
     @Override
@@ -70,6 +72,10 @@ public class Store implements Locationable, Identifiable, Transferable<StoreDTO>
 
     public String getOwnerUsername() {
         return ownerUsername;
+    }
+
+    public String getBelongedRegionName() {
+        return belongedRegionName;
     }
 
     public int getAmountOfItemsForSale() {
@@ -209,6 +215,7 @@ public class Store implements Locationable, Identifiable, Transferable<StoreDTO>
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", ownerUsername='" + ownerUsername + '\'' +
+                ", belongedRegionName='" + belongedRegionName + '\'' +
                 ", location=" + location +
                 ", deliveryPPK=" + deliveryPPK +
                 ", totalIncomeFromDeliveries=" + totalIncomeFromDeliveries +

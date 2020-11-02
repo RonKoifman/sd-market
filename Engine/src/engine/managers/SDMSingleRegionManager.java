@@ -160,7 +160,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
             throw new TakenIdException("The item ID '" + itemId + "' is already taken.");
         }
 
-        RegionItem newItem = new RegionItem(itemId, itemName, PurchaseForm.valueOf(itemPurchaseForm.trim().toUpperCase()));
+        RegionItem newItem = new RegionItem(itemId, itemName, PurchaseForm.valueOf(itemPurchaseForm.trim().toUpperCase()), regionName);
         itemIdToItem.put(newItem.getId(), newItem);
         storeIdToItemPriceInStore.forEach((storeId, itemPriceInStore) -> addNewItemToStore(storeId, itemId, itemPriceInStore));
     }
@@ -171,7 +171,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
             throw new TakenIdException("The store ID '" + storeId + "' is already taken.");
         }
 
-        Store newStore = new Store(storeId, storeName, storeDeliveryPPK, new Location(storeLocation.x, storeLocation.y));
+        Store newStore = new Store(storeId, storeName, storeDeliveryPPK, new Location(storeLocation.x, storeLocation.y), regionName);
         storeIdToStore.put(newStore.getId(), newStore);
         itemIdToItemPriceInStore.forEach((itemId, itemPrice) -> addNewItemToStore(storeId, itemId, itemPrice));
         SDMUsersManager.getInstance().addNewStoreToStoreOwner(ownerUsername, newStore, regionName);
