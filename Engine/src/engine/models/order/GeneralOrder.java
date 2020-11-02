@@ -14,8 +14,8 @@ public class GeneralOrder extends Order implements Transferable<GeneralOrderDTO>
 
     private final Map<Store, SubOrder> storeToOrder = new HashMap<>();
 
-    public GeneralOrder(String customerUsername, Location orderDestination, LocalDate orderDate, List<OrderItem> allOrderedItems, Map<Store, List<OrderItem>> storeToOrderedItems) {
-        super(customerUsername, orderDate, orderDestination, allOrderedItems);
+    public GeneralOrder(String regionName, String customerUsername, Location orderDestination, LocalDate orderDate, List<OrderItem> allOrderedItems, Map<Store, List<OrderItem>> storeToOrderedItems) {
+        super(regionName, customerUsername, orderDate, orderDestination, allOrderedItems);
         createStoresSubOrders(storeToOrderedItems);
         this.totalItemsCost = calculateTotalItemsCost();
         this.deliveryCost = calculateDeliveryCost();
@@ -81,7 +81,7 @@ public class GeneralOrder extends Order implements Transferable<GeneralOrderDTO>
 
     private void createStoresSubOrders(Map<Store, List<OrderItem>> storeToOrderedItems) {
         for (Store store : storeToOrderedItems.keySet()) {
-            storeToOrder.put(store, new SubOrder(store, customerUsername, orderDestination, orderDate, storeToOrderedItems.get(store)));
+            storeToOrder.put(store, new SubOrder(regionName, store, customerUsername, orderDestination, orderDate, storeToOrderedItems.get(store)));
         }
     }
 
@@ -103,7 +103,8 @@ public class GeneralOrder extends Order implements Transferable<GeneralOrderDTO>
         return "GeneralOrder{" +
                 "storeToOrder=" + storeToOrder +
                 ", id=" + id +
-                ", customerUsername=" + customerUsername +
+                ", regionName='" + regionName + '\'' +
+                ", customerUsername='" + customerUsername + '\'' +
                 ", orderDestination=" + orderDestination +
                 ", orderDate=" + orderDate +
                 ", orderedItems=" + orderedItems +

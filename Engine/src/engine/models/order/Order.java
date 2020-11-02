@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public abstract class Order implements Identifiable, Locationable, Serializable {
 
     protected int id;
+    protected final String regionName;
     protected final String customerUsername;
     protected final Location orderDestination;
     protected final LocalDate orderDate;
@@ -25,7 +26,8 @@ public abstract class Order implements Identifiable, Locationable, Serializable 
     protected int totalItemsAmount;
     private static int idGenerator = 1000;
 
-    public Order(String customerUsername, LocalDate orderDate, Location orderDestination, List<OrderItem> orderedItems) {
+    public Order(String regionName, String customerUsername, LocalDate orderDate, Location orderDestination, List<OrderItem> orderedItems) {
+        this.regionName = regionName;
         this.customerUsername = customerUsername;
         this.orderDate = orderDate;
         this.orderDestination = orderDestination;
@@ -128,7 +130,8 @@ public abstract class Order implements Identifiable, Locationable, Serializable 
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", customerUsername=" + customerUsername +
+                ", regionName='" + regionName + '\'' +
+                ", customerUsername='" + customerUsername + '\'' +
                 ", orderDestination=" + orderDestination +
                 ", orderDate=" + orderDate +
                 ", orderedItems=" + orderedItems +

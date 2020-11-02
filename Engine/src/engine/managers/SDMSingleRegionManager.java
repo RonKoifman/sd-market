@@ -228,7 +228,7 @@ public class SDMSingleRegionManager implements SingleRegionManager {
         Store store = chosenStore != null ? storeIdToStore.get(chosenStore.getId()) : null;
 
         matchItemsWithStoresToOrderFrom(isDynamicOrder, allOrderedItems, storeToOrderedItems, store, itemToItemPurchaseAmount);
-        GeneralOrder pendingOrder = new GeneralOrder(customerUsername, destination, orderDate, allOrderedItems, storeToOrderedItems);
+        GeneralOrder pendingOrder = new GeneralOrder(regionName, customerUsername, destination, orderDate, allOrderedItems, storeToOrderedItems);
         usernameToPendingOrder.put(customerUsername, pendingOrder);
     }
 

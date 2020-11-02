@@ -15,8 +15,8 @@ public class SubOrder extends Order implements Transferable<SubOrderDTO> {
     private final Store store;
     private final float distanceFromCustomer;
 
-    public SubOrder(Store store, String customerUsername, Location orderDestination, LocalDate orderDate, List<OrderItem> orderedItems) {
-        super(customerUsername, orderDate, orderDestination, orderedItems);
+    public SubOrder(String regionName, Store store, String customerUsername, Location orderDestination, LocalDate orderDate, List<OrderItem> orderedItems) {
+        super(regionName, customerUsername, orderDate, orderDestination, orderedItems);
         this.store = store;
         this.distanceFromCustomer = calculateDistanceFromCustomer();
         this.totalItemsCost = calculateTotalItemsCost();
@@ -78,9 +78,10 @@ public class SubOrder extends Order implements Transferable<SubOrderDTO> {
     public String toString() {
         return "SubOrder{" +
                 "store=" + store +
-                ", distanceFromUser=" + distanceFromCustomer +
+                ", distanceFromCustomer=" + distanceFromCustomer +
                 ", id=" + id +
-                ", customerUsername=" + customerUsername +
+                ", regionName='" + regionName + '\'' +
+                ", customerUsername='" + customerUsername + '\'' +
                 ", orderDestination=" + orderDestination +
                 ", orderDate=" + orderDate +
                 ", orderedItems=" + orderedItems +
