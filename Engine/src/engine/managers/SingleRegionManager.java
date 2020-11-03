@@ -25,8 +25,6 @@ public interface SingleRegionManager extends Transferable<RegionDTO> {
 
     void checkForFreeLocation(Point location);
 
-    void checkForAvailableId(int id, String objectType);
-
     void createNewPendingOrder(boolean isDynamicOrder, LocalDate orderDate, Point orderDestination, String customerUsername, StoreDTO chosenStore, Map<RegionItemDTO, Float> itemToItemPurchaseAmount);
 
     GeneralOrderDTO getPendingOrderByUsername(String username);

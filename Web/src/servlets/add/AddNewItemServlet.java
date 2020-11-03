@@ -36,7 +36,6 @@ public class AddNewItemServlet extends HttpServlet {
                 Map<Integer, Float> storeIdToItemPriceInStore = getStoreIdToItemPriceFromParameters(req.getParameterMap());
 
                 try {
-                    singleRegionManager.checkForAvailableId(itemId, "RegionItem");
                     if (storeIdToItemPriceInStore.isEmpty()) {
                         res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                         out.print("Please choose at least one store to sell the item before adding a new item.");

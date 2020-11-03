@@ -42,7 +42,6 @@ public class AddNewStoreServlet extends HttpServlet {
 
                 try {
                     singleRegionManager.checkForFreeLocation(new Point(xCoordinate, yCoordinate));
-                    singleRegionManager.checkForAvailableId(storeId, "Store");
                     if (itemIdToItemPriceInStore.isEmpty()) {
                         res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                         out.print("Please choose at least one item for sale before adding a new store.");

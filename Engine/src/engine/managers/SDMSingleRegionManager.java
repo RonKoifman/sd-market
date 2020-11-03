@@ -183,32 +183,6 @@ public class SDMSingleRegionManager implements SingleRegionManager {
     }
 
     @Override
-    public void checkForAvailableId(int id, String objectType) {
-        final String STORE =  "Store";
-        final String REGION_ITEM = "RegionItem";
-
-        switch (objectType) {
-            case STORE: {
-                if (storeIdToStore.containsKey(id)) {
-                    throw new TakenIdException("The store ID '" + id + "' is already taken.");
-                }
-                break;
-            }
-
-            case REGION_ITEM: {
-                if (itemIdToItem.containsKey(id)) {
-                    throw new TakenIdException("The item ID '" + id + "' is already taken.");
-                }
-                break;
-            }
-
-            default: {
-                throw new IllegalArgumentException();
-            }
-        }
-    }
-
-    @Override
     public GeneralOrderDTO getPendingOrderByUsername(String username) {
         return usernameToPendingOrder.get(username).toDTO();
     }
