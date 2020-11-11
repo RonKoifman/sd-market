@@ -39,7 +39,7 @@ At the same time, in order not to encourage monopolies, we will also allow other
 - [x] Executing transactions
 - [x] Receiving notifications
 - [x] Live chat
-- [x] Viewing Orders History
+- [x] Viewing orders history
 
 <img src="Demo/feedbacks-page.png" alt=""/>
 <img src="Demo/checkout-page.png" alt=""/>
