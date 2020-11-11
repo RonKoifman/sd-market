@@ -5,8 +5,7 @@
 # SDMarket
 SDMarket is a Java-based wise consumption web application running on the Apache Tomcat server, developed using the following technologies:
  
-Server-Side: `Java` `Apache Tomcat` `XML` `JSON`<br>
-Client-Side: `JavaScript` `AJAX` `jQuery` `Bootstrap` `HTML5` `CSS`
+`Java` `Apache Tomcat` `XML` `JSON` `JavaScript` `AJAX` `jQuery` `Bootstrap` `HTML5` `CSS`
 
 # About
 The development of the world and technology makes it possible to bring together store owners and consumers and create a digital arena in which the consumer can, on the one hand, make quick and easy price comparisons, and on the other hand, generate exposure of stores to different consumers.
@@ -29,5 +28,5 @@ At the same time, in order not to encourage monopolies, we will also allow other
 
 # Main Features
 
-<img src="Demo/welcome-page.png" width="500" height="500">
-<img src="Demo/signup-page.png" width="500" height="500">  
+<img src="Demo/welcome-page.png">
+<img src="Demo/signup-page.png">  
