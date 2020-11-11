@@ -26,11 +26,8 @@ At the same time, in order not to encourage monopolies, we will also allow other
 4. Go to the `apache-tomcat-9.0.39\bin` folder and run the `startup.bat` file.
 5. Finally, navigate to `https://localhost:8080/sd-market` in your favorite browser.
 
-###### Home Page
-<img src="Demo/welcome-page.png" alt="" width="650" height="300"/>
-
-###### Signup Page
-<img src="Demo/signup-page.png" alt="" width="650" height="300"/>
+<br>
+<img src="Demo/welcome-page.png" alt="" width="700" height="300"/>
 
 # Main Features
 - [x] Creating user accounts
@@ -44,20 +41,24 @@ At the same time, in order not to encourage monopolies, we will also allow other
 - [x] Managing data of stores and items
 - [x] Viewing orders history
 
-###### Home Page
-<img src="Demo/home-page.png" alt="" width="650" height="300"/>
+# Screenshots
+##### Signup page
+<img src="Demo/signup-page.png" alt="" width="700" height="300"/>
 
-###### New Notification
-<img src="Demo/feedback-notification.png" alt="" width="650" height="300"/>
+##### Home page
+<img src="Demo/home-page.png" alt="" width="700" height="300"/>
 
-###### Feedbacks Page
-<img src="Demo/feedbacks-page.png" alt="" width="650" height="300"/>
+##### New notification
+<img src="Demo/feedback-notification.png" alt="" width="700" height="300"/>
 
-###### Checkout Page
-<img src="Demo/checkout-page.png" alt="" width="650" height="300"/>
+##### Feedbacks page
+<img src="Demo/feedbacks-page.png" alt="" width="700" height="300"/>
 
-###### Account Page
-<img src="Demo/account-page.png" alt="" width="650" height="300"/>
+##### Checkout page
+<img src="Demo/checkout-page.png" alt="" width="700" height="300"/>
 
-###### Chat Page
-<img src="Demo/chat-page.png" alt="" width="650" height="300"/>
+##### Account page
+<img src="Demo/account-page.png" alt="" width="700" height="300"/>
+
+##### Chat page
+<img src="Demo/chat-page.png" alt="" width="700" height="300"/>
