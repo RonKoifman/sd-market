@@ -2,10 +2,14 @@
   <img src="https://i.ibb.co/ZdRCKjZ/sdm-full-logo.png" alt="sdm-full-logo">
 </p>
 
-<p float="left">
-  <img src="Demo/welcome-page.png" alt="" width="370" height="500"/>
-  <img src="Demo/signup-page.png" alt="" width="370" height="500"/>
-</p>
+<img src="Demo/welcome-page.png" alt=""/>
+<img src="Demo/signup-page.png" alt=""/>
+<img src="Demo/feedbacks-page.png" alt=""/>
+<img src="Demo/checkout-page.png" alt=""/>
+<img src="Demo/account-page.png" alt=""/>
+<img src="Demo/chat-page.png" alt=""/>
+<img src="Demo/home-page.png" alt=""/>
+<img src="Demo/feedback-notification.png" alt=""/>
 
 # SDMarket
 SDMarket is a Java-based wise consumption web application running on the Apache Tomcat server, developed using the following technologies:
