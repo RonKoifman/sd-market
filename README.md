@@ -7,8 +7,8 @@ SDMarket is a Java-based wise consumption web application running on the Apache 
  
 `Java` `Apache Tomcat` `XML` `JSON` `JavaScript` `AJAX` `jQuery` `Bootstrap` `HTML5` `CSS`
 
-<img src="Demo/welcome-page.png" alt=""/>
-<img src="Demo/signup-page.png" alt=""/>
+<img src="Demo/welcome-page.png" alt="" height="300"/>
+<img src="Demo/signup-page.png" alt="" height="300"/>
 
 # About
 The development of the world and technology makes it possible to bring together store owners and consumers and create a digital arena in which the consumer can, on the one hand, make quick and easy price comparisons, and on the other hand, generate exposure of stores to different consumers.
@@ -31,7 +31,6 @@ At the same time, in order not to encourage monopolies, we will also allow other
 
 # Main Features
 - [x] Creating user accounts
-- [x] Managing data of stores and items
 - [x] Loading data from XML file uploaded
 - [x] Placing orders
 - [x] Applying discounts
@@ -39,11 +38,12 @@ At the same time, in order not to encourage monopolies, we will also allow other
 - [x] Executing transactions
 - [x] Receiving notifications
 - [x] Live chat
+- [x] Managing data of stores and items
 - [x] Viewing orders history
 
-<img src="Demo/feedbacks-page.png" alt=""/>
-<img src="Demo/checkout-page.png" alt=""/>
-<img src="Demo/account-page.png" alt=""/>
-<img src="Demo/chat-page.png" alt=""/>
-<img src="Demo/home-page.png" alt=""/>
-<img src="Demo/feedback-notification.png" alt=""/>
+<img src="Demo/feedbacks-page.png" alt="" height="300"/>
+<img src="Demo/checkout-page.png" alt="" height="300"/>
+<img src="Demo/account-page.png" alt="" height="300"/>
+<img src="Demo/chat-page.png" alt="" height="300"/>
+<img src="Demo/home-page.png" alt="" height="300"/>
+<img src="Demo/feedback-notification.png" alt="" height="300"/>
