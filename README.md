@@ -27,7 +27,7 @@ At the same time, in order not to encourage monopolies, we will also allow other
 5. Finally, navigate to `https://localhost:8080/sd-market` in your favorite browser.
 
 <br>
-<img src="Demo/welcome-page.png" alt="" width="700" height="300"/>
+<img src="Demo/welcome-page.png" alt="" width="700" height="350"/>
 
 # Main Features
 - [x] Creating user accounts
@@ -43,22 +43,22 @@ At the same time, in order not to encourage monopolies, we will also allow other
 
 # Screenshots
 ##### Signup page
-<img src="Demo/signup-page.png" alt="" width="700" height="300"/>
+<img src="Demo/signup-page.png" alt="" width="700" height="350"/>
 
 ##### Home page
-<img src="Demo/home-page.png" alt="" width="700" height="300"/>
+<img src="Demo/home-page.png" alt="" width="700" height="350"/>
 
 ##### New notification
-<img src="Demo/feedback-notification.png" alt="" width="700" height="300"/>
+<img src="Demo/feedback-notification.png" alt="" width="700" height="350"/>
 
 ##### Feedbacks page
-<img src="Demo/feedbacks-page.png" alt="" width="700" height="300"/>
+<img src="Demo/feedbacks-page.png" alt="" width="700" height="350"/>
 
 ##### Checkout page
-<img src="Demo/checkout-page.png" alt="" width="700" height="300"/>
+<img src="Demo/checkout-page.png" alt="" width="700" height="350"/>
 
 ##### Account page
-<img src="Demo/account-page.png" alt="" width="700" height="300"/>
+<img src="Demo/account-page.png" alt="" width="700" height="350"/>
 
 ##### Chat page
-<img src="Demo/chat-page.png" alt="" width="700" height="300"/>
+<img src="Demo/chat-page.png" alt="" width="700" height="350"/>
