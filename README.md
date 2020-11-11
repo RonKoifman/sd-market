@@ -2,6 +2,11 @@
   <img src="https://i.ibb.co/ZdRCKjZ/sdm-full-logo.png" alt="sdm-full-logo">
 </p>
 
+<p float="left">
+  <img src="Demo/welcome-page.png" alt="" width="460"/>
+  <img src="Demo/signup-page.png" alt="" width="460"/>
+</p>
+
 # SDMarket
 SDMarket is a Java-based wise consumption web application running on the Apache Tomcat server, developed using the following technologies:
  
@@ -27,6 +32,7 @@ At the same time, in order not to encourage monopolies, we will also allow other
 5. Finally, navigate to `https://localhost:8080/sd-market` in your favorite browser.
 
 # Main Features
+- [x] dsfsdf
+- [x] dsfsdf
+- [x] sfdsfsd
 
-<img src="Demo/welcome-page.png" alt="">
-<img src="Demo/signup-page.png" alt="">  
