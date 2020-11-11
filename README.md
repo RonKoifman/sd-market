@@ -3,8 +3,8 @@
 </p>
 
 <p float="left">
-  <img src="Demo/welcome-page.png" alt="" width="460"/>
-  <img src="Demo/signup-page.png" alt="" width="460"/>
+  <img src="Demo/welcome-page.png" alt="" width="370" height="500"/>
+  <img src="Demo/signup-page.png" alt="" width="370" height="500"/>
 </p>
 
 # SDMarket
