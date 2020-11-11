@@ -28,5 +28,5 @@ At the same time, in order not to encourage monopolies, we will also allow other
 
 # Main Features
 
-<img src="Demo/welcome-page.png alt="">
+<img src="Demo/welcome-page.png" alt="">
 <img src="Demo/signup-page.png" alt="">  
