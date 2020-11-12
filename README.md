@@ -30,17 +30,16 @@ At the same time, in order not to encourage monopolies, we will also allow other
 <img src="Demo/welcome-page.png" alt="" width="950" height="400"/>
 
 # Main Features
-
-☑️Creating user accounts️
-☑️Loading data from XML file uploaded️
-☑️Placing orders️
-☑️Applying discounts
-☑️Giving feedback️
-☑️Executing transactions️
-☑️Receiving notifications about various events️
-☑️Live chat with other online users️️
-☑️Managing data of stores and items️
-☑️Viewing orders history️
+☑️Creating user accounts️<br
+☑️Loading data from XML file uploaded️<br
+☑️Placing orders️<br
+☑️Applying discounts <br
+☑️Giving feedback️<br
+☑️Executing transactions️ <br
+☑️Receiving notifications about various events️ <br
+☑️Live chat with other online users️️<br
+☑️Managing data of stores and items️<br
+☑️Viewing orders history️<br
 
 # Preview Some Pages in the App
 #### Signup page
