@@ -22,9 +22,8 @@ At the same time, in order not to encourage monopolies, we will also allow other
 # Getting Started
 1. Clone/fork the repository or download the project.
 2. Extract the `apache-tomcat-9.0.39.zip` file.
-3. Put the `sd-market.war` file inside `apache-tomcat-9.0.39\webapps` folder.
-4. Go to the `apache-tomcat-9.0.39\bin` folder and run the `startup.bat` file.
-5. Finally, navigate to `localhost:8080/sd-market` in your favorite browser.
+3. Go to the `apache-tomcat-9.0.39\bin` folder and run the `startup.bat` file.
+4. Finally, navigate to `localhost:8080/sd-market` in your favorite browser.
 
 <br>
 <img src="Demo/welcome-page.png" alt="" width="950" height="400"/>
