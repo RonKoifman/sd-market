@@ -31,18 +31,16 @@ At the same time, in order not to encourage monopolies, we will also allow other
 
 # Main Features
 
-☑️️️
-
-- [x] Creating user accounts
-- [x] Loading data from XML file uploaded
-- [x] Placing orders
-- [x] Applying discounts
-- [x] Giving feedback
-- [x] Executing transactions
-- [x] Receiving notifications about various events
-- [x] Live chat with other online users
-- [x] Managing data of stores and items
-- [x] Viewing orders history
+☑️Creating user accounts️
+☑️Loading data from XML file uploaded️
+☑️Placing orders️
+☑️Applying discounts
+☑️Giving feedback️
+☑️Executing transactions️
+☑️Receiving notifications about various events️
+☑️Live chat with other online users️️
+☑️Managing data of stores and items️
+☑️Viewing orders history️
 
 # Preview Some Pages in the App
 #### Signup page
