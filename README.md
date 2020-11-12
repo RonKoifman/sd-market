@@ -30,35 +30,38 @@ At the same time, in order not to encourage monopolies, we will also allow other
 <img src="Demo/welcome-page.png" alt="" width="950" height="400"/>
 
 # Main Features
+
+☑️️️
+
 - [x] Creating user accounts
 - [x] Loading data from XML file uploaded
 - [x] Placing orders
 - [x] Applying discounts
 - [x] Giving feedback
 - [x] Executing transactions
-- [x] Receiving notifications
-- [x] Live chat
+- [x] Receiving notifications about various events
+- [x] Live chat with other online users
 - [x] Managing data of stores and items
 - [x] Viewing orders history
 
 # Preview Some Pages in the App
-##### Signup page
+#### Signup page
 <img src="Demo/signup-page.png" alt="" width="950" height="400"/>
 
-##### Home page
+#### Home page
 <img src="Demo/home-page.png" alt="" width="950" height="400"/>
 
-##### New notification
+#### New notification
 <img src="Demo/feedback-notification.png" alt="" width="950" height="400"/>
 
-##### Feedbacks page
+#### Feedbacks page
 <img src="Demo/feedbacks-page.png" alt="" width="950" height="400"/>
 
-##### Checkout page
+#### Checkout page
 <img src="Demo/checkout-page.png" alt="" width="950" height="400"/>
 
-##### Account page
+#### Account page
 <img src="Demo/account-page.png" alt="" width="950" height="400"/>
 
-##### Chat page
+#### Chat page
 <img src="Demo/chat-page.png" alt="" width="950" height="400"/>
