@@ -24,14 +24,14 @@ At the same time, in order not to encourage monopolies, we will also allow other
 2. Extract the `apache-tomcat-9.0.39.zip` file.
 3. Put the `sd-market.war` file inside `apache-tomcat-9.0.39\webapps` folder.
 4. Go to the `apache-tomcat-9.0.39\bin` folder and run the `startup.bat` file.
-5. Finally, navigate to `https://localhost:8080/sd-market` in your favorite browser.
+5. Finally, navigate to `localhost:8080/sd-market` in your favorite browser.
 
 <br>
 <img src="Demo/welcome-page.png" alt="" width="950" height="400"/>
 
 # Main Features
 - [x] Creating user accounts
-- [x] Loading data from XML file uploaded
+- [x] Loading data from XML files uploaded
 - [x] Placing orders
 - [x] Applying discounts
 - [x] Giving feedback
@@ -39,9 +39,12 @@ At the same time, in order not to encourage monopolies, we will also allow other
 - [x] Receiving notifications about various events
 - [x] Live chat with other online users
 - [x] Managing data of stores and items
-- [x] Viewing orders history
+- [x] Different user authorizations
+- [x] Orders history
 
-# Preview Some Pages in the App
+# Preview
+Here is a preview of some of the pages in the app. Run the application to see the rest :)
+
 #### Signup page
 <img src="Demo/signup-page.png" alt="" width="950" height="400"/>
 
@@ -53,6 +56,9 @@ At the same time, in order not to encourage monopolies, we will also allow other
 
 #### Feedbacks page
 <img src="Demo/feedbacks-page.png" alt="" width="950" height="400"/>
+
+#### Place order page
+<img src="Demo/place-order-page.png" alt="" width="950" height="400"/>
 
 #### Checkout page
 <img src="Demo/checkout-page.png" alt="" width="950" height="400"/>
